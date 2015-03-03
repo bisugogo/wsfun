@@ -1,0 +1,59 @@
+<div class='row createDesignView' ng-controller="CreateDesignCtrl">
+    <div class='row'>
+        <div class="col-xs-12">
+            <img class='createDesignBgImg' src='img/create_bk.png'></img>
+        </div>
+    </div>
+    <div class='row'>
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-default leftBtn glyphicon glyphicon-refresh"></button>
+            <button class="btn btn-default rightBtn glyphicon glyphicon-ok" ng-click="createDesign()"></button>
+        </div>
+    </div>
+    <div class='row newDesignInfoArea'>
+        <div class="col-xs-12">
+            <div class='row'>
+                <div class="col-xs-6">
+                    <input type="text" class="form-control" placeholder="Design Name" ng-model="designInfo.sDefaultDesc">
+                </div>
+                <div class="col-xs-6">
+                    <label class="checkbox">
+                        <input type="checkbox" ng-model="designInfo.bPrivateDesign">
+                        This is a private design
+                    </label>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <div class="btn-group" dropdown>
+                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                            {{designInfo.sBackgroundColor}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="oColor in constant.BK_COLOR_ARRYA">
+                                <a ng-click="changeBackgroundColor(oColor)">{{oColor}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='col-xs-3'>
+                    <div class="btn-group" dropdown>
+                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                            {{designInfo.sSize}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="oSize in constant.SIZE_ARRAY">
+                                <a ng-click="changeSize(oSize)">{{oSize}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-xs-4">
+                    <a ui-sref="myDesigns">返回我的设计</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

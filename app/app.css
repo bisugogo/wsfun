@@ -1,0 +1,66 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+/*.createDesignView {
+  height: 500px;
+  background-image: url(img/create_bk.png);
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}*/
+
+.createDesignView {
+  width: 100%;
+}
+.createDesignBgImg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+  height: 380px;
+}
+.createDesignView>img {
+  
+}
+
+.rightBtn{
+  float: right;
+}
+
+.newDesignInfoArea {
+  position: fixed;
+  bottom: 50px;
+  width: 100%;
+}
+
+.myDesignListRowImg {
+  width: 25%;
+}
