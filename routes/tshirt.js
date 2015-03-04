@@ -105,7 +105,9 @@ module.exports = function(app) {
 
     console.log('POST - /tshirt___createOrder');
 
-    var oOrder = new Order({
+    var sDesignId = data.designId;
+
+    var oNewOrder = {
       femalePrice: data.femalePrice,
       malePrice: data.malePrice,
       kidPrice: data.kidPrice,
@@ -115,28 +117,30 @@ module.exports = function(app) {
       femaleSize: data.femaleSize,
       femaleQuantity: data.femaleQuantity,
       kidSize: data.kidSize,
-      kidQuantity: data.kidQuantity,
-      lastModified: data.lastModified,
-      status: data.status
-    });
+      kidQuantity: data.kidQuantity
+    };
 
-    oOrder.save(function(err) {
-
-      if(err) {
-
-        console.log('Error while saving order: ' + err);
+    Design.findById(sDesignId, function (err, oDesign) {  
+      if (!err) {
+        console.log('Create order: found target design');
+        oDesign.orders.push(oNewOrder);  
+        oDesign.save(function (err) {  
+        // do something
+          if (err) {
+            console.log('Create order: save new order error' + err);
+            res.send({ error:err });
+            return;
+          } else {
+            console.log("Order created");
+            return res.send({ status: 'OK', order:oNewOrder });
+          }
+        });  
+      } else {
+        console.log('Create order: target design not found!');
         res.send({ error:err });
         return;
-
-      } else {
-
-        console.log("order created");
-        return res.send({ status: 'OK', order:oOrder });
-
       }
-
     });
-
   };
 
 

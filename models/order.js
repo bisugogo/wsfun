@@ -19,32 +19,33 @@ var OrderSchema = new Schema({
     type    : Number,
     require : true
   },
+  totalQuantity: {
+    type    : Number,
+    require : true
+  },
   maleSize:     {
     type    : String,
-    enum    : ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     require : true
   },
   maleQuantity :   {
-    type    : Number,
+    type    : String,
     require : true
   },
   femaleSize:     {
     type    : String,
-    enum    : ['XS', 'S', 'M', 'L', 'XL'],
     require : true
   },
   femaleQuantity :   {
-    type    : Number,
+    type    : String,
     require : true
   },
   kidSize:     {
     type    : String,
-    enum    : ['XS', 'S', 'M', 'L', 'XL'],
     require : true
   },
   kidQuantity :   {
-    type    : Number,
-    default : 0
+    type    : String,
+    equire : true
   },
   lastModified: {
     type    : Date,
@@ -53,7 +54,8 @@ var OrderSchema = new Schema({
   status:   {
     type: String,
     enum    :  ['待付款', '待发货', '已发货', '交易完成'],
-    require : true
+    require : true,
+    default : '待付款'
   }
 });
 

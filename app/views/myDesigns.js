@@ -46,7 +46,7 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
         templateUrl: 'views/designDetail.html',
         controller: 'DesignDetailCtrl'
     });
-}])
+}]);
 
 myDesignList.controller('MyDesignsListCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {
     $scope.constant = {

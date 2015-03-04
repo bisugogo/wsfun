@@ -1,16 +1,17 @@
 'use strict';
 
-angular.module('ntApp.designDetail', ['ui.router', 'designServices'])
+var designDetail = angular.module('ntApp.designDetail', ['ui.router', 'designServices', 'ntApp.createOrder']);
 
-// .config(['$stateProvider', function($stateProvider) {
-//     $stateProvider.state('design.designId', {
-//         url: '/design/:designId',
-//         templateUrl: 'views/designDetail.html',
-//         controller: 'DesignDetailCtrl'
-//     });
-// }])
+designDetail.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('createOrder', {
+        url: '/createOrder',
+        templateUrl: 'views/createOrder.html',
+        controller: 'CreateOrderCtrl',
+        params: {designId: null}
+    });
+}]);
 
-.controller('DesignDetailCtrl', ['$scope', '$stateParams', 'Design', function($scope, $stateParams, Design) {
+designDetail.controller('DesignDetailCtrl', ['$scope', '$stateParams', '$state', 'Design', function($scope, $stateParams, $state, Design) {
     $scope.designInfo = {};
 
     $scope.designInfo.designId = $stateParams.designId;
@@ -19,4 +20,8 @@ angular.module('ntApp.designDetail', ['ui.router', 'designServices'])
         $scope.designInfo = oDesign.designDetail;
         $scope.designInfo.designId = $scope.designInfo._id;
     });
+
+    $scope.onOrderBtnClicked = function() {
+        $state.go('createOrder', {designId: $scope.designInfo.designId});
+    };
 }]);
