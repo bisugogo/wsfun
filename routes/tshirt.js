@@ -32,6 +32,22 @@ module.exports = function(app) {
     });
   };
 
+  getMyDesigns = function(sUserId, res) {
+    console.log("GET - /tshirts_getMyDesigns");
+    return Design.find({creatorId: sUserId}, function(err, aDesign) {
+      if(!err) {
+        return res.send({
+          status: 'OK',
+          designList: aDesign
+        });
+      } else {
+        res.statusCode = 500;
+        console.log('Internal error(%d): %s',res.statusCode,err.message);
+        return res.send({ error: 'Server error' });
+      }
+    });
+  };
+
 
 
   /**
@@ -73,6 +89,7 @@ module.exports = function(app) {
     console.log('POST - /tshirt');
 
     var design = new Design({
+      creatorId: data.creatorId,
       model:    data.model,
       style:    data.style,
       size :    data.size,
@@ -108,6 +125,7 @@ module.exports = function(app) {
     var sDesignId = data.designId;
 
     var oNewOrder = {
+      creatorId: data.creatorId,
       femalePrice: data.femalePrice,
       malePrice: data.malePrice,
       kidPrice: data.kidPrice,
@@ -139,6 +157,37 @@ module.exports = function(app) {
         console.log('Create order: target design not found!');
         res.send({ error:err });
         return;
+      }
+    });
+  };
+
+  getMyOrders = function(sUserId, res) {
+    console.log("GET - /tshirts_getMyOrders");
+    return Design.find({'orders.creatorId': sUserId}).select('_id desc orders').exec(function(err, aDesign) {
+      if(!err) {
+        var aList = [];
+        for (var i = 0; i < aDesign.length; i++) {
+          var oDesign = aDesign[i];
+          aList.push({
+            designId: oDesign._id, 
+            desc: oDesign.desc,
+            orders: []
+          });
+          for (var j = 0; j < oDesign.orders.length; j++) {
+            var oOrder = oDesign.orders[j];
+            if (oOrder.creatorId === sUserId) {
+              aList[i].orders.push(oOrder);
+            }
+          };
+        };
+        return res.send({
+          status: 'OK',
+          orderList: aList
+        });
+      } else {
+        res.statusCode = 500;
+        console.log('Internal error(%d): %s',res.statusCode,err.message);
+        return res.send({ error: 'Server error' });
       }
     });
   };
@@ -220,9 +269,15 @@ module.exports = function(app) {
     var sAction = req.query.action;
     if (sAction === 'getAllMyDesigns') {
       findAllTshirts(req, res);
+    } else if (sAction === 'getMyDesigns') {
+      var sUserId = req.query.userId;
+      getMyDesigns(sUserId, res);
     } else if (sAction === 'getMyDesignById') {
       var sDesignId = req.query.designId;
       findById(sDesignId, res);
+    } else if (sAction === 'getMyOrders') {
+      var sUserId = req.query.userId;
+      getMyOrders(sUserId, res);
     }
   };
 

@@ -2,7 +2,14 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema({
-
+  creatorId: {
+    type: String,
+    require: true
+  },
+  payerId: {
+    type: String,
+    default: ''
+  },
   malePrice:    {
     type    : Number,
     require : true

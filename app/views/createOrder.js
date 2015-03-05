@@ -18,7 +18,8 @@ angular.module('ntApp.createOrder', ['ui.router', 'designServices'])
     $scope.orderInfo = {
         sQuantity: '1',
         sSize: 'L',
-        sGender: 'male'
+        sGender: 'male',
+        sCreatorId: 'MATT'
     };
 
     $scope.onGenderOptionClicked = function(sGender) {
@@ -34,8 +35,9 @@ angular.module('ntApp.createOrder', ['ui.router', 'designServices'])
     };
 
     $scope.onConfirmBtnClicked = function() {
-        var oNewDesign = {
+        var oNewOrder = {
             designId: $scope.designInfo.designId,
+            creatorId: $scope.orderInfo.sCreatorId,
             malePrice: 128,
             femalePrice: 128,
             kidPrice: 128,
@@ -44,25 +46,25 @@ angular.module('ntApp.createOrder', ['ui.router', 'designServices'])
         };
 
         if ($scope.orderInfo.sGender === 'male') {
-            oNewDesign.maleSize = JSON.stringify([$scope.orderInfo.sSize]);
-            oNewDesign.maleQuantity = parseInt($scope.orderInfo.sQuantity);
-            oNewDesign.femaleSize = JSON.stringify([]);
-            oNewDesign.femaleQuantity = JSON.stringify([]);
+            oNewOrder.maleSize = JSON.stringify([$scope.orderInfo.sSize]);
+            oNewOrder.maleQuantity = parseInt($scope.orderInfo.sQuantity);
+            oNewOrder.femaleSize = JSON.stringify([]);
+            oNewOrder.femaleQuantity = JSON.stringify([]);
 
-            oNewDesign.totalQuantity = parseInt($scope.orderInfo.sQuantity);
-            oNewDesign.totalPrice = oNewDesign.malePrice * oNewDesign.maleQuantity;
+            oNewOrder.totalQuantity = parseInt($scope.orderInfo.sQuantity);
+            oNewOrder.totalPrice = oNewOrder.malePrice * oNewOrder.maleQuantity;
         } else {
-            oNewDesign.femaleSize = JSON.stringify([$scope.orderInfo.sSize]);
-            oNewDesign.femaleQuantity = parseInt($scope.orderInfo.sQuantity);
-            oNewDesign.maleSize = JSON.stringify([]);
-            oNewDesign.maleQuantity = JSON.stringify([]);
+            oNewOrder.femaleSize = JSON.stringify([$scope.orderInfo.sSize]);
+            oNewOrder.femaleQuantity = parseInt($scope.orderInfo.sQuantity);
+            oNewOrder.maleSize = JSON.stringify([]);
+            oNewOrder.maleQuantity = JSON.stringify([]);
 
-            oNewDesign.totalQuantity = parseInt($scope.orderInfo.sQuantity);
-            oNewDesign.totalPrice = oNewDesign.femalePrice * oNewDesign.femaleQuantity;
+            oNewOrder.totalQuantity = parseInt($scope.orderInfo.sQuantity);
+            oNewOrder.totalPrice = oNewOrder.femalePrice * oNewOrder.femaleQuantity;
         }
         var oParam = {
             action: 'createOrder',
-            data: oNewDesign
+            data: oNewOrder
         };
         Design.DesignManager.create(oParam);
     };

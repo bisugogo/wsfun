@@ -26,7 +26,14 @@ myDesignList.controller('CreateDesignCtrl', [function() {
 
 }]);*/
 
-var myDesignList = angular.module('ntApp.myDesigns', ['ui.router', 'ntApp.createDesign', 'ntApp.orderDesign', 'ntApp.designDetail', 'designServices']);
+var myDesignList = angular.module('ntApp.myDesigns', [
+    'ui.router', 
+    'ntApp.createDesign', 
+    'ntApp.orderDesign', 
+    'ntApp.designDetail', 
+    'ntApp.orderList', 
+    'designServices'
+]);
 
 myDesignList.config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('myDesigns', {
@@ -45,6 +52,10 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
         url: '/designDetail/:designId',
         templateUrl: 'views/designDetail.html',
         controller: 'DesignDetailCtrl'
+    }).state('orderList', {
+        url: '/orderList',
+        templateUrl: 'views/orderList.html',
+        controller: 'OrderListCtrl'
     });
 }]);
 
@@ -54,7 +65,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$state', 'Design', func
     };
 
     //Design.setGetParam({action: 'getAllMyDesigns'});
-    var oResult = Design.DesignManager.query({action: 'getAllMyDesigns'}, function () {
+    var oResult = Design.DesignManager.query({action: 'getMyDesigns', userId: 'MATT'}, function () {
         // var newWidth = 600 + oResult.designList.length + 1;
         // for (var i = 0; i < oResult.designList.length; i++) {
         //     oResult.designList[i].image = 'http://placekitten.com/' + newWidth + '/300';
@@ -94,6 +105,7 @@ myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', funct
         BK_COLOR_ARRYA: ['黑', '白']
     };
     $scope.designInfo = {
+        sCreatorId: 'MATT',
         bPrivateDesign: true,
         sDefaultDesc: new Date().toUTCString(),
         sBackgroundColor: '白',
@@ -104,6 +116,7 @@ myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', funct
     // $scope.defultDesc = new Date().toUTCString();
     $scope.createDesign = function () {
         var oNewDesign = {
+            creatorId: $scope.designInfo.sCreatorId,
             color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
             model: "Wave2015",
             price: 100,

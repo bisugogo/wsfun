@@ -5,7 +5,10 @@ var Schema = mongoose.Schema;
 var OrderSchema = mongoose.model('Order').schema
 
 var DesignSchema = new Schema({
-
+  creatorId: {
+    type: String,
+    require: true
+  },
   model:    {
     type    : String,
     require : true

@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-xs-4">
+        <span>代付款</span>
+    </div>
+    <div class="col-xs-4">
+        <span>已发货</span>
+    </div>
+    <div class="col-xs-4">
+        <span>已完成</span>
+    </div>
+</div>
+<div class="row" ng-controller="OrderListCtrl">
+    <div class="col-xs-12">
+        <div class='row myDesignListTitleRow'>
+            <div class="col-xs-3"></div>
+            <div class="col-xs-9">
+                <div class='row'>
+                    <div class="col-xs-3">设计名称</div>
+                    <div class="col-xs-3">价格</div>
+                    <div class="col-xs-3">时间</div>
+                    <div class="col-xs-3">状态</div>
+                </div>
+            </div>
+        </div>
+        <div ng-repeat="oOrder in aOrders">
+            <div class='row'>
+                <div class="col-xs-3">
+                    <img ng-src="img/create_bk.png" class="myDesignListRowImg" ng-click="onDesignItemClicked(oDesign)">
+                </div>
+                <div class="col-xs-9">
+                    <div class='row'>
+                        <div class="col-xs-3">{{oOrder.sDesignDesc}}</div>
+                        <div class="col-xs-3">{{oOrder.totalPrice}}</div>
+                        <div class="col-xs-3">{{oOrder.lastModified}}</div>
+                        <div class="col-xs-3">{{oOrder.status}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <a ui-sref="myDesigns">我的设计</a>
+    </div>
+</div>
