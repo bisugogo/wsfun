@@ -3,11 +3,12 @@ var Order = require('../models/order.js');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var OrderSchema = mongoose.model('Order').schema
+var UserSchema = mongoose.model('User').schema
 
 var DesignSchema = new Schema({
   creatorId: {
-    type: String,
-    require: true
+    type: Schema.Types.ObjectId,
+    ref: 'UserSchema'
   },
   model:    {
     type    : String,

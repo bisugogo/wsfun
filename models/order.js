@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var UserSchema = mongoose.model('User').schema
 
 var OrderSchema = new Schema({
   creatorId: {
-    type: String,
-    require: true
+    type: Schema.Types.ObjectId,
+    ref: 'UserSchema'
   },
   payerId: {
     type: String,
