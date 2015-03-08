@@ -33,6 +33,7 @@ WeChatManager.prototype.doEvent = function(req, res) {
                         return;
                     } else {
                         console.log("User created");
+                        res.reply('感谢您关注 微服私纺');
                         return;
                     }
                 });
@@ -47,8 +48,6 @@ WeChatManager.prototype.doEvent = function(req, res) {
                 //return res.send({ error: 'Server error' });
             }
         });
-
-        res.reply('感谢您关注 微服私纺');
         return;
     } else if (sEventType === 'unsubscribe') {
         console.log('Users: ' + sWechatId + ' has unsubscribed us!');
