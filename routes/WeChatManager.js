@@ -9,16 +9,17 @@ WeChatManager.prototype.doAction = function(req, res) {
 
     var sMsgType = oMsg.MsgType;
     if (sMsgType === 'event') {
-        this.doEvent(sMsgType, req, res);
+        this.doEvent(req, res);
     } else {
         res.reply('Weaves Fun!! We are better with you!');
     }
 };
 
-WeChatManager.prototype.doEvent = function(sType, req, res) {
+WeChatManager.prototype.doEvent = function(req, res) {
     var oMsg = req.weixin;
     var sWechatId = oMsg.FromUserName;
-    if (sType === 'subscribe') {
+    var sEventType = oMsg.Event;
+    if (sEventType === 'subscribe') {
         User.find({wechatId: sWechatId}, function(err, oUser) {
 
             if(!oUser) {
@@ -49,7 +50,7 @@ WeChatManager.prototype.doEvent = function(sType, req, res) {
 
         res.reply('感谢您关注 微服私纺');
         return;
-    } else if (sType === 'unsubscribe') {
+    } else if (sEventType === 'unsubscribe') {
         console.log('Users: ' + sWechatId + ' has unsubscribed us!');
         return;
     } else {
