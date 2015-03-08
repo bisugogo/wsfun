@@ -3,8 +3,14 @@ var express        = require('express');
 var morgan         = require('morgan');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var mongoose        = require("mongoose");
+var mongoose       = require("mongoose");
+var crypto         = require('crypto');
 var app            = express();
+var WCManager = require('./routes/WeChatManager');
+
+var wechat = require('wechat');
+
+app.use(express.query()); // Or app.use(express.query());
 
 app.use(express.static(__dirname + '/app'));
 app.use(morgan('dev'));
@@ -30,3 +36,29 @@ console.log('Im listening on port 10001');
 app.get('/', function(req, res) {
   res.sendfile('app/index.html');
 });
+
+app.get('/wechat/authServerConfig', function(req, res) {
+    var shasum = crypto.createHash('sha1');
+    var sSignature = req.params.signature;
+    var sTime = req.params.timestamp;
+    var sNouce = req.params.nouce;
+    var sToken = 'weavesfun';
+    var sEchoStr = req.params.echostr;
+
+    var aStr = [sToken, sTime, sNouce];
+    aStr.sort();
+    var aTargetSig = shasum.update(aStr.join(''));
+
+    if (aTargetSig === sSignature) {
+        res.send(sEchoStr);
+    } else {
+        res.send('Wrong Signature');
+    }
+});
+
+app.use('/wechat', wechat('weavesfun', function (req, res, next) {
+    var oWCMgr = new WeChatManager();
+    console.log('new WeChatManager succeed!');
+    oWCMgr.doAction(req, res);
+}));
+
