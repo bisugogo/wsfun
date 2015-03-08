@@ -66,7 +66,7 @@ var config = {
 };
 
 app.use('/wechat', wechat(config, function (req, res, next) {
-    var oWCMgr = new WeChatManager();
+    var oWCMgr = new WCManager.WeChatManager();
     console.log('new WeChatManager succeed!');
     oWCMgr.doAction(req, res);
 }));
