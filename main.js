@@ -39,17 +39,20 @@ app.get('/', function(req, res) {
 
 app.get('/wechat/authServerConfig', function(req, res) {
     var shasum = crypto.createHash('sha1');
-    var sSignature = req.params.signature;
-    var sTime = req.params.timestamp;
-    var sNouce = req.params.nouce;
+    var sSignature = req.query.signature;
+    var sTime = req.query.timestamp;
+    var sNonce = req.query.nonce;
     var sToken = 'weavesfun';
-    var sEchoStr = req.params.echostr;
+    var sEchoStr = req.query.echostr;
 
-    var aStr = [sToken, sTime, sNouce];
+    var aStr = [sToken, sTime, sNonce];
     aStr.sort();
-    var aTargetSig = shasum.update(aStr.join(''));
+    console.log(aStr.toString());
+    shasum.update(aStr.join(''));
+    var sTargetSig = shasum.digest('hex');
+    console.log(sTargetSig);
 
-    if (aTargetSig === sSignature) {
+    if (sTargetSig === sSignature) {
         res.send(sEchoStr);
     } else {
         res.send('Wrong Signature');
