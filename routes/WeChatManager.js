@@ -27,36 +27,34 @@ WeChatManager.prototype.doEvent = function(sType, req, res) {
                 });
 
                 oNewUser.save(function(err) {
-
                     if(err) {
-
                         console.log('Error while saving user: ' + err);
-                        // res.send({ error:err });
-                        // return;
-
+                        return;
                     } else {
-
                         console.log("User created");
-                        //return res.send({ status: 'OK', tshirt:design });
-
+                        return;
                     }
-
                 });
             }
 
             if(!err) {
                 res.reply('您已经关注了 微服私纺');
+                return;
             } else {
                 console.log('Internal error(%d): %s', res.statusCode, err.message);
+                return;
                 //return res.send({ error: 'Server error' });
             }
         });
 
         res.reply('感谢您关注 微服私纺');
+        return;
     } else if (sType === 'unsubscribe') {
         console.log('Users: ' + sWechatId + ' has unsubscribed us!');
+        return;
     } else {
         res.reply('Event not supported yet.');
+        return;
     }
 };
 
