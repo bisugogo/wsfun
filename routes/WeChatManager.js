@@ -7,4 +7,4 @@ WeChatManager.prototype.doAction = function(req, res) {
     res.reply('Weaves Fun!! We are better with you!');
 };
 
-module.exports = WeChatManager;
+module.exports.WeChatManager = WeChatManager;
