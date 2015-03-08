@@ -29,15 +29,15 @@ mongoose.connect('mongodb://localhost/tshirt', function(err, res) {
   }
 });
 
-app.listen(10001);
-console.log('Im listening on port 10001');
+app.listen(80);
+console.log('Im listening on port 80');
 
 // First example router
 app.get('/', function(req, res) {
   res.sendfile('app/index.html');
 });
 
-app.get('/wechat/authServerConfig', function(req, res) {
+app.get('/wechat', function(req, res) {
     var shasum = crypto.createHash('sha1');
     var sSignature = req.query.signature;
     var sTime = req.query.timestamp;
@@ -59,7 +59,13 @@ app.get('/wechat/authServerConfig', function(req, res) {
     }
 });
 
-app.use('/wechat', wechat('weavesfun', function (req, res, next) {
+var config = {
+  token: 'weavesfun',
+  appid: 'wxf26855bd0cda23bd',
+  encodingAESKey: 'y3CtyrA1LRhh3Bz6aTllJ2UspJHiI8I6TN4E32IP08h'
+};
+
+app.use('/wechat', wechat(config, function (req, res, next) {
     var oWCMgr = new WeChatManager();
     console.log('new WeChatManager succeed!');
     oWCMgr.doAction(req, res);
