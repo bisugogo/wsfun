@@ -57,11 +57,12 @@ WeChatManager.prototype.doEvent = function(req, res) {
         User.findOneAndUpdate({wechatId: sWechatId}, {status: 0}, {upsert:true}, function(err) {
             if(err) {
                 console.log('Error while updating user status: ' + err);
-                return;
+                //return;
             } else {
                 console.log("User status updated");
-                return;
+                //return;
             }
+            res.reply('');
         })
         return;
     } else {

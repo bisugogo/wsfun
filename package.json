@@ -15,7 +15,9 @@
     "shelljs": "^0.2.6",
     "karma-junit-reporter": "^0.2.2",
     "bootstrap": "latest",
-    "wechat": "1.2.1"
+    "wechat": "1.2.1",
+    "passport-wechat": "0.1.2",
+    "passport": "latest"
   },
   "scripts": {
     "postinstall": "bower install",
