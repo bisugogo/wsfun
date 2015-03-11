@@ -20,11 +20,13 @@ WeChatManager.prototype.doEvent = function(req, res) {
     var sWechatId = oMsg.FromUserName;
     var sEventType = oMsg.Event;
     if (sEventType === 'subscribe') {
-        User.find({wechatId: sWechatId}, function(err, oUser) {
+        User.findOne({wechatId: sWechatId}, function(err, oUser) {
 
             if(!oUser) {
+                console.log('no existing user found');
                 var oNewUser = new User({
-                    wechatId: sWechatId
+                    wechatId: sWechatId,
+                    status: 1
                 });
 
                 oNewUser.save(function(err) {
@@ -40,6 +42,7 @@ WeChatManager.prototype.doEvent = function(req, res) {
             }
 
             if(!err) {
+                console.log('existing user found');
                 res.reply('您已经关注了 微服私纺');
                 return;
             } else {
@@ -51,6 +54,15 @@ WeChatManager.prototype.doEvent = function(req, res) {
         return;
     } else if (sEventType === 'unsubscribe') {
         console.log('Users: ' + sWechatId + ' has unsubscribed us!');
+        User.findOneAndUpdate({wechatId: sWechatId}, {status: 0}, {upsert:true}, function(err) {
+            if(err) {
+                console.log('Error while updating user status: ' + err);
+                return;
+            } else {
+                console.log("User status updated");
+                return;
+            }
+        })
         return;
     } else {
         res.reply('Event not supported yet.');

@@ -7,6 +7,7 @@ var mongoose       = require("mongoose");
 var crypto         = require('crypto');
 var app            = express();
 var WCManager = require('./routes/WeChatManager');
+var FDManager = require('./routes/FakeDataManager');
 
 var wechat = require('wechat');
 
@@ -60,9 +61,9 @@ app.get('/wechat', function(req, res) {
 });
 
 var config = {
-  token: 'weavesfun',
-  appid: 'wxf26855bd0cda23bd',
-  encodingAESKey: 'y3CtyrA1LRhh3Bz6aTllJ2UspJHiI8I6TN4E32IP08h'
+    token: 'weavesfun',
+    appid: 'wxf26855bd0cda23bd',
+    encodingAESKey: 'y3CtyrA1LRhh3Bz6aTllJ2UspJHiI8I6TN4E32IP08h'
 };
 
 app.use('/wechat', wechat(config, function (req, res, next) {
@@ -70,4 +71,17 @@ app.use('/wechat', wechat(config, function (req, res, next) {
     console.log('new WeChatManager succeed!');
     oWCMgr.doAction(req, res);
 }));
+
+app.post('/wechatTest', function(req, res) {
+    var oWCMgr = new WCManager.WeChatManager();
+    var oDataMgr = new FDManager.FakeDataManager();
+    var oData = oDataMgr.getWechatEvent();
+    console.log('wechat test new WeChatManager succeed!');
+    console.log(JSON.stringify(oData));
+    req.weixin = oData;
+    res.reply = function(str) {
+      console.log(str);
+    }
+    oWCMgr.doAction(req, res);
+});
 
