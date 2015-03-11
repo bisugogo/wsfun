@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var UserSchema = mongoose.model('User').schema
+var UserSchema = mongoose.model('User').schema;
 
 var OrderSchema = new Schema({
   creatorId: {
     type: Schema.Types.ObjectId,
-    ref: 'UserSchema'
+    ref: 'User'
   },
   payerId: {
     type: String,
@@ -71,4 +71,4 @@ var OrderSchema = new Schema({
 //   return ((v != "") && (v != null));
 // });
 
-var oOrder = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('Order', OrderSchema);

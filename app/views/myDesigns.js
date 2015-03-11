@@ -132,7 +132,7 @@ myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', funct
         Design.DesignManager.create(oParam);
 
         //GO TO ORDER PAGE
-        $state.go('orderDesign');
+        //$state.go('orderDesign');
     };
 
     $scope.deleteDesign = function (sId) {

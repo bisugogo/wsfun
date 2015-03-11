@@ -6,7 +6,8 @@
  */
 
 var Design = require('../models/tshirt.js');
-//var Order = require('../models/order.js');
+var Order = require('../models/order.js');
+var User = require('../models/User.js');
 
 module.exports = function(app) {
 
@@ -34,7 +35,20 @@ module.exports = function(app) {
 
   getMyDesigns = function(sUserId, res) {
     console.log("GET - /tshirts_getMyDesigns");
-    return Design.find({creatorId: sUserId}, function(err, aDesign) {
+    /*return Design.find({creatorId: sUserId}, function(err, aDesign) {
+      if(!err) {
+        return res.send({
+          status: 'OK',
+          designList: aDesign
+        });
+      } else {
+        res.statusCode = 500;
+        console.log('Internal error(%d): %s',res.statusCode,err.message);
+        return res.send({ error: 'Server error' });
+      }
+    });*/
+
+    return Design.find().populate('creatorId').find({access: 'private'}).exec(function(err, aDesign) {
       if(!err) {
         return res.send({
           status: 'OK',

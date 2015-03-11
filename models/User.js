@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-  wechatId: {
+  _id: {
     type: String,
-    default: ''
+    require: true
   },
   status: {
     type: Number,

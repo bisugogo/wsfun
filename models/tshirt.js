@@ -1,14 +1,15 @@
 var Order = require('../models/order.js');
+var User = require('../models/User.js');
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var OrderSchema = mongoose.model('Order').schema
-var UserSchema = mongoose.model('User').schema
+var OrderSchema = mongoose.model('Order').schema;
+var UserSchema = mongoose.model('User').schema;
 
 var DesignSchema = new Schema({
   creatorId: {
     type: Schema.Types.ObjectId,
-    ref: 'UserSchema'
+    ref: 'User'
   },
   model:    {
     type    : String,

@@ -1,9 +1,9 @@
 // Dependencies requirements, Express 4
+var mongoose       = require("mongoose");
 var express        = require('express');
 var morgan         = require('morgan');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var mongoose       = require("mongoose");
 var crypto         = require('crypto');
 var app            = express();
 var WCManager = require('./routes/WeChatManager');
@@ -18,9 +18,6 @@ app.use(morgan('dev'));
 app.use(bodyParser());
 app.use(methodOverride());
 
-//Add the routes
-routes = require('./routes/tshirt')(app);
-
 // MongoDB configuration
 mongoose.connect('mongodb://localhost/tshirt', function(err, res) {
   if(err) {
@@ -29,6 +26,9 @@ mongoose.connect('mongodb://localhost/tshirt', function(err, res) {
     console.log('Connected to Database');
   }
 });
+
+//Add the routes
+routes = require('./routes/tshirt')(app);
 
 app.listen(80);
 console.log('Im listening on port 80');
