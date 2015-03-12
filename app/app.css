@@ -1,5 +1,8 @@
 /* app css stylesheet */
-
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -37,15 +40,17 @@
   background-repeat: no-repeat;
 }*/
 
-.createDesignView {
+.createDesignView.row {
   width: 100%;
+  margin-right: 0px;
+  margin-left: 0px;
 }
 .createDesignBgImg {
   position: absolute;
   top: 0px;
   left: 0px;
   z-index: -1;
-  height: 380px;
+  width: 100%;
 }
 .createDesignView>img {
   
@@ -70,4 +75,39 @@
   font-weight: bold;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.userInfoDerive > div {
+  height: 100%;
+}
+
+.userInfoDerive .userIconRow {
+  height: 20%;
+  padding-top: 10px;
+  border-bottom: solid 1px rgb(213, 213, 213);
+}
+
+.userInfoDerive .userIconRow > div {
+  height: 100%;
+}
+
+.userInfoDerive .userIconRowEx {
+  height: 80%;
+  text-align: center;
+}
+
+.userInfoDerive .userIconRowEx > img {
+  height: 100%;
+  border-radius: 50%;
+  border: solid 2px grey;
+}
+
+.userInfoDerive .userName {
+  text-align: center;
+}
+
+.userInfoDerive .userPersonalRow {
+  padding-top: 10px;
+  height: 15%;
+  border-bottom: solid 1px rgb(213, 213, 213);
 }

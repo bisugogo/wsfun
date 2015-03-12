@@ -6,6 +6,7 @@ var ntApp = angular.module('ntApp', [
     'ui.router',
     'ntApp.myDesigns',
     'ntApp.designDetail',
+    'ntApp.myInfo',
     'ui.bootstrap',
     //'ngAnimate'
 ]);
@@ -33,21 +34,10 @@ ntApp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("myDesigns");
     //
     // Now set up the states
-    // $stateProvider
-    // .state('myDesigns', {
-    //     url: "/myDesigns",
-    //     templateUrl: "views/myDesigns.html",
-    //     resolve: controller('myDesigns')
-    // })
-    // .state('state2', {
-    //   url: "/state2",
-    //   templateUrl: "partials/state2.html"
-    // })
-    // .state('state2.list', {
-    //   url: "/list",
-    //   templateUrl: "partials/state2.list.html",
-    //   controller: function($scope) {
-    //     $scope.things = ["A", "Set", "Of", "Things"];
-    //   }
-    // });
+    $stateProvider
+    .state('myInfo', {
+        url: "/myInfo",
+        templateUrl: 'views/myInfo.html',
+        controller: 'MyInfoCtrl'
+    });
 });
