@@ -83,7 +83,7 @@
 
 .userInfoDerive .userIconRow {
   height: 20%;
-  padding-top: 10px;
+  margin-top: 10px;
   border-bottom: solid 1px rgb(213, 213, 213);
 }
 
@@ -107,7 +107,66 @@
 }
 
 .userInfoDerive .userPersonalRow {
-  padding-top: 10px;
+  margin-top: 10px;
   height: 15%;
   border-bottom: solid 1px rgb(213, 213, 213);
+}
+
+.userInfoDerive .userStatisticsRow {
+  margin-top: 10px;
+  height: 25%;
+  border-bottom: solid 1px rgb(213, 213, 213);
+}
+
+.userInfoDerive .userStatisticsRow > div {
+  height: 100%;
+}
+
+.userInfoDerive .userStatisticsRow > div > div {
+  height: 33%;
+}
+
+.userInfoDerive .userStatisticsRow .userStatisticsSubRow {
+  padding-top: 5px;
+  border-bottom: solid 1px rgb(213, 213, 213);
+}
+
+.userInfoDerive .userStatisticsRow .userStatisticsSubRow .userStatisticsSubRowValue {
+  text-align: right;
+}
+
+.userInfoDerive .userStatisticsRow > .col-xs-9 > .userStatisticsSubRow:last-child {
+  border-bottom: none;
+}
+
+.userInfoDerive .userQRCodeRow {
+  margin-top: 10px;
+  height: 25%;
+  border-bottom: solid 1px rgb(213, 213, 213);
+}
+
+.userInfoDerive .userQRCodeRow > div {
+  height: 100%;
+}
+
+.userInfoDerive .userQRCodeRow .userQRCodeTitle {
+  height: 20px;
+  text-align: left;
+}
+
+.userInfoDerive .userQRCodeRow .userQRCodeValue {
+  height: calc(100% - 20px);
+  text-align: center;
+}
+
+.userInfoDerive .userQRCodeRow .userQRCodeValue > img {
+  height: 100%;
+}
+
+.userInfoDerive .userAddressRow .userAddressRowValue {
+  text-align: right;
+}
+
+.couponList .couponItem .panel-heading{
+  background-color: #E4F1FA;
 }

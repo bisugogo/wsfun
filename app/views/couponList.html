@@ -1,0 +1,25 @@
+<div ng-controller="CouponListCtrl">
+    <div class="row couponList" style="height:{{height-50}}px">
+        <div class="col-xs-12">
+            <accordion close-others="oneAtATime">
+                <accordion-group class="couponItem" heading="优惠券20元" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    This is just some content to illustrate fancy headings.
+                </accordion-group>
+                <!--accordion-group class="couponItem" heading="优惠券20元" ng-repeat="group in groups">
+                    This is just some content to illustrate fancy headings.
+                </accordion-group-->
+                <accordion-group class="couponItem" heading="优惠券20元">
+                    <p>The body of the accordion group grows to fit the contents</p>
+                    <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+                    <div ng-repeat="item in items">asdfa</div>
+                </accordion-group>
+                <accordion-group class="couponItem" is-open="status.open">
+                    <accordion-heading>
+                    优惠券20元<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </accordion-heading>
+                This is just some content to illustrate fancy headings.
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+</div>

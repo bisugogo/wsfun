@@ -7,6 +7,7 @@ var ntApp = angular.module('ntApp', [
     'ntApp.myDesigns',
     'ntApp.designDetail',
     'ntApp.myInfo',
+    'ntApp.couponList',
     'ui.bootstrap',
     //'ngAnimate'
 ]);
@@ -39,5 +40,10 @@ ntApp.config(function ($stateProvider, $urlRouterProvider) {
         url: "/myInfo",
         templateUrl: 'views/myInfo.html',
         controller: 'MyInfoCtrl'
+    })
+    .state('couponList', {
+        url: "/couponList",
+        templateUrl: 'views/couponList.html',
+        controller: 'CouponListCtrl'
     });
 });
