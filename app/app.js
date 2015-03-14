@@ -8,6 +8,7 @@ var ntApp = angular.module('ntApp', [
     'ntApp.designDetail',
     'ntApp.myInfo',
     'ntApp.couponList',
+    'ntApp.createDesign',
     'ui.bootstrap',
     //'ngAnimate'
 ]);

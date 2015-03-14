@@ -40,11 +40,13 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
         url: '/myDesigns',
         templateUrl: 'views/myDesigns.html',
         controller: 'MyDesignsListCtrl'
-    }).state('createDesign', {
+    })
+    .state('createDesign', {
         url: '/createDesign',
         templateUrl: 'views/createDesign.html',
         controller: 'CreateDesignCtrl'
-    }).state('orderDesign', {
+    })
+    .state('orderDesign', {
         url: '/orderDesign',
         templateUrl: 'views/orderDesign.html',
         controller: 'OrderDesignCtrl'
@@ -99,7 +101,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$state', 'Design', func
     };
 }]);
 
-myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {
+/*myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {
     $scope.constant = {
         SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
         BK_COLOR_ARRYA: ['黑', '白']
@@ -153,7 +155,7 @@ myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', funct
     $scope.changeSize = function(sSize) {
         $scope.designInfo.sSize = sSize;
     };
-}]);
+}]);*/
 
 myDesignList.controller('OrderDesignCtrl', ['$scope', 'Design', function($scope, Design) {
     

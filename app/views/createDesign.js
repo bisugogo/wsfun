@@ -27,52 +27,90 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$routeParams', 'Design'
 
 var oCreateDesign = angular.module('ntApp.createDesign', ['ui.router', 'designServices']);
 
-//oCreateDesign.config(['$stateProvider', function($stateProvider) {
-    // $stateProvider.state('createDesign', {
-    //     url: '/createDesign',
-    //     templateUrl: 'views/createDesign.html',
-    //     controller: 'CreateDesignCtrl'
-    // });
-//}]);
+oCreateDesign.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('createDesign.createDetail', {
+        url: '/createDetail',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'createDetail' : {
+                templateUrl: 'views/createDetail.html',
+                controller: function($scope, $state, Design) {
+                    $scope.createDetailtest = "this is test string in createDetail.";
+                }
+            }
+        }
+    }).state('createDesign.createDetail.saveDetail', {
+        url: '/saveDetail',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'saveDetail' : {
+                templateUrl: 'views/saveDetail.html',
+                controller: function($scope, $state, Design) {
+                    $scope.saveDetailtest = "this is test string in saveDetail.";
+                }
+            }
+        }
+    });
+}]);
 
-//oCreateDesign.controller('CreateDesignCtrl', ['$scope', 'Design', function($scope, Design) {
-    /*$scope.status = {
-        isopen: false
+oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {
+    $scope.constant = {
+        SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+        BK_COLOR_ARRYA: ['黑', '白']
     };
     $scope.designInfo = {
-        bPrivateDesign: false,
+        sCreatorId: 'MATT',
+        bPrivateDesign: true,
         sDefaultDesc: new Date().toUTCString(),
-        sBackgroundColor: 'white'
+        sBackgroundColor: '白',
+        sSize: 'XL'
     };
 
     // $scope.bPrivateDesign = false;
     // $scope.defultDesc = new Date().toUTCString();
-    $scope.createDesign = function (bPrivateDesign) {
+    $scope.createDesign = function () {
         var oNewDesign = {
+            creatorId: $scope.designInfo.sCreatorId,
             color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
             model: "Wave2015",
             price: 100,
-            size: 42,
+            size: $scope.designInfo.sSize,
             style: "Casual",
             desc: $scope.designInfo.sDefaultDesc,
             access: $scope.designInfo.bPrivateDesign ? 'private' : 'public'
         };
-        Design.create(oNewDesign);
-    };*/
-//}]);
+        var oParam = {
+            action: 'createDesign',
+            data: oNewDesign
+        };
+        Design.DesignManager.create(oParam);
 
+        //GO TO SAVE PAGE
+        $state.go('createDesign.createDetail.saveDetail');
+    };
 
-// oCreateDesign.controller('AlertDemoCtrl', function ($scope) {
-//   $scope.alerts = [
-//     { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-//     { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
-//   ];
+    $scope.deleteDesign = function (sId) {
+        var oDesign = {
+            designId: sId
+        };
+        var oParam = {
+            action: 'deleteDesign',
+            data: oDesign
+        };
+        Design.DesignManager.delete(oParam);
+    };
 
-//   $scope.addAlert = function() {
-//     $scope.alerts.push({msg: 'Another alert!'});
-//   };
+    $scope.changeBackgroundColor = function(sColor) {
+        $scope.designInfo.sBackgroundColor = sColor;
+    };
 
-//   $scope.closeAlert = function(index) {
-//     $scope.alerts.splice(index, 1);
-//   };
-// });
+    $scope.changeSize = function(sSize) {
+        $scope.designInfo.sSize = sSize;
+    };
+
+    $scope.onGenderSelected = function() {
+        $state.go("createDesign.createDetail");
+    };
+}]);

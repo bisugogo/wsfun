@@ -1,25 +1,30 @@
-<div class='row createDesignView' ng-controller="CreateDesignCtrl">
-    <div ui-view="createDetail">
+<div class='row createDetailView'>
+    <div ui-view="saveDetail">
         <div class='row'>
             <div class="col-xs-12">
                 <img class='createDesignBgImg' src='img/test.svg'></img>
             </div>
         </div>
-        <!--div class='row'>
+        <div class='row'>
             <div class="col-xs-12">
-                <button type="button" class="btn btn-default leftBtn glyphicon glyphicon-refresh"></button>
-                <button class="btn btn-default rightBtn glyphicon glyphicon-ok" ng-click="createDesign()"></button>
-            </div>
-        </div-->
-        <div class='row genderButtonRow'>
-            <div class="col-xs-6">
-                <button class="btn btn-default btn-lg" ng-click="onGenderSelected()">T</button>
-            </div>
-            <div class="col-xs-6">
-                <button class="btn btn-default btn-lg" ng-click="onGenderSelected()">T</button>
+                <div class="col-xs-3">
+                    <button type="button" class="btn btn-default glyphicon glyphicon-refresh"></button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default">白</button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default">转</button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default">黑</button>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-default rightBtn glyphicon glyphicon-ok" ng-click="createDesign()"></button>
+                </div>
             </div>
         </div>
-        <!--div class='row newDesignInfoArea'>
+        <div class='row newDesignInfoArea'>
             <div class="col-xs-12">
                 <div class='row'>
                     <div class="col-xs-6">
@@ -68,12 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div class='row'>
-                    <div class="col-xs-4">
-                        <a ui-sref="myDesigns">返回我的设计</a>
-                    </div>
-                </div>
             </div>
-        </div-->
+        </div>
     </div>
 </div>
