@@ -113,4 +113,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', func
     $scope.onGenderSelected = function() {
         $state.go("createDesign.createDetail");
     };
+
+    $scope.onCreateDesignBackClicked = function() {
+        $state.go('^');
+    };
 }]);

@@ -4,6 +4,12 @@
   padding-right: 0px;
   height: 0px;
 }
+
+.row.noMargin {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -42,7 +48,8 @@
 }*/
 
 .createDesignView.row,
-.createDetailView.row {
+.createDetailView.row,
+.saveDetailView.row {
   width: 100%;
   margin-right: 0px;
   margin-left: 0px;
@@ -186,4 +193,36 @@
 
 .couponList .couponItem .panel-heading{
   background-color: #E4F1FA;
+}
+
+.saveDetailView .headButtonRow {
+  height: 35px;
+  background-color: grey;
+}
+
+.saveDetailView .rightBtn{
+  float: right;
+}
+
+.saveDetailView > div:first-child {
+  height: 100%;
+}
+
+.saveDetailView .designDescriptionRow,
+.saveDetailView .saveDesignOptionRow,
+.saveDetailView .saveDesignActionButtonRow {
+  height: 30%;
+}
+
+.saveDetailView .designDescriptionRow .designThumbnailImg {
+  width: 100%;
+}
+
+.saveDetailView .designDescriptionRow .designDescriptionRow textarea {
+  margin-top: 10px;
+}
+
+.saveDesignOptionRow .row,
+.saveDesignActionButtonRow .row {
+  text-align: center;
 }
