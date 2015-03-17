@@ -37,7 +37,7 @@ var myDesignList = angular.module('ntApp.myDesigns', [
 
 myDesignList.config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('myDesigns', {
-        url: '/myDesigns/',
+        url: '/myDesigns',
         templateUrl: 'views/myDesigns.html',
         controller: 'MyDesignsListCtrl'
     })
