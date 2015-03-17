@@ -71,10 +71,10 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
     });
 }]);
 
-myDesignList.controller('MyDesignsListCtrl', ['$scope', '$stateParams', '$state', 'Design', function($scope, $stateParams, $state, Design) {
-    var sCode = $stateParams.code;
+myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', 'Design', function($scope, $location, $stateParams, $state, Design) {
+    var sCode = $location.path();
     $scope.code = sCode;
-    
+
     $scope.constant = {
         DESIGN_ITEM_OPT: ['删除', '更改'],
     };
