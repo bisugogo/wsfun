@@ -37,7 +37,7 @@ var myDesignList = angular.module('ntApp.myDesigns', [
 
 myDesignList.config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('myDesigns', {
-        url: '/myDesigns',
+        url: '/myDesigns/',
         templateUrl: 'views/myDesigns.html',
         controller: 'MyDesignsListCtrl'
     })
@@ -72,7 +72,7 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
 }]);
 
 myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', 'Design', function($scope, $location, $stateParams, $state, Design) {
-    var sCode = $location.path();
+    var sCode = $location.$$search.code;
     $scope.code = sCode;
 
     $scope.constant = {
