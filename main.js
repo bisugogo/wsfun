@@ -6,6 +6,20 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var crypto         = require('crypto');
 var app            = express();
+
+//var session = require('express-session');
+// var passport = require('passport');
+// var WechatStrategy = require('../lib/strategy');
+ 
+ 
+// passport.serializeUser(function (user, done) {
+//     done(null, user);
+// });
+ 
+// passport.deserializeUser(function (obj, done) {
+//     done(null, obj);
+// });
+
 var WCManager = require('./routes/WeChatManager');
 var FDManager = require('./routes/FakeDataManager');
 

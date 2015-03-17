@@ -41,6 +41,16 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
         templateUrl: 'views/myDesigns.html',
         controller: 'MyDesignsListCtrl'
     })
+    .state('myDesignsAuth', {
+        url: '/myDesignsAuth',
+        template: '<div></div>',
+        controller: function() {
+            $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+            'wxf26855bd0cda23bd' + '&redirect_uri=' + 
+            encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
+            '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+        }
+    })
     .state('createDesign', {
         url: '/createDesign',
         templateUrl: 'views/createDesign.html',
@@ -61,7 +71,7 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
     });
 }]);
 
-myDesignList.controller('MyDesignsListCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {
+myDesignList.controller('MyDesignsListCtrl', ['$scope', '$stateParams', '$state', 'Design', function($scope, $stateParams, $state, Design) {
     $scope.constant = {
         DESIGN_ITEM_OPT: ['删除', '更改'],
     };
