@@ -32,7 +32,8 @@ var myDesignList = angular.module('ntApp.myDesigns', [
     'ntApp.orderDesign', 
     'ntApp.designDetail', 
     'ntApp.orderList', 
-    'designServices'
+    'designServices',
+    'wechatServices'
 ]);
 
 myDesignList.config(['$stateProvider', function($stateProvider) {
@@ -71,47 +72,62 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
     });
 }]);
 
-myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', 'Design', function($scope, $location, $stateParams, $state, Design) {
-    var sCode = $location.$$search.code;
-    $scope.code = sCode;
+myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', 'Design', 'Auth', 
+    function($scope, $location, $stateParams, $state, Design, Auth) {
+        var sCode = $location.$$search.code;
+        $scope.code = sCode;
 
-    $scope.constant = {
-        DESIGN_ITEM_OPT: ['删除', '更改'],
-    };
+        var oUser = Auth.AuthManager.query({
+            appid: "wxf26855bd0cda23bd",
+            secret: "498e6f493c29733d46e212c441f505e8",
+            code: $scope.code,
+            grant_type: "authorization_code"
+        }, function () {
+            if (oUser.openid) {
+                $scope.code = "User OpenID: " + oUser.openid;
+            }
+            if (oUser.errmsg) {
+                $scope.code = oUser.errmsg;
+            }
+        });
 
-    //Design.setGetParam({action: 'getAllMyDesigns'});
-    var oResult = Design.DesignManager.query({action: 'getMyDesigns', userId: 'MATT'}, function () {
-        // var newWidth = 600 + oResult.designList.length + 1;
-        // for (var i = 0; i < oResult.designList.length; i++) {
-        //     oResult.designList[i].image = 'http://placekitten.com/' + newWidth + '/300';
-        // }
-        $scope.aMyDesigns = oResult.designList;
-    });
-
-    $scope.deleteDesign = function (sId) {
-        var oDesign = {
-            designId: sId
+        $scope.constant = {
+            DESIGN_ITEM_OPT: ['删除', '更改'],
         };
-        var oParam = {
-            action: 'deleteDesign',
-            data: oDesign
+
+        //Design.setGetParam({action: 'getAllMyDesigns'});
+        var oResult = Design.DesignManager.query({action: 'getMyDesigns', userId: 'MATT'}, function () {
+            // var newWidth = 600 + oResult.designList.length + 1;
+            // for (var i = 0; i < oResult.designList.length; i++) {
+            //     oResult.designList[i].image = 'http://placekitten.com/' + newWidth + '/300';
+            // }
+            $scope.aMyDesigns = oResult.designList;
+        });
+
+        $scope.deleteDesign = function (sId) {
+            var oDesign = {
+                designId: sId
+            };
+            var oParam = {
+                action: 'deleteDesign',
+                data: oDesign
+            };
+            Design.DesignManager.delete(oParam);
         };
-        Design.DesignManager.delete(oParam);
-    };
 
-    $scope.onDesignItemOptionClicked = function(sOption, oDesign) {
-        if (sOption === '删除') {
-            $scope.deleteDesign(oDesign._id);
-        } else if (sOption === '更改') {
+        $scope.onDesignItemOptionClicked = function(sOption, oDesign) {
+            if (sOption === '删除') {
+                $scope.deleteDesign(oDesign._id);
+            } else if (sOption === '更改') {
 
-        } else {
+            } else {
 
-        }
-    };
+            }
+        };
 
-    $scope.onDesignItemClicked = function(oDesign) {
-        $state.go('designDetail', {designId: oDesign._id});
-    };
+        $scope.onDesignItemClicked = function(oDesign) {
+            $state.go('designDetail', {designId: oDesign._id});
+        };
 }]);
 
 /*myDesignList.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {

@@ -44,7 +44,7 @@ mongoose.connect('mongodb://localhost/tshirt', function(err, res) {
 //Add the routes
 routes = require('./routes/tshirt')(app);
 
-app.listen(80);
+app.listen(10001);
 console.log('Im listening on port 80');
 
 // First example router
