@@ -5,7 +5,7 @@
  * @description :: Maps routes and actions
  */
 
-var http = require('http');
+var https = require('https');
 var User = require('../models/User.js');
 
 var APP_ID = 'wxf26855bd0cda23bd';
@@ -14,10 +14,16 @@ var SECRET = '498e6f493c29733d46e212c441f505e8';
 module.exports = function(app) {
 
     getWechatUserOpenId = function(sCode, res) {
-        http.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + APP_ID +
+        https.get('https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + APP_ID +
             '&secret=' + SECRET +
             '&code=' + sCode + '&grant_type=authorization_code', function(weChatRes) {
-                res.send(weChatRes);
+                console.log('STATUS: ' + weChatRes.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(weChatRes.headers));
+                weChatRes.setEncoding('utf8');
+                weChatRes.on('data', function (chunk) {
+                    console.log('BODY: ' + chunk);
+                    res.send(chunk);
+                });
             }
         );
     };
@@ -40,7 +46,6 @@ module.exports = function(app) {
             console.log("********************");
             console.log("security get service: not supported action");
             console.log("********************");
-
         }
     };
 

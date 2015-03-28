@@ -84,9 +84,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
         //delete $http.defaults.headers.common['X-Requested-With'];
         var oUserReqParam = {
             action: 'getWechatUserOpenId',
-            secret: "498e6f493c29733d46e212c441f505e8",
-            code: sCode,
-            grant_type: "authorization_code"
+            code: sCode
         };
         var oUser = Auth.AuthManager.query(oUserReqParam, function () {
             if (oUser.openid) {
