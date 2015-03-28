@@ -17,7 +17,7 @@ wechatServices.factory('Auth', ['$resource',
             //     oGetParam = oParam;
             // },
 
-            AuthManager: $resource('https://api.weixin.qq.com/sns/oauth2/access_token', {}, {
+            AuthManager: $resource('security', {}, {
                 query: {method:'GET'}/*, params: getPreparedGetParam()},*/
                 // create: {method:'POST'},
                 // delete: {method: 'POST'}

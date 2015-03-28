@@ -36,7 +36,7 @@ var myDesignList = angular.module('ntApp.myDesigns', [
     'wechatServices'
 ]);
 
-myDesignList.config(['$stateProvider', function($stateProvider) {
+myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider, $httpProvider) {
     $stateProvider.state('myDesigns', {
         url: '/myDesigns',
         templateUrl: 'views/myDesigns.html',
@@ -70,26 +70,45 @@ myDesignList.config(['$stateProvider', function($stateProvider) {
         templateUrl: 'views/orderList.html',
         controller: 'OrderListCtrl'
     });
+
+    // $httpProvider.defaults.useXDomain = true;
+    // delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
-myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', 'Design', 'Auth', 
-    function($scope, $location, $stateParams, $state, Design, Auth) {
+myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 
+    function($scope, $location, $stateParams, $state, $http, Design, Auth) {
         var sCode = $location.$$search.code;
         $scope.code = sCode;
 
-        var oUser = Auth.AuthManager.query({
-            appid: "wxf26855bd0cda23bd",
+        //$http.defaults.useXDomain = true;
+        //delete $http.defaults.headers.common['X-Requested-With'];
+        var oUserReqParam = {
+            action: 'getWechatUserOpenId',
             secret: "498e6f493c29733d46e212c441f505e8",
-            code: $scope.code,
+            code: sCode,
             grant_type: "authorization_code"
-        }, function () {
+        };
+        var oUser = Auth.AuthManager.query(oUserReqParam, function () {
             if (oUser.openid) {
                 $scope.code = "User OpenID: " + oUser.openid;
-            }
-            if (oUser.errmsg) {
+            } else if (oUser.errmsg) {
                 $scope.code = oUser.errmsg;
+            } else {
+                $scope.code = "nothing!!!!";
             }
         });
+
+        // $http.get("https://api.weixin.qq.com/sns/oauth2/access_token", {
+        //     appid: "wxf26855bd0cda23bd",
+        //     secret: "498e6f493c29733d46e212c441f505e8",
+        //     code: "asdfasdf",
+        //     grant_type: "authorization_code"
+        // }).success(function(result) {
+        //     console.log("Success", result);
+        //     $scope.result = result;
+        // }).error(function() {
+        //     console.log("error");
+        // });
 
         $scope.constant = {
             DESIGN_ITEM_OPT: ['删除', '更改'],
