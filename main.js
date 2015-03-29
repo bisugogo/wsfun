@@ -45,6 +45,10 @@ mongoose.connect('mongodb://localhost/tshirt', function(err, res) {
 routes = require('./routes/tshirt')(app);
 securityRoutes = require('./routes/security')(app);
 
+//Set up security token intervals
+updateAccessToken();
+setInterval(updateAccessToken, 60*1000);
+
 app.listen(80);
 console.log('Im listening on port 80');
 

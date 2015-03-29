@@ -55,7 +55,31 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
     });
 }]);
 
-oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', function($scope, $state, Design) {
+oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', 'Auth', function($scope, $state, Design, Auth) {
+    var oParam = {
+        action: 'getJsAPISignature'
+    };
+    var oSig = Auth.AuthManager.query(oParam, function () {
+        console.log(oSig.signature);
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: 'wxf26855bd0cda23bd', // 必填，公众号的唯一标识
+            timestamp: oSig.timestamp, // 必填，生成签名的时间戳
+            nonceStr: oSig.nonceStr, // 必填，生成签名的随机串
+            signature: oSig.signature,// 必填，签名，见附录1
+            jsApiList: ["chooseImage", "previewImage", "uploadImage", "downloadImage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+
+        wx.ready(function() {
+            console.log('js sdk configuration set up successfully.');
+        });
+
+        wx.error(function(res){
+            console.log('js sdk configuration set up failed!!!');
+        });
+    });
+
+
     $scope.constant = {
         SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
         BK_COLOR_ARRYA: ['黑', '白']
@@ -116,5 +140,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', func
 
     $scope.onCreateDesignBackClicked = function() {
         $state.go('^');
+    };
+
+    $scope.chooseImageFromGallery = function() {
+        wx.chooseImage({
+            success: function (res) {
+                console.log("images choosed successfully: " + res.localIds);
+            }
+        });
     };
 }]);
