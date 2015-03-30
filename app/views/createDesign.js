@@ -55,7 +55,7 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
     });
 }]);
 
-oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', 'Auth', function($scope, $state, Design, Auth) {
+oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'Design', 'Auth', function($scope, $upload, $state, Design, Auth) {
     var oParam = {
         action: 'getJsAPISignature'
     };
@@ -148,5 +148,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$state', 'Design', 'Aut
                 console.log("images choosed successfully: " + res.localIds);
             }
         });
+    };
+
+    $scope.uploadImage = function() {
+        console.log("asdfasdf");
+    };
+
+    $scope.fileSelected = function(aFile) {
+        console.log("asdfasdf");
     };
 }]);

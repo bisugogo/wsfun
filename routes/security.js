@@ -97,7 +97,7 @@ module.exports = function(app) {
             var sNonce = 'asdfasdfasdf';
             var sNonceStr = 'noncestr=' + sNonce;
             var sTimestampStr = 'timestamp=' + oJsAPITicket.ticketTimestamp;
-            var sUrlStr = 'url=http://www.weavesfun.com/#/createDesign/createDetail';
+            var sUrlStr = 'url=http://design.weavesfun.com/';
             var sTicketStr = 'jsapi_ticket=' + oJsAPITicket.ticketValue;
 
             var shasum = crypto.createHash('sha1');
