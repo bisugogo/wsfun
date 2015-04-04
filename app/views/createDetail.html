@@ -28,6 +28,9 @@
             <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles">Upload using model $watch</input>
             <button class="btn btn-default" ng-file-select ng-file-change="uploadImage($files)">Upload on file change</button>
         </div>
+        <div class="row">
+        	<img src="{{imgSrc}}">
+        </div>
         <div class='row newDesignInfoArea'>
             <div class="col-xs-12">
                 <div class='row'>

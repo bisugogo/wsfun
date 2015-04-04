@@ -21,6 +21,10 @@ designServices.factory('Design', ['$resource',
                 query: {method:'GET', /*params: getPreparedGetParam(), */},
                 create: {method:'POST'},
                 delete: {method: 'POST'}
+            }),
+            
+            FileManager: $resource('file', {}, {
+                query: {method:'GET'},
             })
         };
 }]);

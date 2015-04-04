@@ -25,7 +25,7 @@ module.exports = function(app) {
         var file = req.files.file;
 
         var writestream = gfs.createWriteStream({
-            filename: req.files.file.name,
+            filename: req.body.data.fileName + req.files.file.name,
             mode:'w',
             content_type:req.files.file.mimetype,
             metadata:req.body,
@@ -33,7 +33,9 @@ module.exports = function(app) {
         fs.createReadStream(req.files.file.path).pipe(writestream);
 
         writestream.on('close', function (file) {
-            res.send("Success!");
+            res.send({
+                fileId: file._id.toString()
+            });
             fs.unlink(req.files.file.path, function (err) {
                 if (err) console.error("Error: " + err);
                 console.log('successfully deleted : '+ req.files.file.path );
@@ -45,8 +47,50 @@ module.exports = function(app) {
         console.log(file.type);
         console.log(JSON.stringify(file));
         //res.send({status:'ended????'});
-    };    
+    };
+    
+    getFileContent = function(req, res) {
+        console.log("file get service: getFileContent");
+        var sFileId = req.query.fileId;
+
+        var db = mongoose.connection.db;
+
+        // The native mongo driver which is used by mongoose
+        var mongoDriver = mongoose.mongo;
+        var gfs = new Gridfs(db, mongoDriver);
+        var readStream = gfs.createReadStream({
+            _id: sFileId
+        });
+
+        readStream.setEncoding('base64');
+
+        var buffer = '';
+        readStream.on("data", function (chunk) {
+            buffer += chunk;
+        });
+
+        // dump contents to console when complete
+        readStream.on("end", function () {
+            //var sBase64 = new Buffer(buffer).toString('base64');
+            console.log("contents of file:\n\n", buffer);
+            res.send({
+                data: buffer
+            });
+        });
+    };
+    
+    getService = function(req, res) {
+        var sAction = req.query.action;
+        if (sAction === 'getFileContent') {
+            console.log("********************");
+            console.log("file get service: getFileContent");
+            console.log("********************");
+
+            getFileContent(req, res);
+        }
+    };
 
     //Link routes and actions
     app.post('/uploadFile', multipartMiddleware, uploadFile);
+    app.get('/file', getService);
 };

@@ -163,15 +163,28 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
                     url: 'uploadFile',
                     file: file,
                     data : {
-                        'action': 'uploadFile'
+                        'action': 'uploadFile',
+                        'fileName': 'userOpenId_' + new Date().getTime()
                     }
                 }).progress(function (evt) {
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                 }).success(function (data, status, headers, config) {
                     console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    //$scope.imgSrc = 'file/getFileContent/' + data.fileId;
+                    getFileContent(data.fileId);
                 });
             }
         }
+    };
+    
+    function getFileContent(sFileId) {
+        var oParam = {
+            action: 'getFileContent',
+            fileId: sFileId
+        };
+        var oFileContent = Design.FileManager.query(oParam, function(oContent) {
+            $scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+        });
     };
 }]);
