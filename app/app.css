@@ -90,6 +90,18 @@
   width: 100%;
 }
 
+.myDesignListCarousel {
+  height: 300px;
+}
+
+.myDesignListCarousel > li {
+  height: 100%;
+}
+
+.myDesignListCarousel > li > img {
+  width: 100%;
+}
+
 .myDesignListRowImg {
   width: 25%;
 }

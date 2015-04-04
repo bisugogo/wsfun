@@ -37,6 +37,7 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
                 templateUrl: 'views/createDetail.html',
                 controller: function($scope, $state, Design) {
                     $scope.createDetailtest = "this is test string in createDetail.";
+                    $scope.getMyArtifactThumbnails();
                 }
             }
         }
@@ -62,7 +63,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
     var oSig = Auth.AuthManager.query(oParam, function () {
         console.log(oSig.signature);
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: 'wxf26855bd0cda23bd', // 必填，公众号的唯一标识
             timestamp: oSig.timestamp, // 必填，生成签名的时间戳
             nonceStr: oSig.nonceStr, // 必填，生成签名的随机串
@@ -185,6 +186,15 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
         };
         var oFileContent = Design.FileManager.query(oParam, function(oContent) {
             $scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+        });
+    };
+
+    $scope.getMyArtifactThumbnails = function() {
+        var oParam = {
+            action: 'getMyArtifactThumbnails'
+        };
+        var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
+            //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
         });
     };
 }]);

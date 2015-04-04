@@ -118,7 +118,8 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
             // for (var i = 0; i < oResult.designList.length; i++) {
             //     oResult.designList[i].image = 'http://placekitten.com/' + newWidth + '/300';
             // }
-            $scope.aMyDesigns = oResult.designList;
+            //$scope.aMyDesigns = oResult.designList;
+            $scope.aMyDesigns = [{},{}];
         });
 
         $scope.deleteDesign = function (sId) {

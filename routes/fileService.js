@@ -12,6 +12,7 @@ var fs = require('fs');
 var Gridfs = require('gridfs-stream');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var LOG = require('../util/wsLog');
 
 module.exports = function(app) {
 
@@ -78,6 +79,36 @@ module.exports = function(app) {
             });
         });
     };
+
+    getMyArtifactThumbnails = function(req, res) {
+        var db = mongoose.connection.db;
+
+        // The native mongo driver which is used by mongoose
+        // var mongoDriver = mongoose.mongo;
+        // var gfs = new Gridfs(db, mongoDriver);
+        // var readStream = gfs.createReadStream({
+        //     _id: sFileId
+        // });
+
+        // readStream.setEncoding('base64');
+
+        // var buffer = '';
+        // readStream.on("data", function (chunk) {
+        //     buffer += chunk;
+        // });
+
+        // // dump contents to console when complete
+        // readStream.on("end", function () {
+        //     //var sBase64 = new Buffer(buffer).toString('base64');
+        //     console.log("contents of file:\n\n", buffer);
+        //     res.send({
+        //         data: buffer
+        //     });
+        // });
+        res.send({
+            data: "OK"
+        });
+    };
     
     getService = function(req, res) {
         var sAction = req.query.action;
@@ -87,6 +118,9 @@ module.exports = function(app) {
             console.log("********************");
 
             getFileContent(req, res);
+        } else if (sAction === 'getMyArtifactThumbnails') {
+            LOG.logger.logFunc('getMyArtifactThumbnails');
+            getMyArtifactThumbnails(req, res);
         }
     };
 

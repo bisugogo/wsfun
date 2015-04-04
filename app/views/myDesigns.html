@@ -1,7 +1,7 @@
 <div class='row'>
     <div class="col-xs-12">
         <div ng-controller="MyDesignsListCtrl">
-            <carousel interval="myInterval">
+            <!--carousel interval="myInterval">
                 <slide ng-repeat="oDesign in aMyDesigns" active="oDesign.active">
                     <img ng-src="img/test.svg" style="margin:auto;">
                     <div class="carousel-caption">
@@ -9,8 +9,15 @@
                         <p>{{oDesign.desc}}</p>
                     </div>
                 </slide>
-            </carousel>
+            </carousel-->
             <div>temp code: {{code}}</div>
+
+            <ul rn-carousel class="image myDesignListCarousel" rn-carousel-transition="fadeAndSlide">
+                <li ng-repeat="oDesign in aMyDesigns">
+                    <img ng-src="img/test.svg" style="margin:auto;">
+                </li>
+            </ul>
+
             <!--div>
                 <div class='row myDesignListTitleRow'>
                     <div class="col-xs-3">Thumbnail</div>

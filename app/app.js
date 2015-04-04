@@ -10,7 +10,8 @@ var ntApp = angular.module('ntApp', [
     'ntApp.couponList',
     'ntApp.createDesign',
     'ui.bootstrap',
-    'angularFileUpload'
+    'angularFileUpload',
+    'angular-carousel'
     //'ngAnimate'
 ]);
 
