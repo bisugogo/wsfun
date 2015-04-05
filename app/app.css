@@ -181,8 +181,12 @@
   height: 500px;
 }
 
+.uploadedImageArea .myArtifactsCarousel li {
+  text-align: center;
+}
+
 .uploadedImageArea .myArtifactsCarousel li img {
-  width: 100%;
+  width: 80%;
 }
 
 .uploadedImageArea .myArtifactsCarousel .rn-carousel-controls > span {
