@@ -106,8 +106,16 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 120px;
+  bottom: 80px;
   background-color: rgba(207, 176, 96, 0.5);
+}
+
+.createDetailView .personalGalleryRow > div:first-child {
+  height: 100%;
+}
+
+.createDetailView .personalGalleryRow .uploadedImageArea {
+  height: calc(100% - 110px);
 }
 
 .createDetailView .personalGalleryRow .uploadRowArea {
@@ -178,7 +186,7 @@
 }
 
 .uploadedImageArea .myArtifactsCarousel {
-  height: 500px;
+  height: calc(100% - 50px);
 }
 
 .uploadedImageArea .myArtifactsCarousel li {
