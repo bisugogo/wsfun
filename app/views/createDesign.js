@@ -93,6 +93,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
         sSize: 'XL'
     };
 
+    $scope.test = {};
+
     // $scope.bPrivateDesign = false;
     // $scope.defultDesc = new Date().toUTCString();
     $scope.createDesign = function () {
@@ -129,6 +131,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
 
     $scope.changeBackgroundColor = function(sColor) {
         $scope.designInfo.sBackgroundColor = sColor;
+        getFileContent($scope.test.fileId);
     };
 
     $scope.changeSize = function(sSize) {
@@ -173,7 +176,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
                 }).success(function (data, status, headers, config) {
                     console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
                     //$scope.imgSrc = 'file/getFileContent/' + data.fileId;
-                    getFileContent(data.fileId);
+                    $scope.test.fileId = data.fileId;
+                    //getFileContent(data.fileId);
                 });
             }
         }
@@ -185,7 +189,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
             fileId: sFileId
         };
         var oFileContent = Design.FileManager.query(oParam, function(oContent) {
-            $scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+            $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
+            $scope.largeImgSrc = 'data:image/png;base64,' + oContent.data.largeImage64;
         });
     };
 
