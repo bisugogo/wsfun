@@ -90,6 +90,113 @@
   width: 100%;
 }
 
+.createDetailView .toolRow {
+  position: fixed;
+  bottom: 0px;
+  height: 35px;
+}
+
+.createDetailView .personalGalleryRow {
+  margin-left: 80px;
+  margin-right: 80px;
+  width: auto;
+  margin-left: 80px;
+  margin-right: 80px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 120px;
+  background-color: rgba(207, 176, 96, 0.5);
+}
+
+.createDetailView .personalGalleryRow .uploadRowArea {
+  width: 100%;
+  text-align: center;
+}
+
+.createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper {
+  margin-top: 30px;
+}
+
+.royalButtonWrapper {
+  padding: 10px 15px 10px 15px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgba(211, 144, 22, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.royalButtonWrapper > .royalButton {
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  background-color: white;
+  border-color: rgb(211, 144, 22);
+  border-radius: 0px;
+  border-width: 2px;
+  width: 100%;
+}
+
+.royalButtonWrapper > .royalButton:active,
+.royalButtonWrapper > .royalButton:hover,
+.royalButtonWrapper > .royalButton:focus {
+  background-color: rgb(249, 230, 138);
+}
+
+.royalButtonWrapper > .royalButton > input.uploadInput {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.royalButtonWrapper > .royalButton > span {
+  color: rgb(211, 144, 22);
+  font-size: large;
+  font-weight: bold;
+}
+
+.uploadedImageArea {
+  margin-top: 15px;
+}
+
+.uploadedImageArea .titleDiv {
+  text-align: center;
+}
+
+.uploadedImageArea .titleDiv > span {
+  font-family: SimSun;
+  font-size: large;
+  color: white;
+  font-weight: bold;
+}
+
+.uploadedImageArea .myArtifactsCarousel {
+  height: 500px;
+}
+
+.uploadedImageArea .myArtifactsCarousel li img {
+  width: 100%;
+}
+
+.uploadedImageArea .myArtifactsCarousel .rn-carousel-controls > span {
+  color: white;
+}
+
+.uploadedImageArea .carouselIndicator {
+  text-align: center;
+}
+
+.uploadedImageArea .carouselIndicator > .rn-carousel-indicator > span {
+  margin-right: 5px;
+}
+
 .myDesignListCarousel {
   height: 300px;
 }

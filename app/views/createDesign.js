@@ -36,8 +36,19 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
             'createDetail' : {
                 templateUrl: 'views/createDetail.html',
                 controller: function($scope, $state, Design) {
-                    $scope.createDetailtest = "this is test string in createDetail.";
-                    $scope.getMyArtifactThumbnails();
+                    $scope.onOpenMyGallery = function() {
+                        $scope.getMyArtifactThumbnails();
+                        $state.go('createDesign.createDetail.myGallery');
+                    };
+                }
+            }
+        }
+    }).state('createDesign.createDetail.myGallery', {
+        views: {
+            'personalGallery': {
+                templateUrl: 'views/personalGallery.html',
+                controller: function($scope, $state, Design) {
+                    var i = 0;
                 }
             }
         }
@@ -131,7 +142,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
 
     $scope.changeBackgroundColor = function(sColor) {
         $scope.designInfo.sBackgroundColor = sColor;
-        getFileContent($scope.test.fileId);
+        ///getFileContent($scope.test.fileId);
     };
 
     $scope.changeSize = function(sSize) {
@@ -183,10 +194,10 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
         }
     };
     
-    function getFileContent(sFileId) {
+    $scope.getFileContent = function(sFileId) {
         var oParam = {
             action: 'getFileContent',
-            fileId: sFileId
+            fileId: $scope.test.fileId
         };
         var oFileContent = Design.FileManager.query(oParam, function(oContent) {
             $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
@@ -200,6 +211,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
         };
         var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
             //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+            $scope.aMyArtifact = oContent.data;
+            $scope.aMyArtifactCarouselIndex = 0;
         });
     };
 }]);

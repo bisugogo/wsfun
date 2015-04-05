@@ -5,25 +5,9 @@
                 <img class='createDesignBgImg' src='img/female_white.png'></img>
             </div>
         </div>
-        <div class='row'>
-            <div class="col-xs-12">
-                <div class="col-xs-3">
-                    <button type="button" class="btn btn-default glyphicon glyphicon-refresh" ng-click="onCreateDesignBackClicked()"></button>
-                </div>
-                <div class="col-xs-2">
-                    <button type="button" class="btn btn-default">白</button>
-                </div>
-                <div class="col-xs-2">
-                    <button type="button" class="btn btn-default" ng-click="chooseImageFromGallery()">转</button>
-                </div>
-                <div class="col-xs-2">
-                    <button type="button" class="btn btn-default">黑</button>
-                </div>
-                <div class="col-xs-3">
-                    <button class="btn btn-default rightBtn glyphicon glyphicon-ok" ng-click="createDesign()"></button>
-                </div>
-            </div>
-        </div>
+
+        <div ui-view="personalGallery"></div>
+        
         <div class="row">
             <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles">Upload using model $watch</input>
             <button class="btn btn-default" ng-file-select ng-file-change="uploadImage($files)">Upload on file change</button>
@@ -32,7 +16,30 @@
         	<img src="{{midImgSrc}}">
             <img src="{{largeImgSrc}}">
         </div>
-        <div class='row newDesignInfoArea'>
+
+        <div class='row toolRow'>
+            <div class="col-xs-12">
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default glyphicon glyphicon-refresh" ng-click="onCreateDesignBackClicked()"></button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default">hot</button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default" ng-click="onOpenMyGallery()">mine</button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default" ng-click="getFileContent()">text</button>
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-default">QR</button>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-default rightBtn glyphicon glyphicon-ok" ng-click="createDesign()"></button>
+                </div>
+            </div>
+        </div>
+        <!--div class='row newDesignInfoArea'>
             <div class="col-xs-12">
                 <div class='row'>
                     <div class="col-xs-6">
@@ -82,6 +89,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
     </div>
 </div>

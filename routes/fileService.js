@@ -191,8 +191,21 @@ module.exports = function(app) {
         //         data: buffer
         //     });
         // });
-        res.send({
-            data: "OK"
+
+        var oQuery = Artifact.find();
+        oQuery.select('_id fileId midImage64 largeImage64');
+        oQuery.exec(function (err, aArtifact) {
+            if (err) {
+                res.send({error: err.message});
+            } else {
+                var oRet = {
+                    data: []
+                }
+                if(!!aArtifact && aArtifact.length > 0) {
+                    oRet.data = aArtifact;
+                }
+                res.send(oRet);
+            }
         });
     };
     
