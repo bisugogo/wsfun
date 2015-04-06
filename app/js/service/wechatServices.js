@@ -18,7 +18,8 @@ wechatServices.factory('Auth', ['$resource',
             // },
 
             AuthManager: $resource('security', {}, {
-                query: {method:'GET'}/*, params: getPreparedGetParam()},*/
+                query: {method:'GET'}/*, params: getPreparedGetParam()},*/,
+                update: {method: 'POST'}
                 // create: {method:'POST'},
                 // delete: {method: 'POST'}
             })

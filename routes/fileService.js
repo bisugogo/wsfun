@@ -36,7 +36,7 @@ module.exports = function(app) {
         var oFile = req.files.file;
 
         var writestream = gfs.createWriteStream({
-            filename: req.body.data.fileName + req.files.file.name,
+            filename: req.body.data.fileName + '_' + req.files.file.name,
             mode:'w',
             content_type:req.files.file.mimetype,
             metadata:req.body,
@@ -48,7 +48,7 @@ module.exports = function(app) {
                 fileId: file._id.toString()
             });
 
-            createImageThumbnails(oFile, file._id.toString());
+            createImageThumbnails(oFile, file);
 
             // fs.unlink(req.files.file.path, function (err) {
             //     if (err) console.error("Error: " + err);
@@ -63,7 +63,7 @@ module.exports = function(app) {
         //res.send({status:'ended????'});
     };
 
-    createImageThumbnails = function(oFile, sGFSId) {
+    createImageThumbnails = function(oFile, oGFSFile) {
         gm(oFile.path).options({imageMagick: true}).size(function (err, size) {
             if (!err) {
                 var iOriginHeight = size.height;
@@ -88,7 +88,7 @@ module.exports = function(app) {
                         saveArtifact({
                             mid: sMidBase64,
                             large: sLargeBase64
-                        }, sGFSId);
+                        }, oGFSFile);
                     });
                 });
             } else {
@@ -105,13 +105,16 @@ module.exports = function(app) {
         });
     };
 
-    saveArtifact = function(oArti, sGFSId) {
+    saveArtifact = function(oArti, oGFSFile) {
         var sSmallBase64 = !!oArti.small ? oArti.small : '';
         var sMidBase64 = !!oArti.mid ? oArti.mid : '';
         var sLargeBase64 = !!oArti.large ? oArti.large : '';
 
+        var oMetadata = JSON.parse(oGFSFile.metadata.data);
+        var oCreatorObjectId = oMetadata.creatorId;
         var oNewArti = new Artifact({
-            fileId: sGFSId,
+            fileId: oGFSFile._id.toString(),
+            creatorId: oCreatorObjectId,
             smallImage64: sSmallBase64,
             midImage64: sMidBase64,
             largeImage64: sLargeBase64,
@@ -191,8 +194,9 @@ module.exports = function(app) {
         //         data: buffer
         //     });
         // });
-
-        var oQuery = Artifact.find();
+        
+        var sUserId = req.query.userId;
+        var oQuery = Artifact.find({'creatorId': sUserId});
         oQuery.select('_id fileId midImage64 largeImage64');
         oQuery.exec(function (err, aArtifact) {
             if (err) {

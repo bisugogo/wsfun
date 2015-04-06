@@ -14,7 +14,8 @@
             </div>
             <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide" rn-carousel-controls rn-carousel-index="aMyArtifactCarouselIndex">
                 <li ng-repeat="oImage in aMyArtifact">
-                    <img src="data:image/png;base64,{{oImage.largeImage64}}" style="margin:auto;">
+                    <img src="data:image/png;base64,{{oImage.largeImage64}}" style="margin:auto;" 
+                    ng-click="onArtifactSelected(oImage)">
                 </li>
             </ul>
             <div rn-carousel-indicators ng-if="aMyArtifact.length > 1" slides="aMyArtifact" rn-carousel-index="aMyArtifactCarouselIndex" class="carouselIndicator"></div>

@@ -137,6 +137,21 @@ module.exports = function(app) {
         );
     };
 
+    getUserIdByWechatId = function(sWechatId, res) {
+        var oQuery = User.findOne({wechatId: sWechatId});
+        oQuery.select('_id');
+        oQuery.exec(function (err, oUser) {
+            if (err) {
+                res.send({error: err.message});
+            } else {
+                var oRet = {
+                    data: oUser
+                }
+                res.send(oRet);
+            }
+        });
+    };
+
     getService = function(req, res) {
         var sAction = req.query.action;
         if (sAction === 'getWechatUserOpenId') {
@@ -149,6 +164,9 @@ module.exports = function(app) {
             getWechatUserOpenId(sCode, res);
         } else if (sAction === 'getJsAPISignature') {
             getJsAPISignature(req, res);
+        } else if (sAction === 'getUserIdByWechatId') {
+            var sWechatId = req.query.wechatId;
+            getUserIdByWechatId(sWechatId, res);
         } else {
             console.log("********************");
             console.log("security get service: not supported action");

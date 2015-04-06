@@ -69,6 +69,15 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
 
 oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', '$state', 'Design', 'Auth', 
     function($scope, $location, $upload, $state, Design, Auth) {
+        $scope.test = {
+            larry: {
+                openId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
+                _id: ''
+            }
+        };
+
+        $scope.aSelectedArtifact = [];
+
     //Regist Wechat Interface
     /*var oParam = {
         action: 'getJsAPISignature'
@@ -95,140 +104,141 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         });
     });*/
 
-    // var sTempCode = $location.$$search.code;
-    // if (!sTempCode) {
-    //     var oAuthParam = {
-    //         action: 'registAuth',
-    //         data: {
-    //             targetPage: 'createDesign'
-    //         }
-    //     };
-    //     Auth.AuthManager.update(oAuthParam);
-    // } else {
-    //     $scope.sTempCode = sTempCode;
-    // }
-
-    $scope.constant = {
-        SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-        BK_COLOR_ARRYA: ['黑', '白']
-    };
-    $scope.designInfo = {
-        sCreatorId: 'MATT',
-        bPrivateDesign: true,
-        sDefaultDesc: new Date().toUTCString(),
-        sBackgroundColor: '白',
-        sSize: 'XL'
-    };
-
-    $scope.test = {};
-
-    // $scope.bPrivateDesign = false;
-    // $scope.defultDesc = new Date().toUTCString();
-    $scope.createDesign = function () {
-        var oNewDesign = {
-            creatorId: $scope.designInfo.sCreatorId,
-            color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
-            model: "Wave2015",
-            price: 100,
-            size: $scope.designInfo.sSize,
-            style: "Casual",
-            desc: $scope.designInfo.sDefaultDesc,
-            access: $scope.designInfo.bPrivateDesign ? 'private' : 'public'
+        var oAuthParam = {
+            action: 'getUserIdByWechatId',
+            wechatId: $scope.test.larry.openId
         };
-        var oParam = {
-            action: 'createDesign',
-            data: oNewDesign
+        Auth.AuthManager.query(oAuthParam, function(oData) {
+            $scope.test.larry._id = oData.data._id;
+        });
+
+        $scope.constant = {
+            SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+            BK_COLOR_ARRYA: ['黑', '白']
         };
-        Design.DesignManager.create(oParam);
-
-        //GO TO SAVE PAGE
-        $state.go('createDesign.createDetail.saveDetail');
-    };
-
-    $scope.deleteDesign = function (sId) {
-        var oDesign = {
-            designId: sId
+        $scope.designInfo = {
+            sCreatorId: 'MATT',
+            bPrivateDesign: true,
+            sDefaultDesc: new Date().toUTCString(),
+            sBackgroundColor: '白',
+            sSize: 'XL'
         };
-        var oParam = {
-            action: 'deleteDesign',
-            data: oDesign
+
+        // $scope.bPrivateDesign = false;
+        // $scope.defultDesc = new Date().toUTCString();
+        $scope.createDesign = function () {
+            var oNewDesign = {
+                creatorId: $scope.designInfo.sCreatorId,
+                color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
+                model: "Wave2015",
+                price: 100,
+                size: $scope.designInfo.sSize,
+                style: "Casual",
+                desc: $scope.designInfo.sDefaultDesc,
+                access: $scope.designInfo.bPrivateDesign ? 'private' : 'public'
+            };
+            var oParam = {
+                action: 'createDesign',
+                data: oNewDesign
+            };
+            Design.DesignManager.create(oParam);
+
+            //GO TO SAVE PAGE
+            $state.go('createDesign.createDetail.saveDetail');
         };
-        Design.DesignManager.delete(oParam);
-    };
 
-    $scope.changeBackgroundColor = function(sColor) {
-        $scope.designInfo.sBackgroundColor = sColor;
-        ///getFileContent($scope.test.fileId);
-    };
+        $scope.deleteDesign = function (sId) {
+            var oDesign = {
+                designId: sId
+            };
+            var oParam = {
+                action: 'deleteDesign',
+                data: oDesign
+            };
+            Design.DesignManager.delete(oParam);
+        };
 
-    $scope.changeSize = function(sSize) {
-        $scope.designInfo.sSize = sSize;
-    };
+        $scope.changeBackgroundColor = function(sColor) {
+            $scope.designInfo.sBackgroundColor = sColor;
+            ///getFileContent($scope.test.fileId);
+        };
 
-    $scope.onGenderSelected = function() {
-        $state.go("createDesign.createDetail");
-    };
+        $scope.changeSize = function(sSize) {
+            $scope.designInfo.sSize = sSize;
+        };
 
-    $scope.onCreateDesignBackClicked = function() {
-        $state.go('^');
-    };
+        $scope.onGenderSelected = function() {
+            $state.go("createDesign.createDetail");
+        };
 
-    $scope.chooseImageFromGallery = function() {
-        wx.chooseImage({
-            success: function (res) {
-                console.log("images choosed successfully: " + res.localIds);
+        $scope.onCreateDesignBackClicked = function() {
+            $state.go('^');
+        };
+
+        $scope.chooseImageFromGallery = function() {
+            wx.chooseImage({
+                success: function (res) {
+                    console.log("images choosed successfully: " + res.localIds);
+                }
+            });
+        };
+
+        $scope.uploadImage = function() {
+            console.log("asdfasdf");
+        };
+
+        $scope.fileSelected = function(aFile) {
+            if (aFile && aFile.length) {
+                for (var i = 0; i < aFile.length; i++) {
+                    var file = aFile[i];
+                    $upload.upload({
+                        method: 'POST',
+                        url: 'uploadFile',
+                        file: file,
+                        data : {
+                            'action': 'uploadFile',
+                            'fileName': $scope.test.larry._id + new Date().getTime(),
+                            'creatorId': $scope.test.larry._id
+                        }
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (data, status, headers, config) {
+                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                        //$scope.imgSrc = 'file/getFileContent/' + data.fileId;
+                        $scope.test.fileId = data.fileId;
+                        //getFileContent(data.fileId);
+                    });
+                }
             }
-        });
-    };
-
-    $scope.uploadImage = function() {
-        console.log("asdfasdf");
-    };
-
-    $scope.fileSelected = function(aFile) {
-        if (aFile && aFile.length) {
-            for (var i = 0; i < aFile.length; i++) {
-                var file = aFile[i];
-                $upload.upload({
-                    method: 'POST',
-                    url: 'uploadFile',
-                    file: file,
-                    data : {
-                        'action': 'uploadFile',
-                        'fileName': 'userOpenId_' + new Date().getTime()
-                    }
-                }).progress(function (evt) {
-                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                }).success(function (data, status, headers, config) {
-                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                    //$scope.imgSrc = 'file/getFileContent/' + data.fileId;
-                    $scope.test.fileId = data.fileId;
-                    //getFileContent(data.fileId);
-                });
-            }
-        }
-    };
-    
-    $scope.getFileContent = function(sFileId) {
-        var oParam = {
-            action: 'getFileContent',
-            fileId: $scope.test.fileId
         };
-        var oFileContent = Design.FileManager.query(oParam, function(oContent) {
-            $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
-            $scope.largeImgSrc = 'data:image/png;base64,' + oContent.data.largeImage64;
-        });
-    };
-
-    $scope.getMyArtifactThumbnails = function() {
-        var oParam = {
-            action: 'getMyArtifactThumbnails'
+        
+        $scope.getFileContent = function(sFileId) {
+            var oParam = {
+                action: 'getFileContent',
+                fileId: $scope.test.fileId
+            };
+            var oFileContent = Design.FileManager.query(oParam, function(oContent) {
+                $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
+                $scope.largeImgSrc = 'data:image/png;base64,' + oContent.data.largeImage64;
+            });
         };
-        var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
-            //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
-            $scope.aMyArtifact = oContent.data;
-            $scope.aMyArtifactCarouselIndex = 0;
-        });
-    };
+
+        $scope.getMyArtifactThumbnails = function() {
+            var oParam = {
+                action: 'getMyArtifactThumbnails',
+                userId: $scope.test.larry._id
+            };
+            var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
+                //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+                $scope.aMyArtifact = oContent.data;
+                $scope.aMyArtifactCarouselIndex = 0;
+            });
+        };
+
+        $scope.onArtifactSelected = function(oArtifact) {
+            oArtifact.styleValue = 'top:50px;left:100px;transform: rotate(7deg);';
+            $scope.aSelectedArtifact.push(oArtifact);
+            $state.go('^');
+        };
 }]);

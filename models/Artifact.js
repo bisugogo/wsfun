@@ -3,10 +3,10 @@ var Schema = mongoose.Schema;
 var UserSchema = mongoose.model('User').schema;
 
 var ArtifactSchema = new Schema({
-  // creatorId: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User'
-  // },
+  creatorId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   description: {
     type: String,
     default: ''

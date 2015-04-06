@@ -46,7 +46,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
     })
     .state('myDesignsAuth', {
         url: '/myDesignsAuth',
-        template: '<div></div>',
+        template: '<div>Authenticating...</div>',
         controller: function($window) {
             if (!sTempCode) {
                 $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
