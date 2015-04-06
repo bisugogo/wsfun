@@ -237,7 +237,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onArtifactSelected = function(oArtifact) {
-            oArtifact.styleValue = 'top:50px;left:100px;transform: rotate(7deg);';
+            oArtifact.styleValue = 'top:50px;left:100px;' + 
+                'transform:rotate(7deg);' + 
+                '-o-transform:rotate(7deg);' + 
+                '-webkit-transform: rotate(7deg);' + 
+                '-moz-transform: rotate(7deg);';
             $scope.aSelectedArtifact.push(oArtifact);
             $state.go('^');
         };
