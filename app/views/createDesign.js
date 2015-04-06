@@ -67,10 +67,14 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
     });
 }]);
 
-oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'Design', 'Auth', function($scope, $upload, $state, Design, Auth) {
-    var oParam = {
+oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', '$state', 'Design', 'Auth', 
+    function($scope, $location, $upload, $state, Design, Auth) {
+    //Regist Wechat Interface
+    /*var oParam = {
         action: 'getJsAPISignature'
     };
+
+    
     var oSig = Auth.AuthManager.query(oParam, function () {
         console.log(oSig.signature);
         wx.config({
@@ -89,8 +93,20 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$upload', '$state', 'De
         wx.error(function(res){
             console.log('js sdk configuration set up failed!!!');
         });
-    });
+    });*/
 
+    // var sTempCode = $location.$$search.code;
+    // if (!sTempCode) {
+    //     var oAuthParam = {
+    //         action: 'registAuth',
+    //         data: {
+    //             targetPage: 'createDesign'
+    //         }
+    //     };
+    //     Auth.AuthManager.update(oAuthParam);
+    // } else {
+    //     $scope.sTempCode = sTempCode;
+    // }
 
     $scope.constant = {
         SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],

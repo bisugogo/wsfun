@@ -121,6 +121,22 @@ module.exports = function(app) {
         }
     };
 
+    registAuth = function(oData, res) {
+        https.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + APP_ID + '&redirect_uri=' + 
+            encodeURIComponent('http://design.weavesfun.com/#/createDesign') + 
+            '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect', function(weChatRes) {
+                console.log('STATUS: ' + weChatRes.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(weChatRes.headers));
+                // weChatRes.setEncoding('utf8');
+                // weChatRes.on('data', function (chunk) {
+                //     console.log('BODY: ' + chunk);
+                //     res.send(chunk);
+                // });
+                res.send({data: 'OK'})
+            }
+        );
+    };
+
     getService = function(req, res) {
         var sAction = req.query.action;
         if (sAction === 'getWechatUserOpenId') {
@@ -141,16 +157,12 @@ module.exports = function(app) {
     };
 
     postService = function (req, res) {
-    // var sAction = req.body.action;
-    // if (sAction && sAction !== '') {
-    //   if (sAction === 'createDesign') {
-    //     createDesign(req.body.data, res);
-    //   } else if (sAction === 'deleteDesign') {
-    //     deleteTshirt(req.body.data, res);
-    //   } else if (sAction === 'createOrder') {
-    //     createOrder(req.body.data, res);
-    //   }
-    // }
+        var sAction = req.body.action;
+        if (sAction && sAction !== '') {
+            if (sAction === 'registAuth') {
+                registAuth(req.body.data, res);
+            }
+        }
     };
 
     //Link routes and actions

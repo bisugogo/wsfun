@@ -36,6 +36,8 @@ var myDesignList = angular.module('ntApp.myDesigns', [
     'wechatServices'
 ]);
 
+var sTempCode = null;
+
 myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider, $httpProvider) {
     $stateProvider.state('myDesigns', {
         url: '/myDesigns',
@@ -46,10 +48,12 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         url: '/myDesignsAuth',
         template: '<div></div>',
         controller: function($window) {
-            $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
-            'wxf26855bd0cda23bd' + '&redirect_uri=' + 
-            encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
-            '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+            if (!sTempCode) {
+                $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                'wxf26855bd0cda23bd' + '&redirect_uri=' + 
+                encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
+                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+            }
         }
     })
     .state('createDesign', {
@@ -79,6 +83,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
     function($scope, $location, $stateParams, $state, $http, Design, Auth) {
         var sCode = $location.$$search.code;
         $scope.code = sCode;
+        sTempCode = sCode;
 
         //$http.defaults.useXDomain = true;
         //delete $http.defaults.headers.common['X-Requested-With'];
