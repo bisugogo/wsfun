@@ -17,7 +17,8 @@
                 hm-dragend="onSelectedArtiItemDragend($event, oArtifact)" 
                 hm-touch="onTouched($event)" 
                 hm-tap="onTap($event)"
-                style="top:{{oArtifact.styleValue.top}}px;left:{{oArtifact.styleValue.left}}px;">
+                style="{{oArtifact.styleStr}}">
+                <span class="selectedArtifactItemPencil glyphicon glyphicon-pencil" style="{{oArtifact.pencilStyleStr}}"></span>
             </div>
         </div>
         <!--img src="data:image/png;base64,{{oArtifact.largeImage64}}" design-artifact-->

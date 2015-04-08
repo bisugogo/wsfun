@@ -254,6 +254,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             oArtifact.styleValue = {};
             oArtifact.styleValue.top = 70;
             oArtifact.styleValue.left = 50;
+            oArtifact.styleValue.pencilLeft = -16 + oArtifact.styleValue.left;
+            oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                "left:" + oArtifact.styleValue.left + "px;"
+            oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                "left:" + oArtifact.styleValue.pencilLeft + "px;"
             $scope.aSelectedArtifact.push(oArtifact);
             $state.go('^');
         };
@@ -277,6 +282,12 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             console.log('dragging end!');
             oArtifact.styleValue.top += $event.deltaY;
             oArtifact.styleValue.left += $event.deltaX;
+            oArtifact.styleValue.pencilLeft = -16 + oArtifact.styleValue.left;
+            oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                "left:" + oArtifact.styleValue.left + "px;" + 
+                "width:" + $event.target.clientWidth + "px;";
+            oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                "left:" + oArtifact.styleValue.pencilLeft + "px;"
             //event.gesture.preventDefault();
         };
 
