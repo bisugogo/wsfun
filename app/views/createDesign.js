@@ -251,25 +251,32 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             //     '-o-transform:rotate(7deg);' + 
             //     '-webkit-transform: rotate(7deg);' + 
             //     '-moz-transform: rotate(7deg);';
+            oArtifact.styleValue = {};
+            oArtifact.styleValue.top = 70;
+            oArtifact.styleValue.left = 50;
             $scope.aSelectedArtifact.push(oArtifact);
             $state.go('^');
         };
 
-        $scope.onSelectedArtiItemDragged = function($event) {
-            console.log(event.gesture);
+        $scope.onSelectedArtiItemDragged = function($event, oArtifact) {
+            //console.log($event.gesture);
             console.log('dragging!');
+
+            
             //event.gesture.preventDefault();
         };
 
-        $scope.onSelectedArtiItemDragstart = function($event) {
-            console.log(event.gesture);
+        $scope.onSelectedArtiItemDragstart = function($event, oArtifact) {
+            //console.log($event.gesture);
             console.log('dragging start!');
             //event.gesture.preventDefault();
         };
 
-        $scope.onSelectedArtiItemDragend = function($event) {
-            console.log(event.gesture);
+        $scope.onSelectedArtiItemDragend = function($event, oArtifact) {
+            //console.log($event.gesture);
             console.log('dragging end!');
+            oArtifact.styleValue.top += $event.deltaY;
+            oArtifact.styleValue.left += $event.deltaX;
             //event.gesture.preventDefault();
         };
 

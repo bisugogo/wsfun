@@ -11,9 +11,13 @@
         <div class="selectedArtifactArea">
             <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
                 
-                <img src="data:image/png;base64,{{oArtifact.largeImage64}}" hm-drag="onSelectedArtiItemDragged($event)"
-                hm-dragstart="onSelectedArtiItemDragstart($event)" hm-dragend="onSelectedArtiItemDragend($event)" 
-                hm-touch="onTouched($event)" hm-tap="onTap($event)">
+                <img src="data:image/png;base64,{{oArtifact.largeImage64}}" 
+                
+                hm-dragstart="onSelectedArtiItemDragstart($event, oArtifact)" 
+                hm-dragend="onSelectedArtiItemDragend($event, oArtifact)" 
+                hm-touch="onTouched($event)" 
+                hm-tap="onTap($event)"
+                style="top:{{oArtifact.styleValue.top}}px;left:{{oArtifact.styleValue.left}}px;">
             </div>
         </div>
         <!--img src="data:image/png;base64,{{oArtifact.largeImage64}}" design-artifact-->
