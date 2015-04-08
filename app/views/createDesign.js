@@ -251,23 +251,45 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             //     '-o-transform:rotate(7deg);' + 
             //     '-webkit-transform: rotate(7deg);' + 
             //     '-moz-transform: rotate(7deg);';
+            oArtifact.isEditting = false;
             oArtifact.styleValue = {};
             oArtifact.styleValue.top = 70;
             oArtifact.styleValue.left = 50;
             oArtifact.styleValue.pencilLeft = -16 + oArtifact.styleValue.left;
+
             oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
-                "left:" + oArtifact.styleValue.left + "px;"
+                "left:" + oArtifact.styleValue.left + "px;" + 
+                "width:" + 280 + "px;";
+
             oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
-                "left:" + oArtifact.styleValue.pencilLeft + "px;"
-            $scope.aSelectedArtifact.push(oArtifact);
-            $state.go('^');
+                "left:" + oArtifact.styleValue.pencilLeft + "px;";
+
+
+            var img = new Image();
+            img.src = 'data:image/png;base64,' + oArtifact.largeImage64;
+            //console.log(img.width);       // This might print out 0!
+            img.onload = function() {
+                console.log(img.width);   // This will print out the width.
+                var iResizeTop = oArtifact.styleValue.top - img.height*0.7/2 + 2;//original 70% width limit
+                var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                    "left:" + iResizeLeft + "px;";
+
+                oArtifact.imgWidth = img.height*0.7;
+
+                $scope.aSelectedArtifact.push(oArtifact);
+                $state.go('^');
+            }
+
+            // $scope.aSelectedArtifact.push(oArtifact);
+            // $state.go('^');
         };
 
         $scope.onSelectedArtiItemDragged = function($event, oArtifact) {
             //console.log($event.gesture);
             console.log('dragging!');
-
-            
+            console.log($event.target.clientWidth);
+            //hm-drag="onSelectedArtiItemDragged($event, oArtifact)"
             //event.gesture.preventDefault();
         };
 
@@ -283,12 +305,33 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             oArtifact.styleValue.top += $event.deltaY;
             oArtifact.styleValue.left += $event.deltaX;
             oArtifact.styleValue.pencilLeft = -16 + oArtifact.styleValue.left;
+
+            var iImgWidth = $event.target.clientWidth + 4;//Need to consider 2px border
+            oArtifact.imgWidth = iImgWidth;
+
             oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.left + "px;" + 
-                "width:" + $event.target.clientWidth + "px;";
+                "width:" + iImgWidth + "px;";
+
             oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
-                "left:" + oArtifact.styleValue.pencilLeft + "px;"
+                "left:" + oArtifact.styleValue.pencilLeft + "px;";
+
+            var iResizeTop = oArtifact.styleValue.top - $event.target.clientHeight/2 + 2;
+            var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+            oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                "left:" + iResizeLeft + "px;";
             //event.gesture.preventDefault();
+        };
+
+        $scope.onSelectedArtiItemResizeDrag = function($event, oArtifact) {
+            console.log('resize dragging end!');
+
+            // var iDistance = $event.distance;
+            // var iPercent = 1 - iDistance/1000000;
+            // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.left + "px;" + 
+            //     "width:" + oArtifact.imgWidth*iPercent + "px;";
+            // oArtifact.imgWidth = oArtifact.imgWidth*iPercent;
         };
 
         $scope.onTouched = function($event) {
@@ -301,6 +344,20 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             console.log('touched!');
             alert("touched");
             //event.gesture.preventDefault();
+        };
+
+        $scope.onSelectedArtiItemPinchOut = function($event, oArtifact) {
+            console.log('pinch out');
+            alert('pinch out');
+        };
+
+        $scope.onSelectedArtiItemPinchIn = function($event, oArtifact) {
+            console.log('pinch in');
+            alert('pinch out');
+        };
+
+        $scope.onEditArtifactItemClicked = function(oArtifact) {
+            oArtifact.isEditting = true;
         };
 
         // $scope.startDrag = function() {

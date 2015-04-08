@@ -15,10 +15,17 @@
                 
                 hm-dragstart="onSelectedArtiItemDragstart($event, oArtifact)" 
                 hm-dragend="onSelectedArtiItemDragend($event, oArtifact)" 
+                hm-pinch-in="onSelectedArtiItemPinchIn($event, oArtifact)" 
+                hm-pinch-out="onSelectedArtiItemPinchOut($event, oArtifact)" 
                 hm-touch="onTouched($event)" 
                 hm-tap="onTap($event)"
                 style="{{oArtifact.styleStr}}">
-                <span class="selectedArtifactItemPencil glyphicon glyphicon-pencil" style="{{oArtifact.pencilStyleStr}}"></span>
+                <span class="selectedArtifactItemPencil glyphicon glyphicon-pencil" 
+                style="{{oArtifact.pencilStyleStr}}"
+                ng-click="onEditArtifactItemClicked()"></span>
+                <span class="selectedArtifactItemResize glyphicon glyphicon-resize-full" 
+                style="{{oArtifact.resizeStyleStr}}" 
+                hm-drag="onSelectedArtiItemResizeDrag($event, oArtifact)"></span>
             </div>
         </div>
         <!--img src="data:image/png;base64,{{oArtifact.largeImage64}}" design-artifact-->
