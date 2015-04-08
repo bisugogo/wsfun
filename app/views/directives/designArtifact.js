@@ -1,0 +1,1 @@
+<img src="data:image/png;base64,{{oArtifact.largeImage64}}" jqyoui-draggable></img>

@@ -11,7 +11,9 @@ var ntApp = angular.module('ntApp', [
     'ntApp.createDesign',
     'ui.bootstrap',
     'angularFileUpload',
-    'angular-carousel'
+    'angular-carousel',
+    //'ngDragDrop',
+    'angular-gestures'
     //'ngAnimate'
 ]);
 

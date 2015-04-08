@@ -130,12 +130,8 @@
   margin-top: 30px;
 }
 
-.createDetailView .selectedArtifactArea {
-  position: relative;
-}
-
-.createDetailView .selectedArtifactArea .selectedArtifactItem {
-  position: absolute;
+.createDetailView .selectedArtifactArea .selectedArtifactItem img {
+  width: 70%;
 }
 
 .royalButtonWrapper {

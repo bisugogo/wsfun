@@ -1,4 +1,4 @@
-<div class='row createDetailView'>
+<div class='row createDetailView' ontouchmove="event.preventDefault()">
     <div ui-view="saveDetail">
         <div class='row'>
             <div class="col-xs-12">
@@ -9,11 +9,14 @@
         <div ui-view="personalGallery"></div>
 
         <div class="selectedArtifactArea">
-            <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem" 
-            style="{{oArtifact.styleValue}}">
-                <img src="data:image/png;base64,{{oArtifact.largeImage64}}">
+            <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
+                
+                <img src="data:image/png;base64,{{oArtifact.largeImage64}}" hm-drag="onSelectedArtiItemDragged($event)"
+                hm-dragstart="onSelectedArtiItemDragstart($event)" hm-dragend="onSelectedArtiItemDragend($event)" 
+                hm-touch="onTouched($event)" hm-tap="onTap($event)">
             </div>
         </div>
+        <!--img src="data:image/png;base64,{{oArtifact.largeImage64}}" design-artifact-->
         
         <!--div class="row">
             <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles">Upload using model $watch</input>

@@ -25,9 +25,9 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$routeParams', 'Design'
 }]);*/
 
 
-var oCreateDesign = angular.module('ntApp.createDesign', ['ui.router', 'designServices']);
+var oCreateDesign = angular.module('ntApp.createDesign', ['ui.router', 'designServices', 'angular-gestures']);
 
-oCreateDesign.config(['$stateProvider', function($stateProvider) {
+oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($stateProvider, hammerDefaultOptsProvider) {
     $stateProvider.state('createDesign.createDetail', {
         url: '/createDetail',
         // templateUrl: 'views/createDetail.html',
@@ -64,6 +64,15 @@ oCreateDesign.config(['$stateProvider', function($stateProvider) {
                 }
             }
         }
+    });
+
+    hammerDefaultOptsProvider.set({
+        recognizers: [
+          [Hammer.Tap,{ event: 'tap'}],
+          [Hammer.Tap, { event: 'doubletap', taps: 2 }, [], ['tap']],
+          [Hammer.Press],
+          [Hammer.Pan]
+        ]
     });
 }]);
 
@@ -237,12 +246,149 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onArtifactSelected = function(oArtifact) {
-            oArtifact.styleValue = 'top:50px;left:100px;' + 
-                'transform:rotate(7deg);' + 
-                '-o-transform:rotate(7deg);' + 
-                '-webkit-transform: rotate(7deg);' + 
-                '-moz-transform: rotate(7deg);';
+            // oArtifact.styleValue = //'top:50px;left:100px;' + 
+            //     'transform:rotate(7deg);' + 
+            //     '-o-transform:rotate(7deg);' + 
+            //     '-webkit-transform: rotate(7deg);' + 
+            //     '-moz-transform: rotate(7deg);';
             $scope.aSelectedArtifact.push(oArtifact);
             $state.go('^');
         };
+
+        $scope.onSelectedArtiItemDragged = function($event) {
+            console.log(event.gesture);
+            console.log('dragging!');
+            //event.gesture.preventDefault();
+        };
+
+        $scope.onSelectedArtiItemDragstart = function($event) {
+            console.log(event.gesture);
+            console.log('dragging start!');
+            //event.gesture.preventDefault();
+        };
+
+        $scope.onSelectedArtiItemDragend = function($event) {
+            console.log(event.gesture);
+            console.log('dragging end!');
+            //event.gesture.preventDefault();
+        };
+
+        $scope.onTouched = function($event) {
+            console.log('touched!');
+            alert("touched");
+            //event.gesture.preventDefault();
+        };
+
+        $scope.onTap = function($event) {
+            console.log('touched!');
+            alert("touched");
+            //event.gesture.preventDefault();
+        };
+
+        // $scope.startDrag = function() {
+        //     var i = 0;
+        //     console.log("$scope start drag called.");
+        //     alert("$scope start drag called.");
+        // };
 }]);
+
+/*oCreateDesign.directive('designArtifact', ['$document', function($document) {
+    return {
+        // scope: {
+        //     dragStart:'&startDragging',
+        // },
+        priority: 1001,
+        link: function(scope, element, attr) {
+            var startX = 0, startY = 0, x = 0, y = 0;
+            element.css({
+                position: 'relative',
+                //border: '1px solid red'
+                //background-color: 'lightgrey',
+                cursor: 'pointer',
+                transform: 'rotate(7deg)',
+                oTransform: 'rotate(7deg)',
+                webkitTransform: 'rotate(7deg)',
+                mozTransform: 'rotate(7deg)'
+            });
+
+            var dragStartCallback = function(event) {
+                //alert('dragStartCallback!');
+                //scope.dragStart({e: event});
+                console.log('dragStartCallback!');
+                //event.preventDefault();
+                startX = event.pageX - x;
+                startY = event.pageY - y;
+                // element[0].addEventListener('drag', dragCallback, false);
+                // element[0].addEventListener('dragend', dragEndCallback, false);
+            };
+
+            var dragEndCallback = function(event) {
+                //alert('dragStartCallback!');
+                //scope.dragStart({e: event});
+                console.log('dragEndCallback!');
+                element[0].removeEventListener('drag');
+                element[0].removeEventListener('dragend');
+            };
+
+            var dragCallback = function(event) {
+                console.log('dragging!');
+                y = event.pageY - startY;
+                x = event.pageX - startX;
+                element.css({
+                    top: y + 'px',
+                    left:  x + 'px'
+                });
+            };
+
+            element[0].draggable = true;
+
+            element[0].addEventListener('dragstart', dragStartCallback, false);
+            element[0].addEventListener('dragend', dragEndCallback, false);
+            element[0].addEventListener('drag', dragCallback, false);
+            
+            
+
+            // element.on('mousedown', function(event) {
+            // // Prevent default dragging of selected content
+            //     event.preventDefault();
+            //     startX = event.pageX - x;
+            //     startY = event.pageY - y;
+            //     $document.on('mousemove', mousemove);
+            //     $document.on('mouseup', mouseup);
+            // });
+
+            // element.on('draggstart', function(event) {
+            // // Prevent default dragging of selected content
+            //     event.preventDefault();
+            //     alert("asdf");
+            //     startX = event.pageX - x;
+            //     startY = event.pageY - y;
+            //     $document.on('mousemove', mousemove);
+            //     $document.on('mouseup', mouseup);
+            // });
+
+            // element.on('onStart', function(event) {
+            // // Prevent default dragging of selected content
+            //     event.preventDefault();
+            //     startX = event.pageX - x;
+            //     startY = event.pageY - y;
+            //     $document.on('dragmove', mousemove);
+            //     $document.on('dragend', mouseup);
+            // });
+
+            // function mousemove(event) {
+            //     y = event.pageY - startY;
+            //     x = event.pageX - startX;
+            //     element.css({
+            //         top: y + 'px',
+            //         left:  x + 'px'
+            //     });
+            // }
+
+            // function mouseup() {
+            //     $document.off('mousemove', mousemove);
+            //     $document.off('mouseup', mouseup);
+            // }
+        }
+    };
+}]);*/
