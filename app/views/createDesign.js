@@ -130,27 +130,37 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             bPrivateDesign: true,
             sDefaultDesc: new Date().toUTCString(),
             sBackgroundColor: '白',
-            sSize: 'XL'
+            sSize: 'XL',
+            sDescription: 'test'
+        };
+
+        $scope.htmlItemStyle = {
+            availableArea: {
+                visible: false,
+                width: 0,
+                height: 0,
+                styleStr: "visible:false;width:0px;height:0px;"
+            }
         };
 
         // $scope.bPrivateDesign = false;
         // $scope.defultDesc = new Date().toUTCString();
-        $scope.createDesign = function () {
-            var oNewDesign = {
-                creatorId: $scope.designInfo.sCreatorId,
-                color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
-                model: "Wave2015",
-                price: 100,
-                size: $scope.designInfo.sSize,
-                style: "Casual",
-                desc: $scope.designInfo.sDefaultDesc,
-                access: $scope.designInfo.bPrivateDesign ? 'private' : 'public'
-            };
-            var oParam = {
-                action: 'createDesign',
-                data: oNewDesign
-            };
-            Design.DesignManager.create(oParam);
+        $scope.onCreateDesignClicked = function () {
+            // var oNewDesign = {
+            //     creatorId: $scope.designInfo.sCreatorId,
+            //     color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
+            //     model: "Wave2015",
+            //     price: 100,
+            //     size: $scope.designInfo.sSize,
+            //     style: "Casual",
+            //     desc: $scope.designInfo.sDefaultDesc,
+            //     access: $scope.designInfo.bPrivateDesign ? 'private' : 'public'
+            // };
+            // var oParam = {
+            //     action: 'createDesign',
+            //     data: oNewDesign
+            // };
+            // Design.DesignManager.create(oParam);
 
             //GO TO SAVE PAGE
             $state.go('createDesign.createDetail.saveDetail');
@@ -253,40 +263,68 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             //     '-moz-transform: rotate(7deg);';
             oArtifact.isEditting = false;
             oArtifact.styleValue = {};
-            oArtifact.styleValue.top = 70;
-            oArtifact.styleValue.left = 50;
-            oArtifact.styleValue.pencilLeft = -16 + oArtifact.styleValue.left;
+            oArtifact.styleValue.top = 150;
+            oArtifact.styleValue.left = 80;
+            oArtifact.styleValue.pencilLeft = -20 + oArtifact.styleValue.left;
+
+            oArtifact.imgWidth = 160;
 
             oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.left + "px;" + 
-                "width:" + 280 + "px;";
+                "width:" + oArtifact.imgWidth + "px;";
 
             oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.pencilLeft + "px;";
-
 
             var img = new Image();
             img.src = 'data:image/png;base64,' + oArtifact.largeImage64;
             //console.log(img.width);       // This might print out 0!
             img.onload = function() {
-                console.log(img.width);   // This will print out the width.
-                var iResizeTop = oArtifact.styleValue.top - img.height*0.7/2 + 2;//original 70% width limit
-                var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
-                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
-                    "left:" + iResizeLeft + "px;";
-
-                oArtifact.imgWidth = img.width*0.7;
+                //console.log(img.width);   // This will print out the width.
+                //oArtifact.imgWidth = img.width*0.7;
                 oArtifact.originImgWidth = img.width;
-                oArtifact.imgHeight = img.height*0.7;
                 oArtifact.originImgHeight = img.height;
+                oArtifact.imgHeight = oArtifact.imgWidth/oArtifact.originImgWidth*oArtifact.originImgHeight
+
+
+                var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight/2 + 2;//original 70% width limit
+                var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                "left:" + iResizeLeft + "px;";
+
+                var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;//Need to consider pencil&resize width
+                oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+                "left:" + iRemoveLeft + "px;";
+                
                 oArtifact.lastDragDistance = 0;
 
                 $scope.aSelectedArtifact.push(oArtifact);
+                $scope.updateAvailableAreaStyle();
                 $state.go('^');
             }
 
             // $scope.aSelectedArtifact.push(oArtifact);
             // $state.go('^');
+        };
+
+        $scope.updateAvailableAreaStyle = function() {
+            var oBkImg = $('.createDesignBgImg')[0];
+            var iWidth = oBkImg.clientWidth;
+            var iHeight = oBkImg.clientHeight;
+            $scope.htmlItemStyle.availableArea.visible = true;
+            $scope.htmlItemStyle.availableArea.width = iWidth * 0.6;
+            $scope.htmlItemStyle.availableArea.height = $scope.htmlItemStyle.availableArea.width * 1.25;
+
+            if ($scope.aSelectedArtifact.length > 0) {
+                $scope.htmlItemStyle.availableArea.styleStr = "visibility:visible;" + 
+                "width:" + $scope.htmlItemStyle.availableArea.width + "px;" + 
+                "height:" + $scope.htmlItemStyle.availableArea.height + "px;";
+            } else {
+                $scope.htmlItemStyle.availableArea.styleStr = "visibility:hidden;" + 
+                "width:" + $scope.htmlItemStyle.availableArea.width + "px;" + 
+                "height:" + $scope.htmlItemStyle.availableArea.height + "px;";
+            }
+            
         };
 
         $scope.onSelectedArtiItemDragged = function($event, oArtifact) {
@@ -308,7 +346,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             console.log('dragging end!');
             oArtifact.styleValue.top += $event.deltaY;
             oArtifact.styleValue.left += $event.deltaX;
-            oArtifact.styleValue.pencilLeft = -16 + oArtifact.styleValue.left;
+            oArtifact.styleValue.pencilLeft = -20 + oArtifact.styleValue.left;
 
             var iImgWidth = $event.target.clientWidth + 4;//Need to consider 2px border
             oArtifact.imgWidth = iImgWidth;
@@ -321,9 +359,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 "left:" + oArtifact.styleValue.pencilLeft + "px;";
 
             var iResizeTop = oArtifact.styleValue.top - $event.target.clientHeight/2 + 2;
-            var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+            var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
             oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
                 "left:" + iResizeLeft + "px;";
+
+            var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;
+            oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+                "left:" + iRemoveLeft + "px;";
             //event.gesture.preventDefault();
         };
 
@@ -334,35 +376,60 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
             var iDeltaDragDistance = iDistance - oArtifact.lastDragDistance;
             if (iDeltaDragDistance > 10) {
-                var iPercent = 1 - iDistance/400;
+                var iPercent;
+                if ($event.deltaX > 0) {
+                    iPercent = 1 + iDistance/400;
+                } else {
+                    iPercent = 1 - iDistance/400;
+                }
+
                 oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                     "left:" + oArtifact.styleValue.left + "px;" + 
-                    "width:" + oArtifact.originImgWidth*0.7*iPercent + "px;";
-                //oArtifact.imgWidth = oArtifact.imgWidth*iPercent;
-                //oArtifact.imgHeight = oArtifact.imgHeight*iPercent;
+                    "width:" + oArtifact.imgWidth*iPercent + "px;";
 
-                var iResizeTop = oArtifact.styleValue.top - oArtifact.originImgHeight*0.7*iPercent/2 + 2;
-                var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+                var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+
                 oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
                     "left:" + iResizeLeft + "px;";
 
+                var iRemoveTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth*iPercent - 30*2;
+                oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+                "left:" + iRemoveLeft + "px;";
+
                 console.log(oArtifact.styleStr);
+                oArtifact.lastDraggingWidth = oArtifact.imgWidth*iPercent;
+                oArtifact.lastDraggingHeight = oArtifact.imgHeight*iPercent;
 
                 oArtifact.lastDragDistance = $event.distance;
             } else if (iDeltaDragDistance < -10) {
-                var iPercent = 1 - iDistance/400;
+                var iPercent;
+                if ($event.deltaX > 0) {
+                    iPercent = 1 + iDistance/400;
+                } else {
+                    iPercent = 1 - iDistance/400;
+                }
+
                 oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                     "left:" + oArtifact.styleValue.left + "px;" + 
-                    "width:" + oArtifact.originImgWidth*0.7*iPercent + "px;";
+                    "width:" + oArtifact.imgWidth*iPercent + "px;";
                 //oArtifact.imgWidth = oArtifact.originImgWidth*0.7*iPercent;
                 //oArtifact.imgHeight = oArtifact.originImgHeight*0.7*iPercent;
 
-                var iResizeTop = oArtifact.styleValue.top - oArtifact.originImgHeight*0.7*iPercent/2 + 2;
-                var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+                var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
                 oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
                     "left:" + iResizeLeft + "px;";
 
+                var iRemoveTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth*iPercent - 30*2;
+                oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+                "left:" + iRemoveLeft + "px;";
+
                 console.log(oArtifact.styleStr);
+                oArtifact.lastDraggingWidth = oArtifact.imgWidth*iPercent;
+                oArtifact.lastDraggingHeight = oArtifact.imgHeight*iPercent;
 
                 oArtifact.lastDragDistance = $event.distance;
             }
@@ -370,6 +437,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onSelectedArtiItemResizeDragend = function($event, oArtifact) {
             console.log('resize dragging end!');
+
+            // oArtifact.imgWidth = oArtifact.originImgWidth*0.7*iPercent;
+            // oArtifact.imgHeight = oArtifact.originImgHeight*0.7*iPercent;
+            oArtifact.imgWidth = oArtifact.lastDraggingWidth;
+            oArtifact.imgHeight = oArtifact.lastDraggingHeight;
         };
 
         $scope.onTouched = function($event) {
@@ -398,11 +470,25 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             oArtifact.isEditting = true;
         };
 
-        // $scope.startDrag = function() {
-        //     var i = 0;
-        //     console.log("$scope start drag called.");
-        //     alert("$scope start drag called.");
-        // };
+        $scope.onRemoveArtifactItemClicked = function(oArtifact) {
+            var iTargetIdx = -1;
+            for (var i = 0; i < $scope.aSelectedArtifact.length; i++) {
+                if ($scope.aSelectedArtifact[i]._id === oArtifact._id) {
+                    iTargetIdx = i;
+                    break;
+                }
+            }
+
+            if (iTargetIdx !== -1) {
+                $scope.aSelectedArtifact.splice(iTargetIdx, 1);
+            }
+
+            $scope.updateAvailableAreaStyle();
+        };
+
+        $scope.onPreviewDesignBtnClicked = function() {
+
+        };
 }]);
 
 /*oCreateDesign.directive('designArtifact', ['$document', function($document) {

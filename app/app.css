@@ -135,6 +135,13 @@
   position: relative;
 }
 
+.createDetailView .selectedArtifactArea .availableArea {
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 140px;
+  left: 76px;
+}
+
 .createDetailView .selectedArtifactArea .selectedArtifactItem {
   position: absolute;
   top: 0px;
@@ -143,11 +150,11 @@
 
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemPencil,
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemResize {
-  font-size: 12px;
+  font-size: 18px;
   background-color: rgba(211, 144, 22, 0.5);
   padding: 5px 5px 5px 5px;
   display: inline;
-  border-radius: 12px;
+  border-radius: 18px;
   color: white;
   position: relative;
 }
@@ -158,6 +165,68 @@
   border-width: 2px;
   border-style: dotted;
   border-color: rgb(211, 144, 22);
+}
+
+.createDetailView .previewDesignBtn {
+  text-align: center;
+  position: fixed;
+  bottom: 35px;
+  height: 35px;
+  width: 100%;
+  background-color: rgba(207, 176, 96, 0.5);
+}
+
+.createDetailView .previewDesignBtn > span {
+  font-size: 25px;
+}
+
+.createDetailView .saveDetailView {
+  width: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 80px;
+  background-color: rgba(207, 176, 96, 0.8);
+  z-index: 1000;
+}
+
+.createDetailView .saveDetailView .saveSuccessTitle {
+  text-align: center;
+  margin-top: 10%;
+}
+
+.createDetailView .saveDetailView .saveSuccessTitle > span {
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+}
+
+.createDetailView .saveDetailView .designDescTitle {
+  margin-top: 8%;
+  margin-left: 20px;
+}
+
+.createDetailView .saveDetailView .designDescTitle > span {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.createDetailView .saveDetailView .designDescInput {
+  width: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 3%;
+}
+
+.createDetailView .saveDetailView .goToOrderBtn {
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
+  width: auto;
 }
 
 .royalButtonWrapper {
@@ -373,9 +442,9 @@
   float: right;
 }
 
-.saveDetailView > div:first-child {
+/*.saveDetailView > div:first-child {
   height: 100%;
-}
+}*/
 
 .saveDetailView .designDescriptionRow,
 .saveDetailView .saveDesignOptionRow,

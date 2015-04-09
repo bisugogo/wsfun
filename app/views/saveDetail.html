@@ -1,5 +1,20 @@
 <div class='row saveDetailView'>
-    <div ui-view="purchaseDesign">
+    <div class="saveSuccessTitle">
+        <span>新设计的独家新衣<br>成功保存</span>
+    </div>
+    <div class="designDescTitle">
+        <span class="designDescTitlePencil glyphicon glyphicon-pencil"></span>
+        <span>朕的批注</span>
+    </div>
+    <div class="designDescInput">
+        <input type="text" class="form-control" ng-model="designInfo.sDescription">
+    </div>
+    <div class="royalButtonWrapper goToOrderBtn">
+        <div class="btn btn-warning royalButton">
+            <span>下旨赶制</span>
+        </div>
+    </div>
+    <!--div ui-view="purchaseDesign">
         <div class='row headButtonRow'>
             <div class="col-xs-12">
                 <button class="btn btn-default glyphicon glyphicon-refresh" ng-click="onCreateDesignBackClicked()">Back</button>
@@ -46,5 +61,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div-->
 </div>
