@@ -275,7 +275,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
                     "left:" + iResizeLeft + "px;";
 
-                oArtifact.imgWidth = img.height*0.7;
+                oArtifact.imgWidth = img.width*0.7;
+                oArtifact.originImgWidth = img.width;
+                oArtifact.imgHeight = img.height*0.7;
+                oArtifact.originImgHeight = img.height;
+                oArtifact.lastDragDistance = 0;
 
                 $scope.aSelectedArtifact.push(oArtifact);
                 $state.go('^');
@@ -324,14 +328,48 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onSelectedArtiItemResizeDrag = function($event, oArtifact) {
-            console.log('resize dragging end!');
+            var iDistance = $event.distance;
 
-            // var iDistance = $event.distance;
-            // var iPercent = 1 - iDistance/1000000;
-            // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
-            //     "left:" + oArtifact.styleValue.left + "px;" + 
-            //     "width:" + oArtifact.imgWidth*iPercent + "px;";
-            // oArtifact.imgWidth = oArtifact.imgWidth*iPercent;
+            console.log('resize dragging' + iDistance);
+
+            var iDeltaDragDistance = iDistance - oArtifact.lastDragDistance;
+            if (iDeltaDragDistance > 10) {
+                var iPercent = 1 - iDistance/400;
+                oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                    "left:" + oArtifact.styleValue.left + "px;" + 
+                    "width:" + oArtifact.originImgWidth*0.7*iPercent + "px;";
+                //oArtifact.imgWidth = oArtifact.imgWidth*iPercent;
+                //oArtifact.imgHeight = oArtifact.imgHeight*iPercent;
+
+                var iResizeTop = oArtifact.styleValue.top - oArtifact.originImgHeight*0.7*iPercent/2 + 2;
+                var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                    "left:" + iResizeLeft + "px;";
+
+                console.log(oArtifact.styleStr);
+
+                oArtifact.lastDragDistance = $event.distance;
+            } else if (iDeltaDragDistance < -10) {
+                var iPercent = 1 - iDistance/400;
+                oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                    "left:" + oArtifact.styleValue.left + "px;" + 
+                    "width:" + oArtifact.originImgWidth*0.7*iPercent + "px;";
+                //oArtifact.imgWidth = oArtifact.originImgWidth*0.7*iPercent;
+                //oArtifact.imgHeight = oArtifact.originImgHeight*0.7*iPercent;
+
+                var iResizeTop = oArtifact.styleValue.top - oArtifact.originImgHeight*0.7*iPercent/2 + 2;
+                var iResizeLeft = oArtifact.styleValue.pencilLeft - 24;//Need to consider pencil width
+                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                    "left:" + iResizeLeft + "px;";
+
+                console.log(oArtifact.styleStr);
+
+                oArtifact.lastDragDistance = $event.distance;
+            }
+        };
+
+        $scope.onSelectedArtiItemResizeDragend = function($event, oArtifact) {
+            console.log('resize dragging end!');
         };
 
         $scope.onTouched = function($event) {
