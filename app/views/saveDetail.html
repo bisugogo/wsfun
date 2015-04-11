@@ -9,10 +9,20 @@
     <div class="designDescInput">
         <input type="text" class="form-control" ng-model="designInfo.sDescription">
     </div>
+    <div class="designAccess">
+        <label class="checkbox">
+            恩准他人使用
+            <input type="checkbox" ng-model="designInfo.bPublicDesign">
+        </label>
+    </div>
     <div class="royalButtonWrapper goToOrderBtn">
         <div class="btn btn-warning royalButton">
-            <span>下旨赶制</span>
+            <span ng-click="onOrderBtnClicked()">下旨赶制</span>
         </div>
+    </div>
+    <div class="naviBtnRow">
+        <span class="glyphicon glyphicon-chevron-left" ng-click="onBack2DesignDetailClicked()"></span>
+        <span class="glyphicon glyphicon-send"></span>
     </div>
     <!--div ui-view="purchaseDesign">
         <div class='row headButtonRow'>

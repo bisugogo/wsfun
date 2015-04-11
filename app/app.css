@@ -151,7 +151,7 @@
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemPencil,
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemResize {
   font-size: 18px;
-  background-color: rgba(211, 144, 22, 0.5);
+  background-color: rgba(176, 137, 67, 0.5);
   padding: 5px 5px 5px 5px;
   display: inline;
   border-radius: 18px;
@@ -164,7 +164,7 @@
   position: relative;
   border-width: 2px;
   border-style: dotted;
-  border-color: rgb(211, 144, 22);
+  border-color: rgb(176, 137, 67);
 }
 
 .createDetailView .previewDesignBtn {
@@ -188,7 +188,7 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 80px;
+  bottom: 0px;
   background-color: rgba(207, 176, 96, 0.8);
   z-index: 1000;
 }
@@ -222,6 +222,19 @@
   margin-top: 3%;
 }
 
+.createDetailView .saveDetailView .designAccess {
+  text-align: center;
+}
+
+.createDetailView .saveDetailView .designAccess > label {
+  color: white;
+  font-size: 16px;
+}
+
+.createDetailView .saveDetailView .designAccess > label > input {
+  margin-left: 0px;
+} 
+
 .createDetailView .saveDetailView .goToOrderBtn {
   margin-top: 10%;
   margin-left: 20%;
@@ -229,11 +242,107 @@
   width: auto;
 }
 
+.createDetailView .saveDetailView .naviBtnRow {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+.createDetailView .saveDetailView .naviBtnRow > span {
+  font-size: 25px;
+  color: rgb(176, 137, 67);
+}
+
+.createDetailView .saveDetailView .naviBtnRow > span:first-child {
+  float: left;
+  left: -25px;
+}
+
+.createDetailView .saveDetailView .naviBtnRow > span:nth-child(2) {
+  float: right;
+  left: 25px;
+}
+
+.createDetailView .orderDesignView {
+  width: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(207, 176, 96, 0.8);
+  z-index: 1000;
+}
+
+.createDetailView .orderDesignView .addressValueRow {
+  margin-top: 8%;
+}
+
+.createDetailView .orderDesignView .addressValueRow .addressTitle {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.createDetailView .orderDesignView .addressValueRow .addressValue,
+.createDetailView .orderDesignView .addressValueRow .editAddress {
+  text-align: center;
+}
+
+.createDetailView .orderDesignView .addressValueRow .addressValue > span {
+  font-size: 15px;
+  color: white;
+}
+
+.createDetailView .orderDesignView .addressValueRow .editAddress > span {
+  font-size: 18px;
+  color: white;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow {
+  width: 130%;
+  position: relative;
+  left: -15%;
+  height: 30%;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .leftAxis,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis {
+  position: absolute;
+  width: 15px;
+  height: 100%;
+  background-color: blue;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis {
+  left: calc(100% - 15px);
+  left: -webkit-calc(100% - 15px);
+  left: -moz-calc(100% - 15px);
+  left: -o-calc(100% - 15px);
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent {
+  position: absolute;
+  width: 15px;
+  height: 100%;
+  /* height: calc(100% - 50px); */
+  /* height: -webkit-calc(100% - 50px); */
+  width: calc(100% - 30px);
+  width: -webkit-calc(100% - 30px);
+  width: -moz-calc(100% - 30px);
+  width: -o-calc(100% - 30px);
+  left: 15px;
+  background-color: yellow;
+}
+
 .royalButtonWrapper {
   padding: 10px 15px 10px 15px;
   border-width: 2px;
   border-style: solid;
-  border-color: rgba(211, 144, 22, 0.5);
+  border-color: rgba(176, 137, 67, 0.5);
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -242,7 +351,7 @@
   overflow: hidden;
   position: relative;
   background-color: white;
-  border-color: rgb(211, 144, 22);
+  border-color: rgb(176, 137, 67);
   border-radius: 0px;
   border-width: 2px;
   width: 100%;
@@ -267,7 +376,7 @@
 }
 
 .royalButtonWrapper > .royalButton > span {
-  color: rgb(211, 144, 22);
+  color: rgb(176, 137, 67);
   font-size: large;
   font-weight: bold;
 }

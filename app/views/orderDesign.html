@@ -1,3 +1,25 @@
-<div class='row orderDesignView' ng-controller="OrderDesignCtrl">
-ORDER!
+<div class='row orderDesignView'>
+    <div ui-view="extraOrderInfo"></div>
+    <div class="addressValueRow">
+        <div class="addressTitle">【寝殿】：</div>
+        <div class="addressValue">
+            <span>上海市黄浦区1001号</span>
+        </div>
+        <div class="editAddress">
+            <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </div>
+    </div>
+    <div class="defaultOrderQuantityRow">
+        <div class="leftAxis">
+            <div class="axisTop"></div>
+            <div class="axisCenter"></div>
+            <div class="axisBottom"></div>
+        </div>
+        <div class="quantityContent">Order</div>
+        <div class="rightAxis">
+            <div class="axisTop"></div>
+            <div class="axisCenter"></div>
+            <div class="axisBottom"></div>
+        </div>
+    </div>
 </div>

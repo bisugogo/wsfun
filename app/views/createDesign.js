@@ -60,7 +60,19 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
             'saveDetail' : {
                 templateUrl: 'views/saveDetail.html',
                 controller: function($scope, $state, Design) {
-                    $scope.saveDetailtest = "this is test string in saveDetail.";
+                    //$scope.saveDetailtest = "this is test string in saveDetail.";
+                }
+            }
+        }
+    }).state('createDesign.createDetail.orderDesign', {
+        url: '/orderDesign',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'orderDesign' : {
+                templateUrl: 'views/orderDesign.html',
+                controller: function($scope, $state, Design) {
+                    //$scope.saveDetailtest = "this is test string in saveDetail.";
                 }
             }
         }
@@ -127,7 +139,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
         $scope.designInfo = {
             sCreatorId: 'MATT',
-            bPrivateDesign: true,
+            bPublicDesign: true,
             sDefaultDesc: new Date().toUTCString(),
             sBackgroundColor: '白',
             sSize: 'XL',
@@ -140,6 +152,10 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 width: 0,
                 height: 0,
                 styleStr: "visible:false;width:0px;height:0px;"
+            },
+            designToolArea: {
+                visible: true,
+                styleStr: ""
             }
         };
 
@@ -163,7 +179,18 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             // Design.DesignManager.create(oParam);
 
             //GO TO SAVE PAGE
+            $scope.updateDesignToolRow('saveDetailView');
             $state.go('createDesign.createDetail.saveDetail');
+        };
+
+        $scope.updateDesignToolRow = function(sTargeView) {
+            if (sTargeView === 'saveDetailView') {
+                $scope.htmlItemStyle.designToolArea.visible = false;
+                $scope.htmlItemStyle.designToolArea.styleStr = "display:none;";
+            } else if(sTargeView === 'designDetailView') {
+                $scope.htmlItemStyle.designToolArea.visible = true;
+                $scope.htmlItemStyle.designToolArea.styleStr = "";
+            }
         };
 
         $scope.deleteDesign = function (sId) {
@@ -488,6 +515,15 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onPreviewDesignBtnClicked = function() {
 
+        };
+
+        $scope.onBack2DesignDetailClicked = function() {
+            $scope.updateDesignToolRow('designDetailView');
+            $state.go('^');
+        };
+
+        $scope.onOrderBtnClicked = function() {
+            $state.go('createDesign.createDetail.orderDesign');
         };
 }]);
 

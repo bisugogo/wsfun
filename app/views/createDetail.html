@@ -8,6 +8,7 @@
 
         <div ui-view="personalGallery"></div>
         <div ui-view="saveDetail"></div>
+        <div ui-view="orderDesign"></div>
 
         <div class="selectedArtifactArea">
             <div class="availableArea" style="{{htmlItemStyle.availableArea.styleStr}}"></div>
@@ -47,10 +48,10 @@
             <img src="{{largeImgSrc}}">
         </div-->
 
-        <div class="previewDesignBtn" ng-click="onPreviewDesignBtnClicked()">
+        <div class="previewDesignBtn" style="{{htmlItemStyle.designToolArea.styleStr}}" ng-click="onPreviewDesignBtnClicked()">
             <span>好</span>
         </div>
-        <div class='row toolRow'>
+        <div class='row toolRow' style="{{htmlItemStyle.designToolArea.styleStr}}">
             <div class="col-xs-12">
                 <div class="col-xs-2">
                     <button type="button" class="btn btn-default" ng-click="onCreateDesignBackClicked()">Back</button>
