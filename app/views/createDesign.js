@@ -73,6 +73,23 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 templateUrl: 'views/orderDesign.html',
                 controller: function($scope, $state, Design) {
                     //$scope.saveDetailtest = "this is test string in saveDetail.";
+                    $scope.orderInfo = {
+                        defaultQuanaity: 1,
+                        defaultSize: '中',
+                        defaultQuantityAction: '加',
+                        totalPay: 1001,
+                        couponPay: 33
+                    };
+
+                    $scope.onIncreaseQuantity = function() {
+                        $scope.orderInfo.defaultQuanaity++;
+                    };
+
+                    $scope.onDecreaseQuantity = function() {
+                        if ($scope.orderInfo.defaultQuanaity > 0) {
+                            $scope.orderInfo.defaultQuanaity--;
+                        }
+                    }
                 }
             }
         }
@@ -524,6 +541,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onOrderBtnClicked = function() {
             $state.go('createDesign.createDetail.orderDesign');
+        };
+
+        $scope.onBack2SaveDetailClicked = function() {
+            $scope.updateDesignToolRow('designDetailView');
+            $state.go('^');
         };
 }]);
 

@@ -242,23 +242,27 @@
   width: auto;
 }
 
-.createDetailView .saveDetailView .naviBtnRow {
+.createDetailView .saveDetailView .naviBtnRow,
+.createDetailView .orderDesignView .naviBtnRow {
   position: absolute;
-  bottom: 0px;
+  bottom: 3px;
   width: 100%;
 }
 
-.createDetailView .saveDetailView .naviBtnRow > span {
+.createDetailView .saveDetailView .naviBtnRow > span,
+.createDetailView .orderDesignView .naviBtnRow > span {
   font-size: 25px;
   color: rgb(176, 137, 67);
 }
 
-.createDetailView .saveDetailView .naviBtnRow > span:first-child {
+.createDetailView .saveDetailView .naviBtnRow > span:first-child,
+.createDetailView .orderDesignView .naviBtnRow > span:first-child {
   float: left;
   left: -25px;
 }
 
-.createDetailView .saveDetailView .naviBtnRow > span:nth-child(2) {
+.createDetailView .saveDetailView .naviBtnRow > span:nth-child(2),
+.createDetailView .orderDesignView .naviBtnRow > span:nth-child(2) {
   float: right;
   left: 25px;
 }
@@ -277,7 +281,7 @@
 }
 
 .createDetailView .orderDesignView .addressValueRow {
-  margin-top: 8%;
+  margin-top: 5%;
 }
 
 .createDetailView .orderDesignView .addressValueRow .addressTitle {
@@ -306,7 +310,7 @@
   width: 130%;
   position: relative;
   left: -15%;
-  height: 30%;
+  height: 40%;
 }
 
 .createDetailView .orderDesignView .defaultOrderQuantityRow .leftAxis,
@@ -314,7 +318,41 @@
   position: absolute;
   width: 15px;
   height: 100%;
-  background-color: blue;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .leftAxis > .axisTop,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis > .axisTop,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .leftAxis > .axisBottom,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis > .axisBottom {
+  height: 5px;
+  background-color: rgb(176, 137, 67);
+  margin-left: 3px;
+  margin-right: 3px;
+  width: auto;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .leftAxis > .axisCenter,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis > .axisCenter {
+  background-color: white;
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-color: rgb(176, 137, 67);
+  height: calc(100% - 10px);
+  height: -webkit-calc(100% - 10px);
+  height: -moz-calc(100% - 10px);
+  height: -o-calc(100% - 10px);
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .leftAxis > .axisCenter {
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis > .axisCenter {
+  border-right-width: 2px;
+  border-right-style: solid;
 }
 
 .createDetailView .orderDesignView .defaultOrderQuantityRow .rightAxis {
@@ -326,16 +364,193 @@
 
 .createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent {
   position: absolute;
-  width: 15px;
-  height: 100%;
-  /* height: calc(100% - 50px); */
-  /* height: -webkit-calc(100% - 50px); */
+  height: calc(100% - 10px);
+  height: -webkit-calc(100% - 10px);
+  height: -moz-calc(100% - 10px);
+  height: -o-calc(100% - 10px);
   width: calc(100% - 30px);
   width: -webkit-calc(100% - 30px);
   width: -moz-calc(100% - 30px);
   width: -o-calc(100% - 30px);
   left: 15px;
-  background-color: yellow;
+  top: 5px;
+  background-color: rgb(176, 137, 67);
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > div {
+  width: 10px;
+  word-wrap: break-word;
+  display: inline-block;
+  position: absolute;
+  line-height: 15px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .timeFootage {
+  top: 5px;
+  left: 3%;
+  line-height: 10px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .timeFootage > span {
+  font-size: 12px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .qinci {
+  top: 40%;
+  left: 8%;
+  line-height: 20px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .qinci > span {
+  font-size: 15px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .miling {
+  top: 5%;
+  left: 16%;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .sizeAndQuantity {
+  top: 5%;
+  width: 45%;
+  left: 25%;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .summary {
+  top: 10%;
+  left: 74%;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .summary > span {
+  color: white;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .zhaoyue {
+  top: 5%;
+  left: 82%;
+  line-height: 16px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .zhaoyue > span {
+  font-size: 16px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .shengzhi {
+  top: 35%;
+  left: 89%;
+  line-height: 25px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent > .shengzhi > span {
+  font-size: 22px;
+  color: white;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeTitle,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .quantityTitle,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions {
+  text-align: right;
+  margin-top: 5px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions > label,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions > label {
+  padding: 2px 2px 2px 2px;
+  border-radius: 0px;
+  border: 1px solid white;
+  width: 22%;
+  background-color: rgb(176, 137, 67);
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions > label.active,
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions > label.active {
+  background-color: rgb(229, 169, 59);
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions > label:first-child {
+  width: 25%;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions > label:nth-child(2) {
+  border: none;
+  text-align: center;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions > input {
+  width: 35px;
+  text-align: center;
+  background-color: rgb(203, 152, 72);
+  color: white;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .moreOrders {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.createDetailView .orderDesignView .defaultOrderQuantityRow .quantityContent .moreOrders > span {
+  padding: 3px 3px 3px 3px;
+  border-radius: 15px;
+  background-color: white;
+  font-size: 15px;
+  color: rgb(176, 137, 67);
+}
+
+.createDetailView .orderDesignView .payOptionRow {
+  margin-top: 10%;
+}
+
+.createDetailView .orderDesignView .payOptionRow > div {
+  position: absolute;
+}
+
+.createDetailView .orderDesignView .payOptionRow .paySource,
+.createDetailView .orderDesignView .payOptionRow .payTotalArea,
+.createDetailView .orderDesignView .payOptionRow .payCoupon {
+  width: 33%;
+}
+
+.createDetailView .orderDesignView .payOptionRow .paySourceDiv,
+.createDetailView .orderDesignView .payOptionRow .payCouponDiv {
+  width: 15px;
+  line-height: 13px;
+  position: relative;
+  left: calc(50% - 7px);
+  left: -webkit-calc(50% - 7px);
+  left: -moz-calc(50% - 7px);
+  left: -o-calc(50% - 7px);
+}
+
+.createDetailView .orderDesignView .payOptionRow .paySourceDiv > span,
+.createDetailView .orderDesignView .payOptionRow .payCouponDiv > span,
+.createDetailView .orderDesignView .payOptionRow .payTotalArea > span {
+  color: white;
+}
+
+.createDetailView .orderDesignView .payOptionRow .payTotalArea {
+  left: 33%;
+  width: 33%;
+  text-align: center;
+}
+
+.createDetailView .orderDesignView .payOptionRow .payCoupon {
+  left: 66%;
+}
+
+.createDetailView .orderDesignView .payOptionRow .royalButtonWrapper.payButton {
+  margin-left: 20%;
+  margin-right: 20%;
+  width: auto;
+  padding: 5px 5px 5px 5px;
+}
+
+.createDetailView .orderDesignView .payOptionRow .royalButtonWrapper.payButton > .royalButton {
+  word-wrap: break-word;
+  line-height: 18px;
+  white-space: initial;
+  padding: initial;
+  width: 30px;
 }
 
 .royalButtonWrapper {

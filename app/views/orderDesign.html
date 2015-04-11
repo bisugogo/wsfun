@@ -15,11 +15,78 @@
             <div class="axisCenter"></div>
             <div class="axisBottom"></div>
         </div>
-        <div class="quantityContent">Order</div>
+        <div class="quantityContent">
+            <div class="timeFootage">
+                <span>公元2015年4月15日</span>
+            </div>
+            <div class="qinci">
+                <span>钦此</span>
+            </div>
+            <div class="miling">
+                <span>令内务府加紧赶制</span>
+            </div>
+            <div class="sizeAndQuantity">
+                <div class="sizeTitle">
+                    <span>尺码</span>
+                </div>
+                <div class="sizeOptions">
+                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'极小'">极小</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'小'">小</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'中'">中</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'大'">大</label>
+                </div>
+                <div class="quantityTitle">
+                    <span>数量</span>
+                </div>
+                <div class="sizeActions">
+                    <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'加'" 
+                    ng-click="onIncreaseQuantity()">加</label>
+                    <input type="text" ng-model="orderInfo.defaultQuanaity"></input>
+                    <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'减'" 
+                    ng-click="onDecreaseQuantity()">减</label>
+                </div>
+                <div class="moreOrders">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </div>
+            </div>
+            <div class="summary">
+                <span>女士白色短袖T恤</span>
+            </div>
+            <div class="zhaoyue">
+                <span>奉天承运 皇帝诏曰</span>
+            </div>
+            <div class="shengzhi">
+                <span>圣 旨</span>
+            </div>
+        </div>
         <div class="rightAxis">
             <div class="axisTop"></div>
             <div class="axisCenter"></div>
             <div class="axisBottom"></div>
         </div>
+    </div>
+    <div class="payOptionRow">
+        <div class="paySource">
+            <div class="paySourceDiv">
+                <span>已选银库：微信支付</span>
+            </div>
+        </div>
+        <div class="payTotalArea">
+            <span class="payTotalCount">金额：{{orderInfo.totalPay}}</span>
+            <div class="royalButtonWrapper payButton">
+                <div class="btn btn-warning royalButton">
+                    <span ng-click="onOrderBtnClicked()">国库拨款</span>
+                </div>
+            </div>
+        </div>
+        <div class="payCoupon">
+            <div class="payCouponDiv">
+                <span>已用制衣券：{{orderInfo.couponPay}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="naviBtnRow">
+        <span class="glyphicon glyphicon-chevron-left" ng-click="onBack2SaveDetailClicked()"></span>
+        <span class="glyphicon glyphicon-send"></span>
     </div>
 </div>
