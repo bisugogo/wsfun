@@ -8,6 +8,10 @@ oUIDataServices.factory('UIData', [
         //     return oGetParam;
         // }
         var oUIData = {};
+        var oAPPData = {
+            APP_ID : 'wxf26855bd0cda23bd',
+            BIZ_ID : '1232336702'
+        };
 
         return {
             // getGetParam: function(){
@@ -24,6 +28,10 @@ oUIDataServices.factory('UIData', [
 
             getData: function(key) {
                 return oUIData[key];
+            },
+
+            getAppData: function() {
+                return oAPPData;
             }
         };
 }]);

@@ -17,6 +17,7 @@
     "ng-file-upload": "latest",
     "angular-carousel": "latest",
     "angular-dragdrop": "latest",
-    "angular-gestures": "latest"
+    "angular-gestures": "latest",
+    "angular-md5": "latest"
   }
 }

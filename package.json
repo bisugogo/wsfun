@@ -19,7 +19,8 @@
     "passport-wechat": "0.1.2",
     "passport": "latest",
     "gridfs-stream": "latest",
-    "gm": "latest"
+    "gm": "latest",
+    "node-xml-lite": "latest"
   },
   "scripts": {
     "postinstall": "bower install",

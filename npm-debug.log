@@ -1,64 +1,631 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
-1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'install',
-1 verbose cli   'gm' ]
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.36
-4 verbose readDependencies using package.json deps
-5 verbose cache add [ 'gm', null ]
-6 verbose cache add name=undefined spec="gm" args=["gm",null]
-7 verbose parsed url { protocol: null,
-7 verbose parsed url   slashes: null,
-7 verbose parsed url   auth: null,
-7 verbose parsed url   host: null,
-7 verbose parsed url   port: null,
-7 verbose parsed url   hostname: null,
-7 verbose parsed url   hash: null,
-7 verbose parsed url   search: null,
-7 verbose parsed url   query: null,
-7 verbose parsed url   pathname: 'gm',
-7 verbose parsed url   path: 'gm',
-7 verbose parsed url   href: 'gm' }
-8 silly lockFile d2d359e4-gm gm
-9 verbose lock gm C:\Users\I300357\AppData\Roaming\npm-cache\d2d359e4-gm.lock
-10 silly lockFile d2d359e4-gm gm
-11 silly lockFile d2d359e4-gm gm
-12 verbose addNamed [ 'gm', '' ]
-13 verbose addNamed [ null, '*' ]
-14 silly lockFile 26e550d6-gm gm@
-15 verbose lock gm@ C:\Users\I300357\AppData\Roaming\npm-cache\26e550d6-gm.lock
-16 silly addNameRange { name: 'gm', range: '*', hasData: false }
-17 verbose request where is /gm
-18 verbose request registry http://registry.npmjs.org/
-19 verbose request id 29c772d41e59d7fa
-20 verbose url raw /gm
-21 verbose url resolving [ 'http://registry.npmjs.org/', './gm' ]
-22 verbose url resolved http://registry.npmjs.org/gm
-23 verbose request where is http://registry.npmjs.org/gm
-24 info trying registry request attempt 1 at 14:27:35
-25 http GET http://registry.npmjs.org/gm
-26 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
-27 info trying registry request attempt 2 at 14:27:45
-28 http GET http://registry.npmjs.org/gm
-29 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
-30 info trying registry request attempt 3 at 14:28:45
-31 http GET http://registry.npmjs.org/gm
-32 silly lockFile 26e550d6-gm gm@
-33 silly lockFile 26e550d6-gm gm@
-34 error network getaddrinfo ENOTFOUND
-34 error network This is most likely not a problem with npm itself
-34 error network and is related to network connectivity.
-34 error network In most cases you are behind a proxy or have bad network settings.
-34 error network
-34 error network If you are behind a proxy, please make sure that the
-34 error network 'proxy' config is set properly.  See: 'npm help config'
-35 error System Windows_NT 6.1.7601
-36 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "gm"
-37 error cwd C:\Users\I300357\Documents\GitHub\wsfun
-38 error node -v v0.10.36
-39 error npm -v 1.4.28
-40 error syscall getaddrinfo
-41 error code ENOTFOUND
-42 error errno ENOTFOUND
-43 verbose exit [ 1, true ]
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ 'C:\\Users\\I300357\\Documents\\GitHub\\wsfun',
+6 verbose install   [ 'body-parser',
+6 verbose install     'method-override',
+6 verbose install     'morgan',
+6 verbose install     'connect-multiparty',
+6 verbose install     'express',
+6 verbose install     'mongoose',
+6 verbose install     'karma',
+6 verbose install     'protractor',
+6 verbose install     'http-server',
+6 verbose install     'bower',
+6 verbose install     'shelljs',
+6 verbose install     'karma-junit-reporter',
+6 verbose install     'bootstrap',
+6 verbose install     'wechat',
+6 verbose install     'passport-wechat',
+6 verbose install     'passport',
+6 verbose install     'gridfs-stream',
+6 verbose install     'gm',
+6 verbose install     'node-xml-lite' ] ]
+7 info preinstall angular-seed@0.0.0
+8 verbose readDependencies using package.json deps
+9 verbose cache add [ 'gm@latest', null ]
+10 verbose cache add name=undefined spec="gm@latest" args=["gm@latest",null]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: 'gm@latest',
+11 verbose parsed url   path: 'gm@latest',
+11 verbose parsed url   href: 'gm@latest' }
+12 verbose cache add [ 'node-xml-lite@latest', null ]
+13 verbose cache add name=undefined spec="node-xml-lite@latest" args=["node-xml-lite@latest",null]
+14 verbose parsed url { protocol: null,
+14 verbose parsed url   slashes: null,
+14 verbose parsed url   auth: null,
+14 verbose parsed url   host: null,
+14 verbose parsed url   port: null,
+14 verbose parsed url   hostname: null,
+14 verbose parsed url   hash: null,
+14 verbose parsed url   search: null,
+14 verbose parsed url   query: null,
+14 verbose parsed url   pathname: 'node-xml-lite@latest',
+14 verbose parsed url   path: 'node-xml-lite@latest',
+14 verbose parsed url   href: 'node-xml-lite@latest' }
+15 verbose cache add name="gm" spec="latest" args=["gm","latest"]
+16 verbose parsed url { protocol: null,
+16 verbose parsed url   slashes: null,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: null,
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: null,
+16 verbose parsed url   hash: null,
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: 'latest',
+16 verbose parsed url   path: 'latest',
+16 verbose parsed url   href: 'latest' }
+17 verbose addNamed [ 'gm', 'latest' ]
+18 verbose addNamed [ null, null ]
+19 verbose cache add name="node-xml-lite" spec="latest" args=["node-xml-lite","latest"]
+20 verbose parsed url { protocol: null,
+20 verbose parsed url   slashes: null,
+20 verbose parsed url   auth: null,
+20 verbose parsed url   host: null,
+20 verbose parsed url   port: null,
+20 verbose parsed url   hostname: null,
+20 verbose parsed url   hash: null,
+20 verbose parsed url   search: null,
+20 verbose parsed url   query: null,
+20 verbose parsed url   pathname: 'latest',
+20 verbose parsed url   path: 'latest',
+20 verbose parsed url   href: 'latest' }
+21 verbose addNamed [ 'node-xml-lite', 'latest' ]
+22 verbose addNamed [ null, null ]
+23 silly lockFile 074a695e-gm-latest gm@latest
+24 verbose lock gm@latest C:\Users\I300357\AppData\Roaming\npm-cache\074a695e-gm-latest.lock
+25 silly lockFile 4ac9ef9c-node-xml-lite-latest node-xml-lite@latest
+26 verbose lock node-xml-lite@latest C:\Users\I300357\AppData\Roaming\npm-cache\4ac9ef9c-node-xml-lite-latest.lock
+27 info addNameTag [ 'gm', 'latest' ]
+28 info addNameTag [ 'node-xml-lite', 'latest' ]
+29 verbose request where is /gm
+30 verbose request registry http://registry.npmjs.org/
+31 verbose request id 130a848c94d7fc51
+32 verbose url raw /gm
+33 verbose url resolving [ 'http://registry.npmjs.org/', './gm' ]
+34 verbose url resolved http://registry.npmjs.org/gm
+35 verbose request where is http://registry.npmjs.org/gm
+36 info trying registry request attempt 1 at 23:12:41
+37 verbose etag "6II1TY9YQHDNRK41C42TBR8LD"
+38 http GET http://registry.npmjs.org/gm
+39 verbose already installed skipping body-parser@^1.11.0 C:\Users\I300357\Documents\GitHub\wsfun
+40 verbose already installed skipping method-override@^2.3.1 C:\Users\I300357\Documents\GitHub\wsfun
+41 verbose already installed skipping morgan@^1.5.1 C:\Users\I300357\Documents\GitHub\wsfun
+42 verbose cache add [ 'connect-multiparty@latest', null ]
+43 verbose cache add name=undefined spec="connect-multiparty@latest" args=["connect-multiparty@latest",null]
+44 verbose parsed url { protocol: null,
+44 verbose parsed url   slashes: null,
+44 verbose parsed url   auth: null,
+44 verbose parsed url   host: null,
+44 verbose parsed url   port: null,
+44 verbose parsed url   hostname: null,
+44 verbose parsed url   hash: null,
+44 verbose parsed url   search: null,
+44 verbose parsed url   query: null,
+44 verbose parsed url   pathname: 'connect-multiparty@latest',
+44 verbose parsed url   path: 'connect-multiparty@latest',
+44 verbose parsed url   href: 'connect-multiparty@latest' }
+45 verbose cache add [ 'express@latest', null ]
+46 verbose cache add name=undefined spec="express@latest" args=["express@latest",null]
+47 verbose parsed url { protocol: null,
+47 verbose parsed url   slashes: null,
+47 verbose parsed url   auth: null,
+47 verbose parsed url   host: null,
+47 verbose parsed url   port: null,
+47 verbose parsed url   hostname: null,
+47 verbose parsed url   hash: null,
+47 verbose parsed url   search: null,
+47 verbose parsed url   query: null,
+47 verbose parsed url   pathname: 'express@latest',
+47 verbose parsed url   path: 'express@latest',
+47 verbose parsed url   href: 'express@latest' }
+48 verbose cache add [ 'mongoose@latest', null ]
+49 verbose cache add name=undefined spec="mongoose@latest" args=["mongoose@latest",null]
+50 verbose parsed url { protocol: null,
+50 verbose parsed url   slashes: null,
+50 verbose parsed url   auth: null,
+50 verbose parsed url   host: null,
+50 verbose parsed url   port: null,
+50 verbose parsed url   hostname: null,
+50 verbose parsed url   hash: null,
+50 verbose parsed url   search: null,
+50 verbose parsed url   query: null,
+50 verbose parsed url   pathname: 'mongoose@latest',
+50 verbose parsed url   path: 'mongoose@latest',
+50 verbose parsed url   href: 'mongoose@latest' }
+51 verbose already installed skipping karma@~0.10 C:\Users\I300357\Documents\GitHub\wsfun
+52 verbose already installed skipping protractor@^1.1.1 C:\Users\I300357\Documents\GitHub\wsfun
+53 verbose already installed skipping http-server@^0.6.1 C:\Users\I300357\Documents\GitHub\wsfun
+54 verbose already installed skipping bower@^1.3.1 C:\Users\I300357\Documents\GitHub\wsfun
+55 verbose already installed skipping shelljs@^0.2.6 C:\Users\I300357\Documents\GitHub\wsfun
+56 verbose already installed skipping karma-junit-reporter@^0.2.2 C:\Users\I300357\Documents\GitHub\wsfun
+57 verbose cache add [ 'bootstrap@latest', null ]
+58 verbose cache add name=undefined spec="bootstrap@latest" args=["bootstrap@latest",null]
+59 verbose parsed url { protocol: null,
+59 verbose parsed url   slashes: null,
+59 verbose parsed url   auth: null,
+59 verbose parsed url   host: null,
+59 verbose parsed url   port: null,
+59 verbose parsed url   hostname: null,
+59 verbose parsed url   hash: null,
+59 verbose parsed url   search: null,
+59 verbose parsed url   query: null,
+59 verbose parsed url   pathname: 'bootstrap@latest',
+59 verbose parsed url   path: 'bootstrap@latest',
+59 verbose parsed url   href: 'bootstrap@latest' }
+60 verbose cache add name="connect-multiparty" spec="latest" args=["connect-multiparty","latest"]
+61 verbose parsed url { protocol: null,
+61 verbose parsed url   slashes: null,
+61 verbose parsed url   auth: null,
+61 verbose parsed url   host: null,
+61 verbose parsed url   port: null,
+61 verbose parsed url   hostname: null,
+61 verbose parsed url   hash: null,
+61 verbose parsed url   search: null,
+61 verbose parsed url   query: null,
+61 verbose parsed url   pathname: 'latest',
+61 verbose parsed url   path: 'latest',
+61 verbose parsed url   href: 'latest' }
+62 verbose addNamed [ 'connect-multiparty', 'latest' ]
+63 verbose addNamed [ null, null ]
+64 silly lockFile 3e885bdc-connect-multiparty-latest connect-multiparty@latest
+65 verbose lock connect-multiparty@latest C:\Users\I300357\AppData\Roaming\npm-cache\3e885bdc-connect-multiparty-latest.lock
+66 verbose cache add name="express" spec="latest" args=["express","latest"]
+67 verbose parsed url { protocol: null,
+67 verbose parsed url   slashes: null,
+67 verbose parsed url   auth: null,
+67 verbose parsed url   host: null,
+67 verbose parsed url   port: null,
+67 verbose parsed url   hostname: null,
+67 verbose parsed url   hash: null,
+67 verbose parsed url   search: null,
+67 verbose parsed url   query: null,
+67 verbose parsed url   pathname: 'latest',
+67 verbose parsed url   path: 'latest',
+67 verbose parsed url   href: 'latest' }
+68 verbose addNamed [ 'express', 'latest' ]
+69 verbose addNamed [ null, null ]
+70 silly lockFile c30a01ab-express-latest express@latest
+71 verbose lock express@latest C:\Users\I300357\AppData\Roaming\npm-cache\c30a01ab-express-latest.lock
+72 verbose cache add name="mongoose" spec="latest" args=["mongoose","latest"]
+73 verbose parsed url { protocol: null,
+73 verbose parsed url   slashes: null,
+73 verbose parsed url   auth: null,
+73 verbose parsed url   host: null,
+73 verbose parsed url   port: null,
+73 verbose parsed url   hostname: null,
+73 verbose parsed url   hash: null,
+73 verbose parsed url   search: null,
+73 verbose parsed url   query: null,
+73 verbose parsed url   pathname: 'latest',
+73 verbose parsed url   path: 'latest',
+73 verbose parsed url   href: 'latest' }
+74 verbose addNamed [ 'mongoose', 'latest' ]
+75 verbose addNamed [ null, null ]
+76 silly lockFile 73e949f4-mongoose-latest mongoose@latest
+77 verbose lock mongoose@latest C:\Users\I300357\AppData\Roaming\npm-cache\73e949f4-mongoose-latest.lock
+78 verbose cache add name="bootstrap" spec="latest" args=["bootstrap","latest"]
+79 verbose parsed url { protocol: null,
+79 verbose parsed url   slashes: null,
+79 verbose parsed url   auth: null,
+79 verbose parsed url   host: null,
+79 verbose parsed url   port: null,
+79 verbose parsed url   hostname: null,
+79 verbose parsed url   hash: null,
+79 verbose parsed url   search: null,
+79 verbose parsed url   query: null,
+79 verbose parsed url   pathname: 'latest',
+79 verbose parsed url   path: 'latest',
+79 verbose parsed url   href: 'latest' }
+80 verbose addNamed [ 'bootstrap', 'latest' ]
+81 verbose addNamed [ null, null ]
+82 silly lockFile 77e03313-bootstrap-latest bootstrap@latest
+83 verbose lock bootstrap@latest C:\Users\I300357\AppData\Roaming\npm-cache\77e03313-bootstrap-latest.lock
+84 verbose request where is /node-xml-lite
+85 verbose request registry http://registry.npmjs.org/
+86 verbose url raw /node-xml-lite
+87 verbose url resolving [ 'http://registry.npmjs.org/', './node-xml-lite' ]
+88 verbose url resolved http://registry.npmjs.org/node-xml-lite
+89 verbose request where is http://registry.npmjs.org/node-xml-lite
+90 info trying registry request attempt 1 at 23:12:41
+91 verbose etag "NYUC2ATSAFQ5YFKZ0ZMVXD13"
+92 http GET http://registry.npmjs.org/node-xml-lite
+93 info addNameTag [ 'express', 'latest' ]
+94 verbose already installed skipping wechat@1.2.1 C:\Users\I300357\Documents\GitHub\wsfun
+95 verbose already installed skipping passport-wechat@0.1.2 C:\Users\I300357\Documents\GitHub\wsfun
+96 verbose cache add [ 'passport@latest', null ]
+97 verbose cache add name=undefined spec="passport@latest" args=["passport@latest",null]
+98 verbose parsed url { protocol: null,
+98 verbose parsed url   slashes: null,
+98 verbose parsed url   auth: null,
+98 verbose parsed url   host: null,
+98 verbose parsed url   port: null,
+98 verbose parsed url   hostname: null,
+98 verbose parsed url   hash: null,
+98 verbose parsed url   search: null,
+98 verbose parsed url   query: null,
+98 verbose parsed url   pathname: 'passport@latest',
+98 verbose parsed url   path: 'passport@latest',
+98 verbose parsed url   href: 'passport@latest' }
+99 verbose cache add [ 'gridfs-stream@latest', null ]
+100 verbose cache add name=undefined spec="gridfs-stream@latest" args=["gridfs-stream@latest",null]
+101 verbose parsed url { protocol: null,
+101 verbose parsed url   slashes: null,
+101 verbose parsed url   auth: null,
+101 verbose parsed url   host: null,
+101 verbose parsed url   port: null,
+101 verbose parsed url   hostname: null,
+101 verbose parsed url   hash: null,
+101 verbose parsed url   search: null,
+101 verbose parsed url   query: null,
+101 verbose parsed url   pathname: 'gridfs-stream@latest',
+101 verbose parsed url   path: 'gridfs-stream@latest',
+101 verbose parsed url   href: 'gridfs-stream@latest' }
+102 info addNameTag [ 'connect-multiparty', 'latest' ]
+103 info addNameTag [ 'mongoose', 'latest' ]
+104 info addNameTag [ 'bootstrap', 'latest' ]
+105 verbose cache add name="passport" spec="latest" args=["passport","latest"]
+106 verbose parsed url { protocol: null,
+106 verbose parsed url   slashes: null,
+106 verbose parsed url   auth: null,
+106 verbose parsed url   host: null,
+106 verbose parsed url   port: null,
+106 verbose parsed url   hostname: null,
+106 verbose parsed url   hash: null,
+106 verbose parsed url   search: null,
+106 verbose parsed url   query: null,
+106 verbose parsed url   pathname: 'latest',
+106 verbose parsed url   path: 'latest',
+106 verbose parsed url   href: 'latest' }
+107 verbose addNamed [ 'passport', 'latest' ]
+108 verbose addNamed [ null, null ]
+109 silly lockFile 771f2547-passport-latest passport@latest
+110 verbose lock passport@latest C:\Users\I300357\AppData\Roaming\npm-cache\771f2547-passport-latest.lock
+111 verbose cache add name="gridfs-stream" spec="latest" args=["gridfs-stream","latest"]
+112 verbose parsed url { protocol: null,
+112 verbose parsed url   slashes: null,
+112 verbose parsed url   auth: null,
+112 verbose parsed url   host: null,
+112 verbose parsed url   port: null,
+112 verbose parsed url   hostname: null,
+112 verbose parsed url   hash: null,
+112 verbose parsed url   search: null,
+112 verbose parsed url   query: null,
+112 verbose parsed url   pathname: 'latest',
+112 verbose parsed url   path: 'latest',
+112 verbose parsed url   href: 'latest' }
+113 verbose addNamed [ 'gridfs-stream', 'latest' ]
+114 verbose addNamed [ null, null ]
+115 silly lockFile 7d4c030f-gridfs-stream-latest gridfs-stream@latest
+116 verbose lock gridfs-stream@latest C:\Users\I300357\AppData\Roaming\npm-cache\7d4c030f-gridfs-stream-latest.lock
+117 info addNameTag [ 'passport', 'latest' ]
+118 verbose request where is /express
+119 verbose request registry http://registry.npmjs.org/
+120 verbose url raw /express
+121 verbose url resolving [ 'http://registry.npmjs.org/', './express' ]
+122 verbose url resolved http://registry.npmjs.org/express
+123 verbose request where is http://registry.npmjs.org/express
+124 info trying registry request attempt 1 at 23:12:41
+125 verbose etag "F2J5MEHNOTZMSKX5K7I45I27F"
+126 http GET http://registry.npmjs.org/express
+127 info addNameTag [ 'gridfs-stream', 'latest' ]
+128 verbose request where is /connect-multiparty
+129 verbose request registry http://registry.npmjs.org/
+130 verbose url raw /connect-multiparty
+131 verbose url resolving [ 'http://registry.npmjs.org/', './connect-multiparty' ]
+132 verbose url resolved http://registry.npmjs.org/connect-multiparty
+133 verbose request where is http://registry.npmjs.org/connect-multiparty
+134 info trying registry request attempt 1 at 23:12:41
+135 verbose etag "6OSKHGT3Z9ZP5AW9WAO0LKKGG"
+136 http GET http://registry.npmjs.org/connect-multiparty
+137 verbose request where is /mongoose
+138 verbose request registry http://registry.npmjs.org/
+139 verbose url raw /mongoose
+140 verbose url resolving [ 'http://registry.npmjs.org/', './mongoose' ]
+141 verbose url resolved http://registry.npmjs.org/mongoose
+142 verbose request where is http://registry.npmjs.org/mongoose
+143 info trying registry request attempt 1 at 23:12:41
+144 verbose etag "3YLT5X4UHW52W4VVU1FR0D9CQ"
+145 http GET http://registry.npmjs.org/mongoose
+146 verbose request where is /bootstrap
+147 verbose request registry http://registry.npmjs.org/
+148 verbose url raw /bootstrap
+149 verbose url resolving [ 'http://registry.npmjs.org/', './bootstrap' ]
+150 verbose url resolved http://registry.npmjs.org/bootstrap
+151 verbose request where is http://registry.npmjs.org/bootstrap
+152 info trying registry request attempt 1 at 23:12:41
+153 verbose etag "AIT17F5GYY57AYUMSRKUK9FKW"
+154 http GET http://registry.npmjs.org/bootstrap
+155 verbose request where is /passport
+156 verbose request registry http://registry.npmjs.org/
+157 verbose url raw /passport
+158 verbose url resolving [ 'http://registry.npmjs.org/', './passport' ]
+159 verbose url resolved http://registry.npmjs.org/passport
+160 verbose request where is http://registry.npmjs.org/passport
+161 info trying registry request attempt 1 at 23:12:41
+162 verbose etag "7C9768L2JL94AX5UGY08MN6DH"
+163 http GET http://registry.npmjs.org/passport
+164 verbose request where is /gridfs-stream
+165 verbose request registry http://registry.npmjs.org/
+166 verbose url raw /gridfs-stream
+167 verbose url resolving [ 'http://registry.npmjs.org/', './gridfs-stream' ]
+168 verbose url resolved http://registry.npmjs.org/gridfs-stream
+169 verbose request where is http://registry.npmjs.org/gridfs-stream
+170 info trying registry request attempt 1 at 23:12:41
+171 verbose etag "CUPJ49HQWLTJBE8BI2YTLA5K0"
+172 http GET http://registry.npmjs.org/gridfs-stream
+173 http 304 http://registry.npmjs.org/node-xml-lite
+174 silly registry.get cb [ 304,
+174 silly registry.get   { date: 'Sun, 12 Apr 2015 15:12:39 GMT',
+174 silly registry.get     via: '1.1 varnish',
+174 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:12:39 GMT',
+174 silly registry.get     'cache-control': 'max-age=60',
+174 silly registry.get     etag: '"NYUC2ATSAFQ5YFKZ0ZMVXD13"',
+174 silly registry.get     age: '0',
+174 silly registry.get     connection: 'keep-alive',
+174 silly registry.get     'x-served-by': 'cache-nrt6127-NRT',
+174 silly registry.get     'x-cache': 'HIT',
+174 silly registry.get     'x-cache-hits': '1',
+174 silly registry.get     'x-timer': 'S1428851559.880357,VS0,VE109',
+174 silly registry.get     vary: 'Accept' } ]
+175 verbose etag http://registry.npmjs.org/node-xml-lite from cache
+176 verbose addNamed [ 'node-xml-lite', '0.0.3' ]
+177 verbose addNamed [ '0.0.3', '0.0.3' ]
+178 silly lockFile 84da22fb-node-xml-lite-0-0-3 node-xml-lite@0.0.3
+179 verbose lock node-xml-lite@0.0.3 C:\Users\I300357\AppData\Roaming\npm-cache\84da22fb-node-xml-lite-0-0-3.lock
+180 silly lockFile 84da22fb-node-xml-lite-0-0-3 node-xml-lite@0.0.3
+181 silly lockFile 84da22fb-node-xml-lite-0-0-3 node-xml-lite@0.0.3
+182 silly lockFile 4ac9ef9c-node-xml-lite-latest node-xml-lite@latest
+183 silly lockFile 4ac9ef9c-node-xml-lite-latest node-xml-lite@latest
+184 info already installed node-xml-lite@0.0.3
+185 http 304 http://registry.npmjs.org/gm
+186 silly registry.get cb [ 304,
+186 silly registry.get   { date: 'Sun, 12 Apr 2015 15:12:40 GMT',
+186 silly registry.get     via: '1.1 varnish',
+186 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:12:40 GMT',
+186 silly registry.get     'cache-control': 'max-age=60',
+186 silly registry.get     etag: '"6II1TY9YQHDNRK41C42TBR8LD"',
+186 silly registry.get     age: '0',
+186 silly registry.get     connection: 'keep-alive',
+186 silly registry.get     'x-served-by': 'cache-nrt6130-NRT',
+186 silly registry.get     'x-cache': 'HIT',
+186 silly registry.get     'x-cache-hits': '1',
+186 silly registry.get     'x-timer': 'S1428851560.001382,VS0,VE413',
+186 silly registry.get     vary: 'Accept' } ]
+187 verbose etag http://registry.npmjs.org/gm from cache
+188 verbose addNamed [ 'gm', '1.17.0' ]
+189 verbose addNamed [ '1.17.0', '1.17.0' ]
+190 silly lockFile fbfc84fd-gm-1-17-0 gm@1.17.0
+191 verbose lock gm@1.17.0 C:\Users\I300357\AppData\Roaming\npm-cache\fbfc84fd-gm-1-17-0.lock
+192 silly lockFile fbfc84fd-gm-1-17-0 gm@1.17.0
+193 silly lockFile fbfc84fd-gm-1-17-0 gm@1.17.0
+194 silly lockFile 074a695e-gm-latest gm@latest
+195 silly lockFile 074a695e-gm-latest gm@latest
+196 info already installed gm@1.17.0
+197 http 304 http://registry.npmjs.org/express
+198 silly registry.get cb [ 304,
+198 silly registry.get   { date: 'Sun, 12 Apr 2015 15:12:41 GMT',
+198 silly registry.get     via: '1.1 varnish',
+198 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:12:41 GMT',
+198 silly registry.get     'cache-control': 'max-age=60',
+198 silly registry.get     etag: '"F2J5MEHNOTZMSKX5K7I45I27F"',
+198 silly registry.get     age: '5',
+198 silly registry.get     connection: 'keep-alive',
+198 silly registry.get     'x-served-by': 'cache-nrt6134-NRT',
+198 silly registry.get     'x-cache': 'HIT',
+198 silly registry.get     'x-cache-hits': '1',
+198 silly registry.get     'x-timer': 'S1428851561.192687,VS0,VE3',
+198 silly registry.get     vary: 'Accept' } ]
+199 verbose etag http://registry.npmjs.org/express from cache
+200 verbose addNamed [ 'express', '4.12.3' ]
+201 verbose addNamed [ '4.12.3', '4.12.3' ]
+202 silly lockFile 0b3fc563-express-4-12-3 express@4.12.3
+203 verbose lock express@4.12.3 C:\Users\I300357\AppData\Roaming\npm-cache\0b3fc563-express-4-12-3.lock
+204 silly lockFile 0b3fc563-express-4-12-3 express@4.12.3
+205 silly lockFile 0b3fc563-express-4-12-3 express@4.12.3
+206 silly lockFile c30a01ab-express-latest express@latest
+207 silly lockFile c30a01ab-express-latest express@latest
+208 info already installed express@4.12.3
+209 http 304 http://registry.npmjs.org/passport
+210 silly registry.get cb [ 304,
+210 silly registry.get   { date: 'Sun, 12 Apr 2015 15:12:40 GMT',
+210 silly registry.get     via: '1.1 varnish',
+210 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:12:41 GMT',
+210 silly registry.get     'cache-control': 'max-age=60',
+210 silly registry.get     etag: '"7C9768L2JL94AX5UGY08MN6DH"',
+210 silly registry.get     age: '0',
+210 silly registry.get     connection: 'keep-alive',
+210 silly registry.get     'x-served-by': 'cache-nrt6130-NRT',
+210 silly registry.get     'x-cache': 'HIT',
+210 silly registry.get     'x-cache-hits': '1',
+210 silly registry.get     'x-timer': 'S1428851560.762251,VS0,VE482',
+210 silly registry.get     vary: 'Accept' } ]
+211 verbose etag http://registry.npmjs.org/passport from cache
+212 verbose addNamed [ 'passport', '0.2.1' ]
+213 verbose addNamed [ '0.2.1', '0.2.1' ]
+214 silly lockFile b563cf22-passport-0-2-1 passport@0.2.1
+215 verbose lock passport@0.2.1 C:\Users\I300357\AppData\Roaming\npm-cache\b563cf22-passport-0-2-1.lock
+216 silly lockFile b563cf22-passport-0-2-1 passport@0.2.1
+217 silly lockFile b563cf22-passport-0-2-1 passport@0.2.1
+218 silly lockFile 771f2547-passport-latest passport@latest
+219 silly lockFile 771f2547-passport-latest passport@latest
+220 info already installed passport@0.2.1
+221 http 200 http://registry.npmjs.org/bootstrap
+222 silly registry.get cb [ 200,
+222 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+222 silly registry.get     etag: '"6WJQ3G39PTGPI3UQ6XJCGN9XT"',
+222 silly registry.get     'content-type': 'application/json',
+222 silly registry.get     'cache-control': 'max-age=60',
+222 silly registry.get     'content-length': '23302',
+222 silly registry.get     'accept-ranges': 'bytes',
+222 silly registry.get     date: 'Sun, 12 Apr 2015 15:12:41 GMT',
+222 silly registry.get     via: '1.1 varnish',
+222 silly registry.get     age: '0',
+222 silly registry.get     connection: 'keep-alive',
+222 silly registry.get     'x-served-by': 'cache-nrt6127-NRT',
+222 silly registry.get     'x-cache': 'HIT',
+222 silly registry.get     'x-cache-hits': '1',
+222 silly registry.get     'x-timer': 'S1428851560.447100,VS0,VE709',
+222 silly registry.get     vary: 'Accept' } ]
+223 verbose addNamed [ 'bootstrap', '3.3.4' ]
+224 verbose addNamed [ '3.3.4', '3.3.4' ]
+225 silly lockFile ce41f157-bootstrap-3-3-4 bootstrap@3.3.4
+226 verbose lock bootstrap@3.3.4 C:\Users\I300357\AppData\Roaming\npm-cache\ce41f157-bootstrap-3-3-4.lock
+227 silly lockFile ce41f157-bootstrap-3-3-4 bootstrap@3.3.4
+228 silly lockFile ce41f157-bootstrap-3-3-4 bootstrap@3.3.4
+229 silly lockFile 77e03313-bootstrap-latest bootstrap@latest
+230 silly lockFile 77e03313-bootstrap-latest bootstrap@latest
+231 info already installed bootstrap@3.3.4
+232 http 304 http://registry.npmjs.org/gridfs-stream
+233 silly registry.get cb [ 304,
+233 silly registry.get   { date: 'Sun, 12 Apr 2015 15:12:41 GMT',
+233 silly registry.get     via: '1.1 varnish',
+233 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:12:42 GMT',
+233 silly registry.get     'cache-control': 'max-age=60',
+233 silly registry.get     etag: '"CUPJ49HQWLTJBE8BI2YTLA5K0"',
+233 silly registry.get     age: '0',
+233 silly registry.get     connection: 'keep-alive',
+233 silly registry.get     'x-served-by': 'cache-nrt6134-NRT',
+233 silly registry.get     'x-cache': 'MISS',
+233 silly registry.get     'x-cache-hits': '0',
+233 silly registry.get     'x-timer': 'S1428851561.516470,VS0,VE749',
+233 silly registry.get     vary: 'Accept' } ]
+234 verbose etag http://registry.npmjs.org/gridfs-stream from cache
+235 verbose addNamed [ 'gridfs-stream', '1.1.1' ]
+236 verbose addNamed [ '1.1.1', '1.1.1' ]
+237 silly lockFile d52755e6-gridfs-stream-1-1-1 gridfs-stream@1.1.1
+238 verbose lock gridfs-stream@1.1.1 C:\Users\I300357\AppData\Roaming\npm-cache\d52755e6-gridfs-stream-1-1-1.lock
+239 silly lockFile d52755e6-gridfs-stream-1-1-1 gridfs-stream@1.1.1
+240 silly lockFile d52755e6-gridfs-stream-1-1-1 gridfs-stream@1.1.1
+241 silly lockFile 7d4c030f-gridfs-stream-latest gridfs-stream@latest
+242 silly lockFile 7d4c030f-gridfs-stream-latest gridfs-stream@latest
+243 info already installed gridfs-stream@1.1.1
+244 http 304 http://registry.npmjs.org/mongoose
+245 silly registry.get cb [ 304,
+245 silly registry.get   { date: 'Sun, 12 Apr 2015 15:12:41 GMT',
+245 silly registry.get     via: '1.1 varnish',
+245 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:12:42 GMT',
+245 silly registry.get     'cache-control': 'max-age=60',
+245 silly registry.get     etag: '"3YLT5X4UHW52W4VVU1FR0D9CQ"',
+245 silly registry.get     age: '0',
+245 silly registry.get     connection: 'keep-alive',
+245 silly registry.get     'x-served-by': 'cache-nrt6121-NRT',
+245 silly registry.get     'x-cache': 'HIT',
+245 silly registry.get     'x-cache-hits': '1',
+245 silly registry.get     'x-timer': 'S1428851561.959180,VS0,VE184',
+245 silly registry.get     vary: 'Accept' } ]
+246 verbose etag http://registry.npmjs.org/mongoose from cache
+247 verbose addNamed [ 'mongoose', '4.0.1' ]
+248 verbose addNamed [ '4.0.1', '4.0.1' ]
+249 silly lockFile 3522a951-mongoose-4-0-1 mongoose@4.0.1
+250 verbose lock mongoose@4.0.1 C:\Users\I300357\AppData\Roaming\npm-cache\3522a951-mongoose-4-0-1.lock
+251 silly lockFile 3522a951-mongoose-4-0-1 mongoose@4.0.1
+252 silly lockFile 3522a951-mongoose-4-0-1 mongoose@4.0.1
+253 silly lockFile 73e949f4-mongoose-latest mongoose@latest
+254 silly lockFile 73e949f4-mongoose-latest mongoose@latest
+255 info already installed mongoose@4.0.1
+256 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+257 info trying registry request attempt 2 at 23:13:03
+258 verbose etag "6OSKHGT3Z9ZP5AW9WAO0LKKGG"
+259 http GET http://registry.npmjs.org/connect-multiparty
+260 http 304 http://registry.npmjs.org/connect-multiparty
+261 silly registry.get cb [ 304,
+261 silly registry.get   { date: 'Sun, 12 Apr 2015 15:13:00 GMT',
+261 silly registry.get     via: '1.1 varnish',
+261 silly registry.get     'last-modified': 'Sun, 12 Apr 2015 15:13:00 GMT',
+261 silly registry.get     'cache-control': 'max-age=60',
+261 silly registry.get     etag: '"6OSKHGT3Z9ZP5AW9WAO0LKKGG"',
+261 silly registry.get     age: '0',
+261 silly registry.get     connection: 'keep-alive',
+261 silly registry.get     'x-served-by': 'cache-nrt6124-NRT',
+261 silly registry.get     'x-cache': 'HIT',
+261 silly registry.get     'x-cache-hits': '1',
+261 silly registry.get     'x-timer': 'S1428851580.646144,VS0,VE186',
+261 silly registry.get     vary: 'Accept' } ]
+262 verbose etag http://registry.npmjs.org/connect-multiparty from cache
+263 verbose addNamed [ 'connect-multiparty', '1.2.5' ]
+264 verbose addNamed [ '1.2.5', '1.2.5' ]
+265 silly lockFile 504292ad-connect-multiparty-1-2-5 connect-multiparty@1.2.5
+266 verbose lock connect-multiparty@1.2.5 C:\Users\I300357\AppData\Roaming\npm-cache\504292ad-connect-multiparty-1-2-5.lock
+267 silly lockFile 504292ad-connect-multiparty-1-2-5 connect-multiparty@1.2.5
+268 silly lockFile 504292ad-connect-multiparty-1-2-5 connect-multiparty@1.2.5
+269 silly lockFile 3e885bdc-connect-multiparty-latest connect-multiparty@latest
+270 silly lockFile 3e885bdc-connect-multiparty-latest connect-multiparty@latest
+271 info already installed connect-multiparty@1.2.5
+272 silly resolved []
+273 info build C:\Users\I300357\Documents\GitHub\wsfun
+274 verbose linkStuff [ false, false, false, 'C:\\Users\\I300357\\Documents\\GitHub' ]
+275 info linkStuff angular-seed@0.0.0
+276 verbose linkBins angular-seed@0.0.0
+277 verbose linkMans angular-seed@0.0.0
+278 verbose rebuildBundles angular-seed@0.0.0
+279 verbose rebuildBundles [ '.bin',
+279 verbose rebuildBundles   'body-parser',
+279 verbose rebuildBundles   'bootstrap',
+279 verbose rebuildBundles   'bower',
+279 verbose rebuildBundles   'connect-multiparty',
+279 verbose rebuildBundles   'express',
+279 verbose rebuildBundles   'gm',
+279 verbose rebuildBundles   'gridfs-stream',
+279 verbose rebuildBundles   'http-server',
+279 verbose rebuildBundles   'karma',
+279 verbose rebuildBundles   'karma-junit-reporter',
+279 verbose rebuildBundles   'latest',
+279 verbose rebuildBundles   'method-override',
+279 verbose rebuildBundles   'mongoose',
+279 verbose rebuildBundles   'morgan',
+279 verbose rebuildBundles   'node-xml-lite',
+279 verbose rebuildBundles   'passport',
+279 verbose rebuildBundles   'passport-wechat',
+279 verbose rebuildBundles   'protractor',
+279 verbose rebuildBundles   'shelljs',
+279 verbose rebuildBundles   'wechat' ]
+280 verbose rebuild bundle C:\Users\I300357\Documents\GitHub\wsfun\node_modules\latest
+281 info build C:\Users\I300357\Documents\GitHub\wsfun\node_modules\latest
+282 info preinstall latest@0.1.2
+283 verbose linkStuff [ false,
+283 verbose linkStuff   false,
+283 verbose linkStuff   false,
+283 verbose linkStuff   'C:\\Users\\I300357\\Documents\\GitHub\\wsfun\\node_modules' ]
+284 info linkStuff latest@0.1.2
+285 verbose linkBins latest@0.1.2
+286 verbose linkMans latest@0.1.2
+287 verbose rebuildBundles latest@0.1.2
+288 verbose rebuildBundles [ '.bin', 'npm' ]
+289 info install latest@0.1.2
+290 info postinstall latest@0.1.2
+291 info install angular-seed@0.0.0
+292 info postinstall angular-seed@0.0.0
+293 verbose unsafe-perm in lifecycle true
+294 info angular-seed@0.0.0 Failed to exec postinstall script
+295 error angular-seed@0.0.0 postinstall: `bower install`
+295 error Exit status 1
+296 error Failed at the angular-seed@0.0.0 postinstall script.
+296 error This is most likely a problem with the angular-seed package,
+296 error not with npm itself.
+296 error Tell the author that this fails on your system:
+296 error     bower install
+296 error You can get their info via:
+296 error     npm owner ls angular-seed
+296 error There is likely additional logging output above.
+297 error System Windows_NT 6.1.7601
+298 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+299 error cwd C:\Users\I300357\Documents\GitHub\wsfun
+300 error node -v v0.10.36
+301 error npm -v 1.4.28
+302 error code ELIFECYCLE
+303 verbose exit [ 1, true ]

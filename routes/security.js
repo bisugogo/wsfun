@@ -6,6 +6,7 @@
  */
 
 var https = require('https');
+var xmlLite = require("node-xml-lite");
 var User = require('../models/User.js');
 var Cache = require('../util/globalCache.js').cache;
 var crypto = require('crypto');
@@ -163,8 +164,8 @@ module.exports = function(app) {
         LOG.logger.logFunc('createPreOrder', 'remote IP: ' + sRemoteIP);
 
         var sAppId = APP_ID;
-        var sAttach = '支付测试';
-        var sBody = '女士T恤1件';
+        var sAttach = 'test pay';
+        var sBody = 'femail tshirt 1';
         var sMchId = BIZ_ID;
         var sNonceStr = createRandomString(32);
         var sNotifyUrl = 'http://design.weavesfun.com/security';
@@ -181,8 +182,8 @@ module.exports = function(app) {
         var sNonceStrKeyValue = 'nonce_str=' + sNonceStr;
         var sNotifyUrlKeyValue = 'notify_url=' + sNotifyUrl;
         var sOpenIdKeyValue = 'openid=' + sOpenId;
-        var sOutTradeNoKeyValue = 'out_trade_no' + sOutTradeNo;
-        var sSpBillCreateIpKeyValue = 'spbill_create_ip' + sSpBillCreateIp;
+        var sOutTradeNoKeyValue = 'out_trade_no=' + sOutTradeNo;
+        var sSpBillCreateIpKeyValue = 'spbill_create_ip=' + sSpBillCreateIp;
         var sTotalFeeKeyValue = 'total_fee=' + sTotalFee;
         var sTradeTypeKeyValue = 'trade_type=' + sTradeType;
 
@@ -248,25 +249,21 @@ module.exports = function(app) {
         oPostData += '</sign>';
         oPostData += '</xml>';
 
-
-            // <notify_url>http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php</notify_url>
-            // <openid>oUpF8uMuAJO_M2pxb1Q9zNjWeS6o</openid>
-            // <out_trade_no>1415659990</out_trade_no>
-            // <spbill_create_ip>14.23.150.211</spbill_create_ip>
-            // <total_fee>1</total_fee>
-            // <trade_type>JSAPI</trade_type>
-            // <sign>0CB01533B8C1EF103065174F50BCA001</sign>
-            // </xml>';
-
         var oPostReq = https.request(oPostOption, function(weChatRes) {
                 console.log('STATUS: ' + weChatRes.statusCode);
                 console.log('HEADERS: ' + JSON.stringify(weChatRes.headers));
                 weChatRes.setEncoding('utf8');
                 weChatRes.on('data', function (chunk) {
                     console.log('BODY: ' + chunk);
-                    res.send({data: 'OK'});
+                    var oRet = parsePreOrderResponse(chunk);
+                    LOG.logger.logFunc('createPreOrder', 'pre-order response: ' + JSON.stringify(oRet));
+                    res.send({data: oRet});
                 });
                 //res.send({data: 'OK'})
+
+                weChatRes.on('error', function (e) {
+                    LOG.logger.logFunc('createPreOrder', 'pre-order response error: ' + e.message);
+                });
             }
         );
 
@@ -276,6 +273,18 @@ module.exports = function(app) {
 
         oPostReq.write(oPostData);
         oPostReq.end();
+    };
+
+    parsePreOrderResponse = function(sData) {
+        var oRet = {};
+        var oData = xmlLite.parseString(sData)
+        if (oData && oData.childs && oData.childs.length > 0) {
+            for (var i = 0; i < oData.childs.length; i++) {
+                var oCurChild = oData.childs[i];
+                oRet[oCurChild.name] = oCurChild.childs[0];
+            }
+        }
+        return oRet;
     };
 
     escapeXMLValue = function(sValue) {

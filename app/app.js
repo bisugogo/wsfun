@@ -13,7 +13,8 @@ var ntApp = angular.module('ntApp', [
     'angularFileUpload',
     'angular-carousel',
     //'ngDragDrop',
-    'angular-gestures'
+    'angular-gestures',
+    'angular-md5'
     //'ngAnimate'
 ]);
 
