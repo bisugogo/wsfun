@@ -159,7 +159,7 @@ module.exports = function(app) {
 
     createPreOrder = function(req, res) {
         var oData = req.body.data;
-        var sRemoteIP = req._remoteAddress;
+        var sRemoteIP = getClientIp(req);
         LOG.logger.logFunc('createPreOrder', 'remote IP: ' + sRemoteIP);
 
         var sAppId = APP_ID;
@@ -295,6 +295,23 @@ module.exports = function(app) {
             return sRet;
         }
     };
+
+    getClientIp = function(req) {
+        var ipAddress;
+        var forwardedIpsStr = req.header('x-forwarded-for') || req.headers['x-real-ip'];
+        if (forwardedIpsStr) {
+            var forwardedIps = forwardedIpsStr.split(',');
+            ipAddress = forwardedIps[0];
+        }
+        if (!ipAddress) {
+            ipAddress = req.connection.remoteAddress;
+        }
+        if (!ipAddress) {
+            ipAddress = req.socket.remoteAddress;
+        }
+        return ipAddress;
+    };
+
 
     getService = function(req, res) {
         var sAction = req.query.action;
