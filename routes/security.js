@@ -14,6 +14,7 @@ var LOG = require('../util/wsLog');
 var APP_ID = 'wxf26855bd0cda23bd';
 var SECRET = '498e6f493c29733d46e212c441f505e8';
 var BIZ_ID = '1232336702';
+var API_KEY = 'ENt2aaBmTQdaBki2Qwcjm4Fp2A6dREkB';
 var LARRY_OPEN_ID = 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw';
 var TEMP_TRADE_ID = new Date().getTime().toString();
 
@@ -161,47 +162,89 @@ module.exports = function(app) {
         var sRemoteIP = req._remoteAddress;
         LOG.logger.logFunc('createPreOrder', 'remote IP: ' + sRemoteIP);
 
+        var sAppId = APP_ID;
+        var sAttach = '支付测试';
+        var sBody = '女士T恤1件';
+        var sMchId = BIZ_ID;
+        var sNonceStr = createRandomString(32);
+        var sNotifyUrl = 'http://design.weavesfun.com/security';
+        var sOpenId = LARRY_OPEN_ID;
+        var sOutTradeNo = TEMP_TRADE_ID;
+        var sSpBillCreateIp = sRemoteIP;
+        var sTotalFee = 1;
+        var sTradeType = 'JSAPI';
+
+        var sAppIdKeyValue = 'appid=' + sAppId;
+        var sAttachKeyValue = 'attach=' + sAttach;
+        var sBodyKeyValue = 'body=' + sBody;
+        var sMchIdKeyValue = 'mch_id=' + sMchId;
+        var sNonceStrKeyValue = 'nonce_str=' + sNonceStr;
+        var sNotifyUrlKeyValue = 'notify_url=' + sNotifyUrl;
+        var sOpenIdKeyValue = 'openid=' + sOpenId;
+        var sOutTradeNoKeyValue = 'out_trade_no' + sOutTradeNo;
+        var sSpBillCreateIpKeyValue = 'spbill_create_ip' + sSpBillCreateIp;
+        var sTotalFeeKeyValue = 'total_fee=' + sTotalFee;
+        var sTradeTypeKeyValue = 'trade_type=' + sTradeType;
+
+        var md5sum = crypto.createHash('md5');
+        var aStr = [sAppIdKeyValue, sAttachKeyValue, sBodyKeyValue, sMchIdKeyValue, sNonceStrKeyValue, 
+            sNotifyUrlKeyValue, sOpenIdKeyValue, sOutTradeNoKeyValue, sSpBillCreateIpKeyValue, sTotalFeeKeyValue, 
+            sTradeTypeKeyValue];
+
+        aStr.sort();
+        //console.log(aStr.toString());
+        var sTempKeyValue = aStr.join('&');
+        sTempKeyValue += '&key=' + API_KEY;
+
+        LOG.logger.logFunc('createPreOrder', 'sTempKeyValue: ' + sTempKeyValue);
+
+        md5sum.update(sTempKeyValue);
+        var sTargetSig = md5sum.digest('hex').toUpperCase();
+
+        LOG.logger.logFunc('createPreOrder', 'signature: ' + sTargetSig);
+
         var oPostOption = {
-            hostname: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
+            hostname: 'api.mch.weixin.qq.com',
+            path: '/pay/unifiedorder',
             method: 'POST'
         };
 
         var oPostData = '<xml>';
         oPostData += '<appid>';
-        oPostData += escapeXMLValue(APP_ID);
+        oPostData += escapeXMLValue(sAppId);
         oPostData += '</appid>';
         oPostData += '<attach>';
-        oPostData += escapeXMLValue('支付测试');
+        oPostData += escapeXMLValue(sAttach);
         oPostData += '</attach>';
         oPostData += '<body>';
-        oPostData += escapeXMLValue('女士T恤1件');
+        oPostData += escapeXMLValue(sBody);
         oPostData += '</body>';
         oPostData += '<mch_id>';
-        oPostData += escapeXMLValue(BIZ_ID);
+        oPostData += escapeXMLValue(sMchId);
         oPostData += '</mch_id>';
         oPostData += '<nonce_str>';
-        oPostData += escapeXMLValue(createRandomString(32));
+        oPostData += escapeXMLValue(sNonceStr);
         oPostData += '</nonce_str>';
         oPostData += '<notify_url>';
-        oPostData += escapeXMLValue('http://design.weavesfun.com/security');
+        oPostData += escapeXMLValue(sNotifyUrl);
         oPostData += '</notify_url>';
         oPostData += '<openid>';
-        oPostData += escapeXMLValue(LARRY_OPEN_ID);
+        oPostData += escapeXMLValue(sOpenId);
         oPostData += '</openid>';
         oPostData += '<out_trade_no>';
-        oPostData += escapeXMLValue(TEMP_TRADE_ID);
+        oPostData += escapeXMLValue(sOutTradeNo);
         oPostData += '</out_trade_no>';
         oPostData += '<spbill_create_ip>';
-        oPostData += escapeXMLValue();
+        oPostData += escapeXMLValue(sSpBillCreateIp);
         oPostData += '</spbill_create_ip>';
         oPostData += '<total_fee>';
-        oPostData += escapeXMLValue('1');
+        oPostData += escapeXMLValue(sTotalFee.toString());
         oPostData += '</total_fee>';
         oPostData += '<trade_type>';
-        oPostData += escapeXMLValue('JSAPI');
+        oPostData += escapeXMLValue(sTradeType);
         oPostData += '</trade_type>';
         oPostData += '<sign>';
-        oPostData += escapeXMLValue();
+        oPostData += escapeXMLValue(sTargetSig);
         oPostData += '</sign>';
         oPostData += '</xml>';
 
