@@ -31,7 +31,8 @@ var myDesignList = angular.module('ntApp.myDesigns', [
     'ntApp.createDesign', 
     'ntApp.orderDesign', 
     'ntApp.designDetail', 
-    'ntApp.orderList', 
+    'ntApp.orderList',
+    'ntApp.payOrder',
     'designServices',
     'wechatServices'
 ]);
@@ -61,11 +62,12 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         templateUrl: 'views/createDesign.html',
         controller: 'CreateDesignCtrl'
     })
-    .state('orderDesign', {
-        url: '/orderDesign',
-        templateUrl: 'views/orderDesign.html',
-        controller: 'OrderDesignCtrl'
-    }).state('designDetail', {
+    .state('payOrder', {
+        url: '/payOrder',
+        templateUrl: 'views/payOrder.html',
+        controller: 'PayOrderCtrl'
+    })
+    .state('designDetail', {
         url: '/designDetail/:designId',
         templateUrl: 'views/designDetail.html',
         controller: 'DesignDetailCtrl'

@@ -9,9 +9,13 @@ var https = require('https');
 var User = require('../models/User.js');
 var Cache = require('../util/globalCache.js').cache;
 var crypto = require('crypto');
+var LOG = require('../util/wsLog');
 
 var APP_ID = 'wxf26855bd0cda23bd';
 var SECRET = '498e6f493c29733d46e212c441f505e8';
+var BIZ_ID = '1232336702';
+var LARRY_OPEN_ID = 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw';
+var TEMP_TRADE_ID = new Date().getTime().toString();
 
 module.exports = function(app) {
     updateJsAPITicket = function() {
@@ -152,6 +156,103 @@ module.exports = function(app) {
         });
     };
 
+    createPreOrder = function(req, res) {
+        var oData = req.body.data;
+        var sRemoteIP = req._remoteAddress;
+        LOG.logger.logFunc('createPreOrder', 'remote IP: ' + sRemoteIP);
+
+        var oPostOption = {
+            hostname: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
+            method: 'POST'
+        };
+
+        var oPostData = '<xml>';
+        oPostData += '<appid>';
+        oPostData += escapeXMLValue(APP_ID);
+        oPostData += '</appid>';
+        oPostData += '<attach>';
+        oPostData += escapeXMLValue('支付测试');
+        oPostData += '</attach>';
+        oPostData += '<body>';
+        oPostData += escapeXMLValue('女士T恤1件');
+        oPostData += '</body>';
+        oPostData += '<mch_id>';
+        oPostData += escapeXMLValue(BIZ_ID);
+        oPostData += '</mch_id>';
+        oPostData += '<nonce_str>';
+        oPostData += escapeXMLValue(createRandomString(32));
+        oPostData += '</nonce_str>';
+        oPostData += '<notify_url>';
+        oPostData += escapeXMLValue('http://design.weavesfun.com/security');
+        oPostData += '</notify_url>';
+        oPostData += '<openid>';
+        oPostData += escapeXMLValue(LARRY_OPEN_ID);
+        oPostData += '</openid>';
+        oPostData += '<out_trade_no>';
+        oPostData += escapeXMLValue(TEMP_TRADE_ID);
+        oPostData += '</out_trade_no>';
+        oPostData += '<spbill_create_ip>';
+        oPostData += escapeXMLValue();
+        oPostData += '</spbill_create_ip>';
+        oPostData += '<total_fee>';
+        oPostData += escapeXMLValue('1');
+        oPostData += '</total_fee>';
+        oPostData += '<trade_type>';
+        oPostData += escapeXMLValue('JSAPI');
+        oPostData += '</trade_type>';
+        oPostData += '<sign>';
+        oPostData += escapeXMLValue();
+        oPostData += '</sign>';
+        oPostData += '</xml>';
+
+
+            // <notify_url>http://wxpay.weixin.qq.com/pub_v2/pay/notify.v2.php</notify_url>
+            // <openid>oUpF8uMuAJO_M2pxb1Q9zNjWeS6o</openid>
+            // <out_trade_no>1415659990</out_trade_no>
+            // <spbill_create_ip>14.23.150.211</spbill_create_ip>
+            // <total_fee>1</total_fee>
+            // <trade_type>JSAPI</trade_type>
+            // <sign>0CB01533B8C1EF103065174F50BCA001</sign>
+            // </xml>';
+
+        var oPostReq = https.request(oPostOption, function(weChatRes) {
+                console.log('STATUS: ' + weChatRes.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(weChatRes.headers));
+                weChatRes.setEncoding('utf8');
+                weChatRes.on('data', function (chunk) {
+                    console.log('BODY: ' + chunk);
+                    res.send({data: 'OK'});
+                });
+                //res.send({data: 'OK'})
+            }
+        );
+
+        oPostReq.on('error', function(e) {
+            LOG.logger.logFunc('createPreOrder -> post pre-order request error', e.message);
+        });
+
+        oPostReq.write(oPostData);
+        oPostReq.end();
+    };
+
+    escapeXMLValue = function(sValue) {
+        return '<![CDATA[' + sValue + ']]>';
+    };
+
+    createRandomString = function(iLen) {
+        if (iLen < 1) {
+            return '';
+        } else {
+            var sCharSet = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+            var maxPos = sCharSet.length;
+            var sRet = '';
+            for (i = 0; i < iLen; i++) {
+                sRet += sCharSet.charAt(Math.floor(Math.random() * maxPos));
+            }
+            return sRet;
+        }
+    };
+
     getService = function(req, res) {
         var sAction = req.query.action;
         if (sAction === 'getWechatUserOpenId') {
@@ -179,6 +280,8 @@ module.exports = function(app) {
         if (sAction && sAction !== '') {
             if (sAction === 'registAuth') {
                 registAuth(req.body.data, res);
+            } else if (sAction === 'createPreOrder') {
+                createPreOrder(req, res);
             }
         }
     };

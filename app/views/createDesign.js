@@ -25,7 +25,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$routeParams', 'Design'
 }]);*/
 
 
-var oCreateDesign = angular.module('ntApp.createDesign', ['ui.router', 'designServices', 'angular-gestures']);
+var oCreateDesign = angular.module('ntApp.createDesign', ['ui.router', 'designServices', 'angular-gestures', 'uiDataServices']);
 
 oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($stateProvider, hammerDefaultOptsProvider) {
     $stateProvider.state('createDesign.createDetail', {
@@ -71,7 +71,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
         views: {
             'orderDesign' : {
                 templateUrl: 'views/orderDesign.html',
-                controller: function($scope, $state, Design) {
+                controller: function($scope, $state, Design, UIData) {
                     //$scope.saveDetailtest = "this is test string in saveDetail.";
                     $scope.orderInfo = {
                         defaultQuanaity: 1,
@@ -89,7 +89,12 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                         if ($scope.orderInfo.defaultQuanaity > 0) {
                             $scope.orderInfo.defaultQuanaity--;
                         }
-                    }
+                    };
+
+                    $scope.onPayOrderBtnClicked = function() {
+                        UIData.setData('designCount', 5);
+                        $state.go('payOrder');
+                    };
                 }
             }
         }
@@ -105,8 +110,8 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
     });
 }]);
 
-oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', '$state', 'Design', 'Auth', 
-    function($scope, $location, $upload, $state, Design, Auth) {
+oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', '$state', 'Design', 'Auth', 'UIData', 
+    function($scope, $location, $upload, $state, Design, Auth, UIData) {
         $scope.test = {
             larry: {
                 openId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
