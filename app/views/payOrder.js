@@ -62,7 +62,7 @@ payOrder.controller('PayOrderCtrl', ['$scope', '$state', 'md5', 'Auth', 'UIData'
         var sAppId = oAppInfo.APP_ID;
         var sTimestamp = new Date().getTime();
         var sNonceStr = oData.nonce_str;
-        var sPackage = oData.prepay_id;
+        var sPackage = 'prepay_id=' + oData.prepay_id;
         var sSignType = 'MD5';
 
         var sAppIdKeyValue = 'appId=' + sAppId;
@@ -74,6 +74,7 @@ payOrder.controller('PayOrderCtrl', ['$scope', '$state', 'md5', 'Auth', 'UIData'
         var aStr = [sAppIdKeyValue, sTimestampKeyValue, sNonceStrKeyValue, sPackageKeyValue, sSignTypeKeyValue];
         aStr.sort();
         var sTempStr = aStr.join('&');
+        sTempStr += '&key=ENt2aaBmTQdaBki2Qwcjm4Fp2A6dREkB';
         var sSign = md5.createHash(sTempStr).toUpperCase();
 
         wx.chooseWXPay({

@@ -110,8 +110,8 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
     });
 }]);
 
-oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', '$state', 'Design', 'Auth', 'UIData', 
-    function($scope, $location, $upload, $state, Design, Auth, UIData) {
+oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', '$state', '$modal', 'Design', 'Auth', 'UIData', 
+    function($scope, $location, $upload, $state, $modal, Design, Auth, UIData) {
         $scope.test = {
             larry: {
                 openId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
@@ -256,7 +256,9 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.fileSelected = function(aFile) {
-            if (aFile && aFile.length) {
+            if (aFile && aFile.length > 0) {
+                $scope.open();
+
                 for (var i = 0; i < aFile.length; i++) {
                     var file = aFile[i];
                     $upload.upload({
@@ -270,15 +272,52 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                         }
                     }).progress(function (evt) {
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        $scope.uploadDialogData.uploadProgress = progressPercentage;
                         console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                     }).success(function (data, status, headers, config) {
                         console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
                         //$scope.imgSrc = 'file/getFileContent/' + data.fileId;
                         $scope.test.fileId = data.fileId;
                         //getFileContent(data.fileId);
+
+                        $scope.uploadDialogData.cancel($scope.modalInstance);//Close upload progress dialog
+                        $scope.uploadDialogData = null;
                     });
                 }
             }
+        };
+
+        $scope.open = function () {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'views/uploadDialog.html',
+                controller: function($scope) {
+                    $scope.uploadProgress = 0;
+                    $scope.$parent.uploadDialogData = $scope;
+
+                    $scope.cancel = function (oInstance) {
+                        if (oInstance) {
+                            oInstance.dismiss('cancel');
+                        } else {
+                            $modalInstance.dismiss('cancel');
+                        }
+                    };
+                },
+                size: 'lg',
+                scope: $scope
+                // resolve: {
+                //     items: function () {
+                //         return $scope.items;
+                //     }
+                // }
+            });
+            $scope.modalInstance = modalInstance;
+
+            // modalInstance.result.then(function (selectedItem) {
+            // $scope.selected = selectedItem;
+            // }, function () {
+            // $log.info('Modal dismissed at: ' + new Date());
+            // });
         };
         
         $scope.getFileContent = function(sFileId) {
