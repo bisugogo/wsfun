@@ -10,11 +10,11 @@
         <div ui-view="saveDetail"></div>
         <div ui-view="orderDesign"></div>
 
-        <div class="selectedArtifactArea">
+        <div class="selectedArtifactArea" ng-if="aSelectedArtifact.length > 0">
             <div class="availableArea" style="{{htmlItemStyle.availableArea.styleStr}}"></div>
             <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
                 
-                <img src="data:image/png;base64,{{oArtifact.largeImage64}}" 
+                <img src="{{oArtifact.largeImage64}}" 
                 
                 hm-dragstart="onSelectedArtiItemDragstart($event, oArtifact)" 
                 hm-dragend="onSelectedArtiItemDragend($event, oArtifact)" 

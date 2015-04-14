@@ -277,8 +277,17 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     }).success(function (data, status, headers, config) {
                         console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
                         //$scope.imgSrc = 'file/getFileContent/' + data.fileId;
-                        $scope.test.fileId = data.fileId;
+                        //$scope.test.fileId = data.fileId;
                         //getFileContent(data.fileId);
+
+                        //$scope.aMyArtifact.push(data.data);
+                        $scope.insertNewArtifact2Carousel(data.data);
+                        $scope.aMyArtifactCarouselIndex = $scope.aMyArtifact.length - 1;
+                        //$scope.$apply();
+                        // setTimeout(function() {
+                        //     $scope.aMyArtifactCarouselIndex = $scope.aMyArtifact.length - 1;
+                        // }, 500);
+                        
 
                         $scope.uploadDialogData.cancel($scope.modalInstance);//Close upload progress dialog
                         $scope.uploadDialogData = null;
@@ -338,9 +347,60 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             };
             var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
                 //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
-                $scope.aMyArtifact = oContent.data;
+                $scope.aMyArtifact = $scope.groupArtifactThumbnails(oContent.data, 4);
                 $scope.aMyArtifactCarouselIndex = 0;
             });
+        };
+
+        $scope.groupArtifactThumbnails = function(aThumbnail, iGroupSize) {
+            var oRet = [];
+            var iSize = 4;
+            if (aThumbnail && aThumbnail.length > 0) {
+                if (!!iGroupSize) {
+                    iSize = iGroupSize;
+                }
+                var iCount = Math.floor(aThumbnail.length / iSize) + 1;
+
+                for (var i = 0; i < iCount - 1; i++) {
+                    var oGroup = [];
+                    oGroup.push(aThumbnail[i*iSize]);
+                    oGroup.push(aThumbnail[i*iSize + 1]);
+                    oGroup.push(aThumbnail[i*iSize + 2]);
+                    oGroup.push(aThumbnail[i*iSize + 3]);
+
+                    oRet.push(oGroup);
+                }
+
+                var iLeft = aThumbnail.length - (iCount - 1) * iSize;
+                if (iLeft > 0) {
+                    var oLeftGroup = [];
+                    for (var j = 0; j < iLeft; j++) {
+                        oLeftGroup.push(aThumbnail[(iCount - 1) * iSize + j]);
+                    }
+                    oRet.push(oLeftGroup);
+                }
+            }
+            return oRet;
+        };
+
+        $scope.insertNewArtifact2Carousel = function(oThumbnail) {
+            if (!$scope.aMyArtifact) {
+                $scope.aMyArtifact = [];
+            }
+
+            if ($scope.aMyArtifact.length < 1) {
+                var oGroup = [oThumbnail];
+                $scope.aMyArtifact.push(oGroup);
+            } else {
+                var iLastGroupIdx = $scope.aMyArtifact.length - 1;
+                var oLastGroup = $scope.aMyArtifact[iLastGroupIdx];
+                if (oLastGroup.length < 4) {
+                    oLastGroup.push(oThumbnail);
+                } else {
+                    var oGroup = [oThumbnail];
+                    $scope.aMyArtifact.push(oGroup);
+                }
+            }
         };
 
         $scope.onArtifactSelected = function(oArtifact) {
@@ -365,7 +425,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 "left:" + oArtifact.styleValue.pencilLeft + "px;";
 
             var img = new Image();
-            img.src = 'data:image/png;base64,' + oArtifact.largeImage64;
+            img.src = oArtifact.largeImage64;
             //console.log(img.width);       // This might print out 0!
             img.onload = function() {
                 //console.log(img.width);   // This will print out the width.

@@ -44,11 +44,11 @@ module.exports = function(app) {
         fs.createReadStream(req.files.file.path).pipe(writestream);
 
         writestream.on('close', function (file) {
-            res.send({
-                fileId: file._id.toString()
-            });
+            // res.send({
+            //     fileId: file._id.toString()
+            // });
 
-            createImageThumbnails(oFile, file);
+            createImageThumbnails(oFile, file, res);
 
             // fs.unlink(req.files.file.path, function (err) {
             //     if (err) console.error("Error: " + err);
@@ -63,7 +63,7 @@ module.exports = function(app) {
         //res.send({status:'ended????'});
     };
 
-    createImageThumbnails = function(oFile, oGFSFile) {
+    createImageThumbnails = function(oFile, oGFSFile, res) {
         gm(oFile.path).options({imageMagick: true}).size(function (err, size) {
             if (!err) {
                 var iOriginHeight = size.height;
@@ -88,7 +88,7 @@ module.exports = function(app) {
                         saveArtifact({
                             mid: sMidBase64,
                             large: sLargeBase64
-                        }, oGFSFile);
+                        }, oGFSFile, res);
                     });
                 });
             } else {
@@ -105,7 +105,7 @@ module.exports = function(app) {
         });
     };
 
-    saveArtifact = function(oArti, oGFSFile) {
+    saveArtifact = function(oArti, oGFSFile, res) {
         var sSmallBase64 = !!oArti.small ? oArti.small : '';
         var sMidBase64 = !!oArti.mid ? oArti.mid : '';
         var sLargeBase64 = !!oArti.large ? oArti.large : '';
@@ -115,9 +115,9 @@ module.exports = function(app) {
         var oNewArti = new Artifact({
             fileId: oGFSFile._id.toString(),
             creatorId: oCreatorObjectId,
-            smallImage64: sSmallBase64,
-            midImage64: sMidBase64,
-            largeImage64: sLargeBase64,
+            smallImage64: 'data:image/png;base64,' + sSmallBase64,
+            midImage64: 'data:image/png;base64,' + sMidBase64,
+            largeImage64: 'data:image/png;base64,' + sLargeBase64,
         });
 
         oNewArti.save(function(err) {
@@ -125,6 +125,14 @@ module.exports = function(app) {
                 LOG.logger.logFunc('saveArtifact', 'save new arti failed');
             } else {
                 LOG.logger.logFunc('saveArtifact', 'save new arti successful!');
+
+                res.send({
+                    data: {
+                        fileId: oGFSFile._id.toString(),
+                        midImage64: 'data:image/png;base64,' + sMidBase64,
+                        largeImage64: 'data:image/png;base64,' + sLargeBase64
+                    }
+                });
             }
         });
     }
