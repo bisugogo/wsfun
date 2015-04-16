@@ -241,31 +241,36 @@
 }
 
 .createDetailView .saveDetailView .naviBtnRow,
-.createDetailView .orderDesignView .naviBtnRow {
+.createDetailView .orderDesignView .naviBtnRow,
+.createDetailView .addressDesignView .naviBtnRow {
   position: absolute;
   bottom: 3px;
   width: 100%;
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span,
-.createDetailView .orderDesignView .naviBtnRow > span {
+.createDetailView .orderDesignView .naviBtnRow > span,
+.createDetailView .addressDesignView .naviBtnRow > span {
   font-size: 25px;
   color: rgb(176, 137, 67);
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span:first-child,
-.createDetailView .orderDesignView .naviBtnRow > span:first-child {
+.createDetailView .orderDesignView .naviBtnRow > span:first-child,
+.createDetailView .addressDesignView .naviBtnRow > span:first-child {
   float: left;
   left: -25px;
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span:nth-child(2),
-.createDetailView .orderDesignView .naviBtnRow > span:nth-child(2) {
+.createDetailView .orderDesignView .naviBtnRow > span:nth-child(2),
+.createDetailView .addressDesignView .naviBtnRow > span:nth-child(2) {
   float: right;
   left: 25px;
 }
 
-.createDetailView .orderDesignView {
+.createDetailView .orderDesignView,
+.createDetailView .addressDesignView {
   width: auto;
   margin-left: 50px;
   margin-right: 50px;
@@ -278,11 +283,13 @@
   z-index: 1000;
 }
 
-.createDetailView .orderDesignView .addressValueRow {
+.createDetailView .orderDesignView .addressValueRow,
+.createDetailView .addressDesignView .addressDetailTitleRow {
   margin-top: 5%;
 }
 
-.createDetailView .orderDesignView .addressValueRow .addressTitle {
+.createDetailView .orderDesignView .addressValueRow .addressTitle,
+.createDetailView .addressDesignView .addressDetailTitleRow > div {
   text-align: center;
   font-size: 16px;
   font-weight: bold;
@@ -302,6 +309,96 @@
 .createDetailView .orderDesignView .addressValueRow .editAddress > span {
   font-size: 18px;
   color: white;
+}
+
+.createDetailView .addressDesignView .mobileInfo,
+.createDetailView .addressDesignView .districtAndCode,
+.createDetailView .addressDesignView .saveAddressBtn {
+  margin-top: 10px;
+}
+
+.createDetailView .addressDesignView .contactInfo,
+.createDetailView .addressDesignView .provinceAndCity,
+.createDetailView .addressDesignView .detailedAddress {
+  margin-top: 10%;
+}
+
+.createDetailView .addressDesignView input {
+  background-color: transparent;
+  border-bottom: 2px solid white;
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+.createDetailView .addressDesignView .contactInfo > span,
+.createDetailView .addressDesignView .mobileInfo > span {
+  margin-left: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.createDetailView .addressDesignView .contactInfo > input,
+.createDetailView .addressDesignView .mobileInfo > input {
+  width: 50%;
+  display: inline;
+  position: absolute;
+  right: 10px;
+  height: 24px;
+  padding: initial;
+}
+
+.createDetailView .addressDesignView .provinceAndCity > div,
+.createDetailView .addressDesignView .districtAndCode > div {
+  width: 50%;
+  display: inline;
+}
+
+.createDetailView .addressDesignView .provinceAndCity > div > span,
+.createDetailView .addressDesignView .districtAndCode > div > span {
+  margin-left: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.createDetailView .addressDesignView .provinceAndCity > div > input,
+.createDetailView .addressDesignView .districtAndCode > div > input {
+  width: 70px;
+  display: inline;
+  height: 24px;
+  padding: initial;
+}
+
+.createDetailView .addressDesignView .detailedAddress > div {
+  margin-left: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.createDetailView .addressDesignView .detailedAddress > div > input {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 24px;
+  padding: initial;
+  width: 85%;
+}
+
+.createDetailView .addressDesignView .saveAddressBtn {
+  text-align: center;
+}
+
+.createDetailView .addressDesignView .saveAddressBtn > span {
+  border-radius: 20px;
+  background-color: white;
+  font-size: 20px;
+  padding: 6px;
+  color: rgb(207, 176, 96);
+  border: 2px solid;
 }
 
 .createDetailView .orderDesignView .defaultOrderQuantityRow {

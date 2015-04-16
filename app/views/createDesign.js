@@ -98,6 +98,18 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 }
             }
         }
+    }).state('createDesign.createDetail.addressDetail', {
+        //url: '/addressDetail',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'addressDetail' : {
+                templateUrl: 'views/addressDetail.html',
+                controller: function($scope, $state, Design) {
+                    //$scope.saveDetailtest = "this is test string in saveDetail.";
+                }
+            }
+        }
     });
 
     hammerDefaultOptsProvider.set({
@@ -650,6 +662,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.onBack2SaveDetailClicked = function() {
             $scope.updateDesignToolRow('designDetailView');
             $state.go('^');
+        };
+
+        $scope.onEditAddressDetailClicked = function() {
+            $state.go('createDesign.createDetail.addressDetail');
+        };
+
+        $scope.onBackFromAddreeDetailClicked = function() {
+            $state.go('createDesign.createDetail.orderDesign');
         };
 }]);
 

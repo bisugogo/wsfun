@@ -1,0 +1,48 @@
+<div class='row addressDesignView'>
+    <div class="addressDetailTitleRow">
+        <div>寝殿：</div>
+    </div>
+    <div class="contactInfo">
+        <span>联系人：</span>
+        <input type="text" class="form-control" ng-model="orderInfo.sContact">
+    </div>
+    <div class="mobileInfo">
+        <span>手机：</span>
+        <input type="text" class="form-control" ng-model="orderInfo.sMobile">
+    </div>
+    <div class="provinceAndCity">
+        <div>
+            <span>省</span>
+            <input type="text" class="form-control" ng-model="orderInfo.sProvince">
+        </div>
+        <div>
+            <span>市</span>
+            <input type="text" class="form-control" ng-model="orderInfo.sProvince">
+        </div>
+    </div>
+    <div class="districtAndCode">
+        <div>
+            <span>区</span>
+            <input type="text" class="form-control" ng-model="orderInfo.sCity">
+        </div>
+        <div>
+            <span>邮编</span>
+            <input type="text" class="form-control" ng-model="orderInfo.sPostCode">
+        </div>
+    </div>
+    <div class="detailedAddress">
+        <div>
+            <span>详细地址</span>
+        </div>
+        <div>
+            <input type="text" class="form-control" ng-model="orderInfo.sDetailAddress">
+        </div>
+    </div>
+    <div class="saveAddressBtn">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+    </div>
+    <div class="naviBtnRow">
+        <span class="glyphicon glyphicon-chevron-left" ng-click="onBackFromAddreeDetailClicked()"></span>
+        <span class="glyphicon glyphicon-send"></span>
+    </div>
+</div>
