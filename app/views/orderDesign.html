@@ -67,6 +67,9 @@
     </div>
     <div class="payOptionRow">
         <div class="paySource">
+            <div class="paySourceButtonDiv">
+                <span class="glyphicon glyphicon-triangle-left" ng-click="onPaySourceBtnClicked()"></span>
+            </div>
             <div class="paySourceDiv">
                 <span>已选银库：微信支付</span>
             </div>
@@ -80,6 +83,9 @@
             </div>
         </div>
         <div class="payCoupon">
+            <div class="payCouponButtonDiv">
+                <span class="glyphicon glyphicon-triangle-right" ng-click="onPayCouponBtnClicked()"></span>
+            </div>
             <div class="payCouponDiv">
                 <span>已用制衣券：{{orderInfo.couponPay}}</span>
             </div>

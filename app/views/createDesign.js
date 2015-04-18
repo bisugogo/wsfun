@@ -95,6 +95,89 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                         UIData.setData('designCount', 5);
                         $state.go('payOrder');
                     };
+
+                    $scope.onPaySourceBtnClicked = function() {
+                        $state.go('createDesign.createDetail.paySourceList');
+                    };
+
+                    $scope.onPayCouponBtnClicked = function() {
+                        $state.go('createDesign.createDetail.payCouponList');
+                    };
+                }
+            }
+        }
+    }).state('createDesign.createDetail.paySourceList', {
+        //url: '/addressDetail',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'paySourceList' : {
+                templateUrl: 'views/paySourceList.html',
+                controller: function($scope, $state, Design) {
+                    //$scope.saveDetailtest = "this is test string in saveDetail.";
+                }
+            }
+        }
+    }).state('createDesign.createDetail.payCouponList', {
+        //url: '/addressDetail',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'payCouponList' : {
+                templateUrl: 'views/payCouponList.html',
+                controller: function($scope, $state, Design) {
+                    $scope.aCoupons = [
+                        {
+                            type: 1,
+                            couponValue: 10,
+                            selected: true,
+                            validFrom: new Date(1428332139683),
+                            validTo: new Date(1436332139683)
+                        },
+                        {
+                            type: 1,
+                            couponValue: 50,
+                            selected: false,
+                            validFrom: new Date(1428332139683),
+                            validTo: new Date(1438332139683)
+                        },
+                        {
+                            type: 1,
+                            couponValue: 5,
+                            selected: false,
+                            validFrom: new Date(1428332139683),
+                            validTo: new Date(1438332139683)
+                        },
+                        {
+                            type: 1,
+                            couponValue: 20,
+                            selected: false,
+                            validFrom: new Date(1428332139683),
+                            validTo: new Date(1438332139683)
+                        },
+                        {
+                            type: 1,
+                            couponValue: 10,
+                            selected: false,
+                            validFrom: new Date(1428332139683),
+                            validTo: new Date(1438332139683)
+                        },
+                        {
+                            type: 1,
+                            couponValue: 35,
+                            selected: false,
+                            validFrom: new Date(1428332139683),
+                            validTo: new Date(1438332139683)
+                        },
+                    ];
+
+                    $scope.onCouponItemSelectClicked = function(oCoupon) {
+                        if (!!oCoupon.selected) {
+                            oCoupon.selected = false;
+                        } else {
+                            oCoupon.selected = true;
+                        }
+                    };
                 }
             }
         }

@@ -270,7 +270,9 @@
 }
 
 .createDetailView .orderDesignView,
-.createDetailView .addressDesignView {
+.createDetailView .addressDesignView,
+.createDetailView .paySourceListView,
+.createDetailView .payCouponListView {
   width: auto;
   margin-left: 50px;
   margin-right: 50px;
@@ -281,6 +283,12 @@
   bottom: 0px;
   background-color: rgba(207, 176, 96, 0.8);
   z-index: 1000;
+}
+
+.createDetailView .paySourceListView .royalButtonWrapper {
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .createDetailView .orderDesignView .addressValueRow,
@@ -606,6 +614,32 @@
   width: 33%;
 }
 
+.createDetailView .orderDesignView .payOptionRow .paySourceButtonDiv,
+.createDetailView .orderDesignView .payOptionRow .payCouponButtonDiv {
+  position: relative;
+  top: 50px;
+}
+
+.createDetailView .orderDesignView .payOptionRow .paySourceButtonDiv {
+  left: calc(50% - 25px);
+  left: -webkit-calc(50% - 25px);
+  left: -moz-calc(50% - 25px);
+  left: -o-calc(50% - 25px);
+}
+
+.createDetailView .orderDesignView .payOptionRow .payCouponButtonDiv {
+  left: calc(50% + 5px);
+  left: -webkit-calc(50% + 5px);
+  left: -moz-calc(50% + 5px);
+  left: -o-calc(50% + 5px); 
+}
+
+.createDetailView .orderDesignView .payOptionRow .paySourceButtonDiv,
+.createDetailView .orderDesignView .payOptionRow .payCouponButtonDiv {
+  font-size: 18px;
+  color: white;
+}
+
 .createDetailView .orderDesignView .payOptionRow .paySourceDiv,
 .createDetailView .orderDesignView .payOptionRow .payCouponDiv {
   width: 15px;
@@ -646,6 +680,70 @@
   white-space: initial;
   padding: initial;
   width: 30px;
+}
+
+.createDetailView .payCouponListView .couponItemDiv {
+  margin-top: 15px;
+  position: relative;
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemContent {
+  display: inline-block;
+  width: calc(100% - 45px);
+  width: -webkit-calc(100% - 45px);
+  width: -moz-calc(100% - 45px);
+  width: -o-calc(100% - 45px); 
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemContent > .couponItem {
+  height: 35px;
+  border: 2px solid rgb(176, 137, 67);
+  width: auto;
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: center;
+  background-color: white;
+  color: rgb(176, 137, 67);
+  font-size: 16px;
+  padding-top: 5px;
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemContent > .couponItem > span:nth-child(2) {
+  font-size: 12px;
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemContent > .couponItemDesc > span {
+  font-size: 13px;
+  color: white;
+  padding-left: 15px;
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemCheck {
+  display: inline-block;
+  width: 35px;
+  margin-right: 5px;
+  position: absolute;
+  top: 2px;
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemCheck .couponItemSelected > span {
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 18px;
+  background-color: white;
+  padding: 5px;
+  border: 2px solid rgb(176, 137, 67);
+  color: rgb(176, 137, 67);
+}
+
+.createDetailView .payCouponListView .couponItemDiv .couponItemCheck > .selectMask {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border-radius: 18px;
+  background-color: white;
 }
 
 .royalButtonWrapper {
