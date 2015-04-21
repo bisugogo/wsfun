@@ -70,7 +70,7 @@
             <div class="paySourceButtonDiv">
                 <span class="glyphicon glyphicon-triangle-left" ng-click="onPaySourceBtnClicked()"></span>
             </div>
-            <div class="paySourceDiv">
+            <div class="paySourceDiv" ng-click="onPaySourceBtnClicked()">
                 <span>已选银库：微信支付</span>
             </div>
         </div>
@@ -86,7 +86,7 @@
             <div class="payCouponButtonDiv">
                 <span class="glyphicon glyphicon-triangle-right" ng-click="onPayCouponBtnClicked()"></span>
             </div>
-            <div class="payCouponDiv">
+            <div class="payCouponDiv" ng-click="onPayCouponBtnClicked()">
                 <span>已用制衣券：{{orderInfo.couponPay}}</span>
             </div>
         </div>

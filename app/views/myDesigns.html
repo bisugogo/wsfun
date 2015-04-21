@@ -1,4 +1,4 @@
-<div class='row'>
+<div class='row myDesignsView'>
     <div class="col-xs-12">
         <div ng-controller="MyDesignsListCtrl">
             <!--carousel interval="myInterval">
@@ -10,13 +10,36 @@
                     </div>
                 </slide>
             </carousel-->
-            <div>temp code: {{code}}</div>
+            <div class="myDesignListHeader">
+                <span>朕设计的</span>
+                <span>朕喜欢的</span>
+            </div>
 
-            <ul rn-carousel class="image myDesignListCarousel" rn-carousel-transition="fadeAndSlide">
-                <li ng-repeat="oDesign in aMyDesigns">
-                    <img ng-src="img/test.svg" style="margin:auto;">
-                </li>
-            </ul>
+            <div class="myDesignListContent">
+                <div class="myDesignListLeft">
+                    <div>
+                        
+                    </div>
+                </div>
+                <div class="myDesignListCenter">
+                    <ul rn-carousel class="image myDesignListCarousel" rn-carousel-transition="fadeAndSlide">
+                        <li ng-repeat="oDesign in aMyDesigns">
+                            <div class="designItem">
+                                <img ng-src="{{oDesign.previewImage64}}" style="margin:auto;">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myDesignListRight">
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="myDesignListFooter">
+                
+            </div>
 
             <!--div>
                 <div class='row myDesignListTitleRow'>

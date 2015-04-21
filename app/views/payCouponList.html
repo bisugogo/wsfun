@@ -1,28 +1,34 @@
 <div class='row payCouponListView'>
-    <div ng-repeat="oCoupon in aCoupons">
-        <div class="couponItemDiv">
-            <div class="couponItemContent">
-                <div class="couponItem">
-                    <span>{{oCoupon.type === 1 ? '制衣券' : 'Coupon'}}</span>
-                    <span>¥</span>
-                    <span>{{oCoupon.couponValue}}</span>
+    <div class="payCouponListContainer">
+        <div ng-repeat="oCoupon in aCoupons">
+            <div class="couponItemDiv">
+                <div class="couponItemContent">
+                    <div class="couponItem">
+                        <span>{{oCoupon.type === 1 ? '制衣券' : 'Coupon'}}</span>
+                        <span>¥</span>
+                        <span>{{oCoupon.couponValue}}</span>
+                    </div>
+                    <div class="couponItemDesc">
+                        <span>有效期至 {{oCoupon.validTo.toLocaleDateString()}}</span>
+                    </div>
                 </div>
-                <div class="couponItemDesc">
-                    <span>有效期至 {{oCoupon.validTo.toLocaleDateString()}}</span>
-                </div>
-            </div>
-            <div class="couponItemCheck">
-                <div class="couponItemSelected" ng-click="onCouponItemSelectClicked(oCoupon)">
-                    <span class="glyphicon glyphicon-ok"></span>
-
-                    <!--label class="myCheckbox">
-                        <input type="checkbox" ng-model="oCoupon.selected">
+                <div class="couponItemCheck">
+                    <div class="couponItemSelected" ng-click="onCouponItemSelectClicked(oCoupon)">
                         <span class="glyphicon glyphicon-ok"></span>
-                    </label-->
+
+                        <!--label class="myCheckbox">
+                            <input type="checkbox" ng-model="oCoupon.selected">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label-->
+                    </div>
+                    <div class="selectMask" style="{{oCoupon.selected === true ? 'display:none' : ''}}"
+                    ng-click="onCouponItemSelectClicked(oCoupon)"></div>
                 </div>
-                <div class="selectMask" style="{{oCoupon.selected === true ? 'display:none' : ''}}"
-                ng-click="onCouponItemSelectClicked(oCoupon)"></div>
             </div>
         </div>
+    </div>
+    <div class="naviBtnRow">
+        <span class="glyphicon glyphicon-chevron-left" ng-click="onBackFromPayCouponListClicked()"></span>
+        <span class="glyphicon glyphicon-send"></span>
     </div>
 </div>

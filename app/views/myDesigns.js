@@ -120,13 +120,13 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
         };
 
         //Design.setGetParam({action: 'getAllMyDesigns'});
-        var oResult = Design.DesignManager.query({action: 'getMyDesigns', userId: 'MATT'}, function () {
+        var oResult = Design.DesignManager.query({action: 'getMyDesigns', userId: 'MATT'}, function (aDesigns) {
             // var newWidth = 600 + oResult.designList.length + 1;
             // for (var i = 0; i < oResult.designList.length; i++) {
             //     oResult.designList[i].image = 'http://placekitten.com/' + newWidth + '/300';
             // }
             //$scope.aMyDesigns = oResult.designList;
-            $scope.aMyDesigns = [{},{}];
+            $scope.aMyDesigns = aDesigns.designList;
         });
 
         $scope.deleteDesign = function (sId) {

@@ -47,6 +47,80 @@
   background-repeat: no-repeat;
 }*/
 
+.busyView {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: white;
+}
+
+.busyView > div:first-child {
+  width: 10px;
+  margin-left: 45%;
+  margin-top: 45%;
+}
+
+.busyView > div:first-child > span {
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(176, 137, 67);
+}
+
+.busyView > img {
+  width: 40%;
+  position: relative;
+  animation: busyCloud 8s;
+  animation-timing-function: linear;
+  animation-delay: 1s;
+  animation-iteration-count: infinite;
+  -moz-animation: busyCloud 8s; /* Firefox */
+  -moz-animation-timing-function: linear;
+  -moz-animation-delay: 1s;
+  -moz-animation-iteration-count: infinite;
+  -webkit-animation: busyCloud 8s;  /* Safari 和 Chrome */
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -o-animation: busyCloud 8s; /* Opera */
+  -o-animation-timing-function: linear;
+  -o-animation-delay: 1s;
+  -o-animation-iteration-count: infinite;
+}
+
+@keyframes busyCloud
+{
+0%   {left: 0%;}
+25%  {left: 20%;}
+50%  {left: 40%;}
+100% {left: 60%;}
+}
+
+@-moz-keyframes busyCloud /* Firefox */
+{
+0%   {left: 0px;}
+25%  {left: 20%;}
+50%  {left: 40%;}
+100% {left: 60%;}
+}
+
+@-webkit-keyframes busyCloud /* Safari 和 Chrome */
+{
+0%   {left: 0px;}
+25%  {left: 20%;}
+50%  {left: 40%;}
+100% {left: 60%;}
+}
+
+@-o-keyframes busyCloud /* Opera */
+{
+0%   {left: 0px;}
+25%  {left: 20%;}
+50%  {left: 40%;}
+100% {left: 60%;}
+}
+
 .createDesignView.row,
 .createDetailView.row,
 .saveDetailView.row {
@@ -70,6 +144,14 @@
 }
 .createDesignView>img {
   
+}
+
+.createDetailView .alerts {
+  position: absolute;
+  width: 100%;
+  bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .createDesignView .genderButtonRow {
@@ -242,7 +324,9 @@
 
 .createDetailView .saveDetailView .naviBtnRow,
 .createDetailView .orderDesignView .naviBtnRow,
-.createDetailView .addressDesignView .naviBtnRow {
+.createDetailView .addressDesignView .naviBtnRow,
+.createDetailView .payCouponListView .naviBtnRow,
+.createDetailView .paySourceListView .naviBtnRow {
   position: absolute;
   bottom: 3px;
   width: 100%;
@@ -250,21 +334,27 @@
 
 .createDetailView .saveDetailView .naviBtnRow > span,
 .createDetailView .orderDesignView .naviBtnRow > span,
-.createDetailView .addressDesignView .naviBtnRow > span {
+.createDetailView .addressDesignView .naviBtnRow > span,
+.createDetailView .payCouponListView .naviBtnRow > span,
+.createDetailView .paySourceListView .naviBtnRow > span {
   font-size: 25px;
   color: rgb(176, 137, 67);
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span:first-child,
 .createDetailView .orderDesignView .naviBtnRow > span:first-child,
-.createDetailView .addressDesignView .naviBtnRow > span:first-child {
+.createDetailView .addressDesignView .naviBtnRow > span:first-child,
+.createDetailView .payCouponListView .naviBtnRow > span:first-child,
+.createDetailView .paySourceListView .naviBtnRow > span:first-child {
   float: left;
   left: -25px;
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span:nth-child(2),
 .createDetailView .orderDesignView .naviBtnRow > span:nth-child(2),
-.createDetailView .addressDesignView .naviBtnRow > span:nth-child(2) {
+.createDetailView .addressDesignView .naviBtnRow > span:nth-child(2),
+.createDetailView .payCouponListView .naviBtnRow > span:nth-child(2),
+.createDetailView .paySourceListView .naviBtnRow > span:nth-child(2) {
   float: right;
   left: 25px;
 }
@@ -682,6 +772,11 @@
   width: 30px;
 }
 
+.createDetailView .payCouponListView .payCouponListContainer {
+  height: 100%;
+  overflow: auto;
+}
+
 .createDetailView .payCouponListView .couponItemDiv {
   margin-top: 15px;
   position: relative;
@@ -741,7 +836,7 @@
   height: 30px;
   position: absolute;
   top: 3px;
-  left: 3px;
+  left: 2px;
   border-radius: 18px;
   background-color: white;
 }
@@ -839,16 +934,73 @@
   margin-right: 5px;
 }
 
+.myDesignsView .myDesignListHeader {
+  width: 100%;
+  height: 40px;
+  border-bottom: 2px solid rgb(176, 137, 67);
+  text-align: center;
+}
+
+.myDesignsView .myDesignListFooter {
+  height: 20px;
+}
+
+.myDesignsView .myDesignListHeader > span {
+  font-size: 15px;
+  color: rgb(176, 137, 67);
+}
+
+.myDesignsView .myDesignListHeader > span:first-child {
+  margin-right: 10px;
+}
+
+.myDesignsView .myDesignListContent {
+  height: calc(100% - 60px);
+  height: -webkit-calc(100% - 60px);
+  height: -moz-calc(100% - 60px);
+  height: -o-calc(100% - 60px);
+}
+
+.myDesignsView .myDesignListContent > .myDesignListLeft,
+.myDesignsView .myDesignListContent > .myDesignListRight,
+.myDesignsView .myDesignListContent > .myDesignListCenter {
+  display: inline-block;
+}
+
+.myDesignsView .myDesignListContent > .myDesignListLeft,
+.myDesignsView .myDesignListContent > .myDesignListRight {
+  width: 15%;
+  height: 100%;
+}
+
+.myDesignsView .myDesignListContent > .myDesignListCenter {
+  width: 70%;
+}
+
+.myDesignsView .myDesignListContent > .myDesignListLeft > div {
+  margin-right: 8px;
+  border-top: 2px solid rgb(176, 137, 67);
+  border-bottom: 2px solid rgb(176, 137, 67);
+  border-right: 2px solid rgb(176, 137, 67);
+}
+
+.myDesignsView .myDesignListContent > .myDesignListRight > div {
+  margin-left: 8px;
+  border-top: 2px solid rgb(176, 137, 67);
+  border-bottom: 2px solid rgb(176, 137, 67);
+  border-left: 2px solid rgb(176, 137, 67);
+}
+
 .myDesignListCarousel {
   height: 300px;
 }
 
-.myDesignListCarousel > li {
-  height: 100%;
+.myDesignListCarousel .designItem {
+  text-align: center;
 }
 
-.myDesignListCarousel > li > img {
-  width: 100%;
+.myDesignListCarousel .designItem > img {
+  width: 70%;
 }
 
 .myDesignListRowImg {

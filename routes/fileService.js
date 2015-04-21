@@ -11,6 +11,8 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var gm = require('gm');
 var Gridfs = require('gridfs-stream');
+var cp = require('child_process');
+var path = require('path')
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var LOG = require('../util/wsLog');
@@ -20,8 +22,10 @@ var Artifact = require('../models/Artifact.js');
 
 var FILE_CONSTANT = {
     SMALL_IMAGE_WIDTH: 50,
-    MID_IMAGE_WIDTH: 100,
-    LARGE_IMAGE_WIDTH: 400
+    MID_IMAGE_WIDTH: 200,
+    LARGE_IMAGE_WIDTH: 400,
+    FINAL_DESIGN_WIDTH: 1600,
+    FINAL_DESIGN_HEIGHT: 2000
 };
 
 module.exports = function(app) {
@@ -220,6 +224,168 @@ module.exports = function(app) {
             }
         });
     };
+
+    createCustomDesign = function(req, res) {
+        var oData = req.body.data;
+
+        oData = {
+            userId: 'asdf',
+            artifacts:[
+                {
+                    fileId: '552fb66a8903900c7bea3edb',
+                    relativeWidth: 0.6,
+                    relativeTop: 0.1,
+                    relativeLeft: 0.1
+                },
+                {
+                    fileId: '5533745c6ce76dc029da49a2',
+                    relativeWidth: 0.6,
+                    relativeTop: 0.5,
+                    relativeLeft: 0.2
+                },
+                {
+                    fileId: '5533746e6ce76dc029da49ca',
+                    relativeWidth: 0.6,
+                    relativeTop: 0.3,
+                    relativeLeft: 0.5
+                },
+            ]
+        };
+
+        if (!oData.artifacts || oData.artifacts.length < 1) {
+            LOG.logger.logFunc('createCustomDesign', 'artifacts length illegal!');
+            res.send({error: 'artifacts length illegal!'});
+            return;
+        }
+
+        // var sOutParam = 'img/female_black.png -geometry 100x200-20+5 -composite ' + 
+        //     'img/female_white -geometry 100x200+350+5 -composite img/test.png';
+        // gm(400, 500, "#00ff55aa").options({imageMagick: true})
+        // .command('composite')
+        // .geometry('100x200+20+5')
+        // .in('img/female_black.png')
+        // .command('composite')
+        // .geometry('100x200+200+5')
+        // .in('img/female_white.png')
+        // .write('img/test.png', function(err) {
+        //     if (!err) {
+        //         console.log('Success!!!!');
+        //     }
+        // });
+        oData.requestedTime = new Date().getTime();
+        fs.mkdirSync('img/' + oData.requestedTime);
+
+        var sOutParam2 = '-size 400x500 xc:none img/female_black.png -geometry 10%x-50+5 -composite ' + 
+        'img/female_white.png -geometry 10%x+350+5 -composite img/test.png';
+
+        var sOutParam = '-size ' + FILE_CONSTANT.FINAL_DESIGN_WIDTH + 'x' + FILE_CONSTANT.FINAL_DESIGN_HEIGHT + ' xc:none ';
+
+        for (var i = 0; i < oData.artifacts.length; i++) {
+            var oCurArti = oData.artifacts[i];
+            sOutParam += 'img/' + oData.requestedTime + '/' + oCurArti.fileId + '.jpg'
+            sOutParam += ' -geometry ';
+            sOutParam += oCurArti.relativeWidth * FILE_CONSTANT.FINAL_DESIGN_WIDTH;
+            sOutParam += 'x';
+
+            if (oCurArti.relativeLeft < 0) {
+                sOutParam += '-';
+            } else {
+                sOutParam += '+';
+            }
+            sOutParam += oCurArti.relativeLeft * FILE_CONSTANT.FINAL_DESIGN_WIDTH;
+
+            if (oCurArti.relativeTop < 0) {
+                sOutParam += '-';
+            } else {
+                sOutParam += '+';
+            }
+            sOutParam += oCurArti.relativeTop * FILE_CONSTANT.FINAL_DESIGN_HEIGHT;
+            sOutParam += ' -composite ';
+        }
+        sOutParam += 'img/' + oData.requestedTime + '/' + 'final.png';
+
+        var db = mongoose.connection.db;
+        var mongoDriver = mongoose.mongo;
+        var gfs = new Gridfs(db, mongoDriver);
+
+        var iCount = 0;
+
+        for (var i = 0; i < oData.artifacts.length; i++) {
+            var sFileId = oData.artifacts[i].fileId;
+
+            // gfs.exist({
+            //     _id: sFileId
+            // }, function(err, found) {
+            //     if (err) {
+            //         LOG.logger.logFunc('gfs.exist error');
+            //     } else {
+            //         if (found) {
+            //             var readstream = gfs.createReadStream({
+            //                 _id: sFileId
+            //             });
+            //         }
+            //     }
+
+            // });
+
+            var readstream = gfs.createReadStream({
+                _id: sFileId
+            });
+
+            readstream.on('error', function(err) {
+                console.log(err);
+            });
+
+            var sPath = 'img/' + oData.requestedTime + '/' + sFileId + '.jpg';
+            var writestream = fs.createWriteStream(sPath);
+
+            writestream.on('close', function() {
+                console.log('one file closed.' + sPath);
+                iCount++;
+                console.log(iCount);
+                if (iCount === oData.artifacts.length) {
+                    var curDir = path.resolve(process.cwd(), '.');
+                    console.log(curDir);
+                    cp.exec('convert ' + sOutParam, {cwd: curDir}, function(err, stdout, stderr) {
+                        if (!err) {
+                            console.log('Success!!!!');
+                            res.send({data: 'custom design created successfully.'});
+                        } else {
+                            res.send({error: err});
+                            console.log('stdout: ' + stdout);
+                            console.log('stderr: ' + stderr);
+                        }
+                    });
+                }
+            });
+            writestream.on('error', function() {
+                console.log('one file error.');
+            });
+            readstream.pipe(writestream);
+        }
+
+        // var curDir = path.resolve(process.cwd(), '.');
+        // console.log(curDir);
+        // cp.exec('convert ' + sOutParam2, {cwd: curDir}, function(err, stdout, stderr) {
+        //     if (!err) {
+        //         console.log('Success!!!!');
+        //         res.send({data: 'custom design created successfully.'});
+        //     } else {
+        //         res.send({error: err});
+        //         console.log('stdout: ' + stdout);
+        //         console.log('stderr: ' + stderr);
+        //     }
+        // });
+        
+    };
+
+    // prepareSourceArtifact = function(aArtifact) {
+    //     if (!aArtifact || aArtifact.length < 1) {
+    //         return null;
+    //     }
+
+
+    // };
     
     getService = function(req, res) {
         var sAction = req.query.action;
@@ -235,7 +401,18 @@ module.exports = function(app) {
         }
     };
 
+    postService = function(req, res) {
+        var sAction = req.body.action;
+        if (sAction === 'createCustomDesign') {
+            LOG.logger.logFunc('createCustomDesign');
+            createCustomDesign(req, res);
+        } else {
+            res.send({error: 'Funtion not implemented.'});
+        }
+    };
+
     //Link routes and actions
     app.post('/uploadFile', multipartMiddleware, uploadFile);
     app.get('/file', getService);
+    app.post('/file', postService);
 };

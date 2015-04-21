@@ -9,6 +9,7 @@
         <div ui-view="personalGallery"></div>
         <div ui-view="saveDetail"></div>
         <div ui-view="orderDesign"></div>
+        <div ui-view="orderMore"></div>
         <div ui-view="addressDetail"></div>
         <div ui-view="paySourceList"></div>
         <div ui-view="payCouponList"></div>
@@ -75,6 +76,10 @@
                     <button class="btn btn-default rightBtn glyphicon glyphicon-ok" ng-click="onCreateDesignClicked()"></button>
                 </div>
             </div>
+        </div>
+
+        <div class="alerts">
+            <alert ng-repeat="oMsg in aMessage" type="{{oMsg.type}}" close="closeAlert($index)">{{oMsg.content}}</alert>
         </div>
         <!--div class='row newDesignInfoArea'>
             <div class="col-xs-12">

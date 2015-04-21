@@ -25,6 +25,7 @@ designServices.factory('Design', ['$resource',
             
             FileManager: $resource('file', {}, {
                 query: {method:'GET'},
+                create: {method:'POST'}
             })
         };
 }]);

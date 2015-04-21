@@ -11,22 +11,12 @@ var DesignSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  model:    {
-    type    : String,
-    require : true
-  },
-  style:    {
-    type    : String,
-    enum    :  ['Casual', 'Vintage', 'Alternative'],
-    require : true
-  },
-  size:     {
-    type    : String,
-    enum    : ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-    require : true
-  },
   color:   {
     type: String
+  },
+  gender: {
+    type: String,
+    default: 'male'
   },
   price :   {
     type    : Number,
@@ -41,6 +31,14 @@ var DesignSchema = new Schema({
   },
   access:   {
     type: String
+  },
+  previewImage64: {
+    type: String,
+    default: ''
+  },
+  designFileId: {
+    type: String,
+    default: ''
   },
   orders: [OrderSchema]
 });

@@ -106,6 +106,15 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 }
             }
         }
+    }).state('createDesign.createDetail.orderMore', {
+        views: {
+            'orderMore' : {
+                templateUrl: 'views/orderMore.html',
+                controller: function($scope, $state, Design) {
+
+                }
+            }
+        }
     }).state('createDesign.createDetail.paySourceList', {
         //url: '/addressDetail',
         // templateUrl: 'views/createDetail.html',
@@ -115,6 +124,9 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 templateUrl: 'views/paySourceList.html',
                 controller: function($scope, $state, Design) {
                     //$scope.saveDetailtest = "this is test string in saveDetail.";
+                    $scope.onBackFromPaySourceListClicked = function() {
+                        $state.go('createDesign.createDetail.orderDesign');
+                    };
                 }
             }
         }
@@ -178,6 +190,10 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                             oCoupon.selected = true;
                         }
                     };
+
+                    $scope.onBackFromPayCouponListClicked = function() {
+                        $state.go('createDesign.createDetail.orderDesign');
+                    };
                 }
             }
         }
@@ -215,6 +231,16 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.aSelectedArtifact = [];
+        $scope.aMessage = [];
+        $scope.busyViewStyle = "display:none;"
+
+        $scope.showBusy = function() {
+            $scope.busyViewStyle = "";
+        };
+
+        $scope.hideBusy = function() {
+            $scope.busyViewStyle = "display:none;";
+        };
 
     //Regist Wechat Interface
     /*var oParam = {
@@ -279,6 +305,33 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         // $scope.bPrivateDesign = false;
         // $scope.defultDesc = new Date().toUTCString();
         $scope.onCreateDesignClicked = function () {
+            if ($scope.aSelectedArtifact.length < 1) {
+                $scope.aMessage.push({
+                    type: 'danger',
+                    content: '您还没有选择素材'
+                });
+                return;
+            }
+
+            var oNewDesign = {
+                creatorId: '54fed66202f4c3e48e0df896',
+                color: 'white',
+                gender: 'female',
+                price: 100,
+                desc: 'test design',
+                access: 'public',
+                artifacts: []
+            };
+            for(var i = 0; i < $scope.aSelectedArtifact.length; i++) {
+                var oCurArti = $scope.aSelectedArtifact[i];
+                var oArtiParam = {
+                    fileId: oCurArti.fileId,
+                    relativeWidth: oCurArti.imgWidth / $scope.htmlItemStyle.availableArea.width,
+                    relativeTop: (oCurArti.styleValue.top - 140) / $scope.htmlItemStyle.availableArea.height,
+                    relativeLeft: (oCurArti.styleValue.left - 76) / $scope.htmlItemStyle.availableArea.width
+                };
+                oNewDesign.artifacts.push(oArtiParam);
+            }
             // var oNewDesign = {
             //     creatorId: $scope.designInfo.sCreatorId,
             //     color: $scope.designInfo.sBackgroundColor === '白' ? 'white' : 'black',
@@ -289,15 +342,22 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             //     desc: $scope.designInfo.sDefaultDesc,
             //     access: $scope.designInfo.bPrivateDesign ? 'private' : 'public'
             // };
-            // var oParam = {
-            //     action: 'createDesign',
-            //     data: oNewDesign
-            // };
-            // Design.DesignManager.create(oParam);
+            var oParam = {
+                action: 'createDesign',
+                data: oNewDesign
+            };
+            $scope.showBusy();
+            Design.DesignManager.create(oParam, function(oDesign) {
+                $scope.hideBusy();
 
-            //GO TO SAVE PAGE
-            $scope.updateDesignToolRow('saveDetailView');
-            $state.go('createDesign.createDetail.saveDetail');
+                //GO TO SAVE PAGE
+                $scope.updateDesignToolRow('saveDetailView');
+                $state.go('createDesign.createDetail.saveDetail');
+            });
+        };
+
+        $scope.closeAlert = function(index) {
+            $scope.aMessage.splice(index, 1);
         };
 
         $scope.updateDesignToolRow = function(sTargeView) {
@@ -730,7 +790,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onPreviewDesignBtnClicked = function() {
-
+            var oParam = {
+                action: 'createCustomDesign',
+                fileId: $scope.test.fileId
+            };
+            var oFileContent = Design.FileManager.create(oParam, function(oContent) {
+                $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
+                $scope.largeImgSrc = 'data:image/png;base64,' + oContent.data.largeImage64;
+            });
         };
 
         $scope.onBack2DesignDetailClicked = function() {
