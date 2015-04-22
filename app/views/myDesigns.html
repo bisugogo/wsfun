@@ -11,8 +11,14 @@
     <img src="img/cloud.png" class="bottomCenterCloud">
 
     <div class="myDesignListHeader">
-        <span>朕设计的</span>
-        <span>朕喜欢的</span>
+        <div ng-click="onIDesignedClicked()">
+            <span style="{{whatILiked === true ? '' : 'font-weight:bold;'}}">朕设计的</span>
+            <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? 'display:none;' : ''}}"></span>
+        </div>
+        <div ng-click="onILikedClicked()">
+            <span style="{{whatILiked === true ? 'font-weight:bold;' : ''}}">朕喜欢的</span>
+            <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? '' : 'display:none;'}}"></span>
+        </div>
     </div>
 
     <img src="img/cloud.png" class="topLeftCloud">

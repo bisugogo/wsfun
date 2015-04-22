@@ -970,17 +970,27 @@
   text-align: center;
 }
 
+.myDesignsView .myDesignListHeader > div {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  position: relative;
+}
+
+.myDesignsView .myDesignListHeader > div > span:nth-child(2) {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  color: rgb(176, 137, 67);
+}
+
 .myDesignsView .myDesignListFooter {
   height: 30px;
 }
 
-.myDesignsView .myDesignListHeader > span {
+.myDesignsView .myDesignListHeader > div > span {
   font-size: 15px;
   color: rgb(176, 137, 67);
-}
-
-.myDesignsView .myDesignListHeader > span:first-child {
-  margin-right: 10px;
 }
 
 .myDesignsView .myDesignListContent {

@@ -119,6 +119,14 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
             DESIGN_ITEM_OPT: ['删除', '更改'],
         };
 
+        $scope.whatILiked = false;
+        $scope.onILikedClicked = function() {
+            $scope.whatILiked = true;
+        };
+        $scope.onIDesignedClicked = function() {
+            $scope.whatILiked = false;
+        };
+
         //Design.setGetParam({action: 'getAllMyDesigns'});
         var oResult = Design.DesignManager.query({action: 'getMyDesigns', userId: 'MATT'}, function (aDesigns) {
             // var newWidth = 600 + oResult.designList.length + 1;
@@ -127,10 +135,10 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
             // }
             //$scope.aMyDesigns = oResult.designList;
             $scope.aMyDesigns = aDesigns.designList;
-            var oBkImg = $('.designBackgroundImg')[0];
-            if (oBkImg) {
-                var iWidth = oBkImg.width;
-                var iHeight = oBkImg.height;
+            var oCenterDom = $('.myDesignListCenter')[0];
+            if (oCenterDom) {
+                var iWidth = oCenterDom.clientWidth;
+                var iHeight = oCenterDom.clientHeight;
                 var iLeft = iWidth * 0.21;
                 var iTop = iHeight * 0.3;
                 var iDesignImageWidth = iWidth * 0.6;
