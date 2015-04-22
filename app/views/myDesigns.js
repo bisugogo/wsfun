@@ -127,6 +127,18 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
             // }
             //$scope.aMyDesigns = oResult.designList;
             $scope.aMyDesigns = aDesigns.designList;
+            var oBkImg = $('.designBackgroundImg')[0];
+            if (oBkImg) {
+                var iWidth = oBkImg.width;
+                var iHeight = oBkImg.height;
+                var iLeft = iWidth * 0.21;
+                var iTop = iHeight * 0.3;
+                var iDesignImageWidth = iWidth * 0.6;
+
+                $scope.positionInfoStyleValue = "left:" + iLeft + "px;" + 
+                    "top:" + iTop + "px;" + 
+                    "width:" + iDesignImageWidth + "px;";
+            }
         });
 
         $scope.deleteDesign = function (sId) {

@@ -617,11 +617,15 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             $scope.htmlItemStyle.availableArea.visible = true;
             $scope.htmlItemStyle.availableArea.width = iWidth * 0.6;
             $scope.htmlItemStyle.availableArea.height = $scope.htmlItemStyle.availableArea.width * 1.25;
+            $scope.htmlItemStyle.availableArea.left = iWidth * 0.21;
+            $scope.htmlItemStyle.availableArea.top = iHeight * 0.3;
 
             if ($scope.aSelectedArtifact.length > 0) {
                 $scope.htmlItemStyle.availableArea.styleStr = "visibility:visible;" + 
                 "width:" + $scope.htmlItemStyle.availableArea.width + "px;" + 
-                "height:" + $scope.htmlItemStyle.availableArea.height + "px;";
+                "height:" + $scope.htmlItemStyle.availableArea.height + "px;" + 
+                "left:" + $scope.htmlItemStyle.availableArea.left + "px;" + 
+                "top:" + $scope.htmlItemStyle.availableArea.top + "px;";
             } else {
                 $scope.htmlItemStyle.availableArea.styleStr = "visibility:hidden;" + 
                 "width:" + $scope.htmlItemStyle.availableArea.width + "px;" + 
