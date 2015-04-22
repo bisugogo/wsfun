@@ -296,7 +296,7 @@ module.exports = function(app) {
         }
 
         function saveDesign(oRes, oData, sDesignBase64, sDesignFileId) {
-            var design = new Design({
+            var oDesignJson = {
                 creatorId : oData.creatorId,
                 color : oData.color,
                 price : oData.price,
@@ -304,7 +304,8 @@ module.exports = function(app) {
                 access : oData.access,
                 previewImage64 : sDesignBase64,
                 designFileId : sDesignFileId
-            });
+            };
+            var design = new Design(oDesignJson);
 
             design.save(function(err) {
 
@@ -321,7 +322,7 @@ module.exports = function(app) {
                     console.log("design created");
                     return oRes.send({
                         status : 'OK',
-                        tshirt : design
+                        designData : oDesignJson
                     });
 
                 }
