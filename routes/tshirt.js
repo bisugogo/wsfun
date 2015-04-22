@@ -542,6 +542,7 @@ module.exports = function(app) {
     postService = function(req, res) {
         var sAction = req.body.action;
         if (sAction && sAction !== '') {
+            console.log("design post service, action: " + sAction);
             if (sAction === 'createDesign') {
                 createDesign(req.body.data, res);
             } else if (sAction === 'deleteDesign') {
@@ -550,6 +551,7 @@ module.exports = function(app) {
                 createOrder(req.body.data, res);
             }
         }
+        console.log("design post service, action: empty.");
     };
 
     //Link routes and actions
