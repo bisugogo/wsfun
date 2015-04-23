@@ -138,7 +138,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
             var oCenterDom = $('.myDesignListCenter')[0];
             if (oCenterDom) {
                 var iWidth = oCenterDom.clientWidth;
-                var iHeight = oCenterDom.clientHeight;
+                var iHeight = iWidth * 1021 / 642;
                 var iLeft = iWidth * 0.21;
                 var iTop = iHeight * 0.3;
                 var iDesignImageWidth = iWidth * 0.6;

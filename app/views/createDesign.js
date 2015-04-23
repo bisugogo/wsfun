@@ -390,7 +390,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             $scope.designInfo.sSize = sSize;
         };
 
-        $scope.onGenderSelected = function() {
+        $scope.onMaleSelected = function() {
+            $scope.designInfo.gender = 'male';
+            $state.go("createDesign.createDetail");
+        };
+
+        $scope.onFemalerSelected = function() {
+            $scope.designInfo.gender = 'female';
             $state.go("createDesign.createDetail");
         };
 
