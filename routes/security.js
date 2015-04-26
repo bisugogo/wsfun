@@ -325,21 +325,22 @@ module.exports = function(app) {
     wechatPayConfirm = function(req, res) {
         var oConfirmData = {};
 
-        for (prop in req.body) {
-            LOG.logger.logFunc('wechatPayConfirm body', prop + ': ' + req.body[prop]);
-        }
-
-        for (prop in req.query) {
-            LOG.logger.logFunc('wechatPayConfirm query', prop + ': ' + req.query[prop]);
-        }
-
-        // var oData = xmlLite.parseString(req.body);
-        // if (oData && oData.childs && oData.childs.length > 0) {
-        //     for (var i = 0; i < oData.childs.length; i++) {
-        //         var oCurChild = oData.childs[i];
-        //         oConfirmData[oCurChild.name] = oCurChild.childs[0];
-        //     }
+        // for (prop in req.body) {
+        //     LOG.logger.logFunc('wechatPayConfirm body', prop + ': ' + req.body[prop]);
         // }
+
+        // for (prop in req.query) {
+        //     LOG.logger.logFunc('wechatPayConfirm query', prop + ': ' + req.query[prop]);
+        // }
+        LOG.logger.logFunc('wechatPayConfirm rawBody', req.rawBody);
+
+        var oData = xmlLite.parseString(req.rawBody);
+        if (oData && oData.childs && oData.childs.length > 0) {
+            for (var i = 0; i < oData.childs.length; i++) {
+                var oCurChild = oData.childs[i];
+                oConfirmData[oCurChild.name] = oCurChild.childs[0];
+            }
+        }
         LOG.logger.logFunc('wechatPayConfirm', oConfirmData.toString());
     };
 
@@ -375,7 +376,15 @@ module.exports = function(app) {
                 createPreOrder(req, res);
             }
         } else {
-            wechatPayConfirm(req, res);
+            var data = '';
+            req.setEncoding('utf8');
+            req.on('data', function(chunk) { 
+                data += chunk;
+            });
+            req.on('end', function() {
+                req.rawBody = data;
+                wechatPayConfirm();
+            });
         }
     };
 
