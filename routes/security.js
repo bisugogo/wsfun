@@ -383,7 +383,7 @@ module.exports = function(app) {
             });
             req.on('end', function() {
                 req.rawBody = data;
-                wechatPayConfirm();
+                wechatPayConfirm(req, res);
             });
         }
     };

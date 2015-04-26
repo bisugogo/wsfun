@@ -52,7 +52,8 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Aut
 
     var oPreOrderAttach = {
         orderId: $scope.orderInfo.orderId,
-        actualPay: $scope.orderInfo.totalPay
+        actualPay: $scope.orderInfo.totalPay,
+        orderCreatorId: $scope.orderInfo.creatorId
     };
 
     $scope.onPayClicked = function() {
