@@ -1,0 +1,22 @@
+<div class='activitiesView'>
+    <div>
+        <span>关注“微服私纺”公众号，即可获赠价值30元优惠券</span>
+    </div>
+    <div>
+        <ul rn-carousel class="couponSourceCarousel" rn-carousel-transition="fadeAndSlide">
+            <li ng-repeat="oCouponSource in aCouponSources">
+                <div class="couponSourceItem">
+                    <div class="couponSourceImgDiv">
+                        <img ng-src="{{oCouponSource.imgSrc}}" class="couponSourceItemImg">
+                    </div>
+                    <div>
+                        <label class="btn btn-warning" ng-click="onGetCouponClicked(oCouponSource)">领取优惠券</label>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <label class="btn btn-warning" ng-click="onCreateNewCouponSource()">Create Coupon Source</label>
+    </div>
+</div>

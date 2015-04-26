@@ -22,6 +22,10 @@ var DesignSchema = new Schema({
     type    : Number,
     require : true
   },
+  type :   {
+    type    : String,
+    default: 'normal'
+  },
   modified: {
     type    : Date,
     default : Date.now
@@ -40,7 +44,10 @@ var DesignSchema = new Schema({
     type: String,
     default: ''
   },
-  orders: [OrderSchema]
+  orders: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Order'
+  }]
 });
 
 // DesignSchema.path('model').validate(function (v) {

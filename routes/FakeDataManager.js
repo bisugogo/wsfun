@@ -4,7 +4,7 @@ FakeDataManager.prototype.getWechatEvent = function() {
     var oRet = {
         MsgType: 'event',
         FromUserName: 'user1',
-        Event: 'unsubscribe',
+        Event: 'subscribe',
         Content: 'content text'
     };
     return oRet;

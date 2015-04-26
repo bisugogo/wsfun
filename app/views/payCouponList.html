@@ -1,10 +1,13 @@
 <div class='row payCouponListView'>
     <div class="payCouponListContainer">
+        <div class="noCouponFoundDiv" style="{{aCoupons.length > 0 ? 'display:none;' : ''}}">
+            <span >没有发现领取过的制衣券</span>
+        </div>
         <div ng-repeat="oCoupon in aCoupons">
             <div class="couponItemDiv">
                 <div class="couponItemContent">
                     <div class="couponItem">
-                        <span>{{oCoupon.type === 1 ? '制衣券' : 'Coupon'}}</span>
+                        <span>制衣券</span>
                         <span>¥</span>
                         <span>{{oCoupon.couponValue}}</span>
                     </div>

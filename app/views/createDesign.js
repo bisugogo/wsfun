@@ -73,27 +73,77 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 templateUrl: 'views/orderDesign.html',
                 controller: function($scope, $state, Design, UIData) {
                     //$scope.saveDetailtest = "this is test string in saveDetail.";
-                    $scope.orderInfo = {
-                        defaultQuanaity: 1,
-                        defaultSize: '中',
-                        defaultQuantityAction: '加',
-                        totalPay: 1001,
-                        couponPay: 33
-                    };
+                    // $scope.orderInfo = {
+                    //     defaultQuanaity: 1,
+                    //     defaultSize: '中',
+                    //     defaultGender: $scope.designInfo.sGender,
+                    //     defaultQuantityAction: '加',
+                    //     totalPay: 1001,
+                    //     usedCoupons: []
+                    // };
 
                     $scope.onIncreaseQuantity = function() {
-                        $scope.orderInfo.defaultQuanaity++;
+                        $scope.orderInfo.clothesQuanaity++;
+                        $scope.calcPay();
                     };
 
                     $scope.onDecreaseQuantity = function() {
-                        if ($scope.orderInfo.defaultQuanaity > 0) {
-                            $scope.orderInfo.defaultQuanaity--;
+                        if ($scope.orderInfo.clothesQuanaity > 1) {
+                            $scope.orderInfo.clothesQuanaity--;
+                            $scope.calcPay();
                         }
                     };
 
-                    $scope.onPayOrderBtnClicked = function() {
-                        UIData.setData('designCount', 5);
-                        $state.go('payOrder');
+                    $scope.onCreateOrderBtnClicked = function() {
+                        // var iCouponValue = 0;
+                        // for (var i = 0; i < $scope.orderInfo.usedCoupons.length; i++) {
+                        //     iCouponValue += $scope.orderInfo.usedCoupons[i].couponValue;
+                        // };
+                        // $scope.orderInfo.totalPay = $scope.constant.ORIGIN_PRICE * $scope.orderInfo.clothesQuanaity - 
+                        //     iCouponValue;
+                        var oParam = {
+                            action: 'createOrder',
+                            data: {
+                                creatorId: $scope.test.larry._id,
+                                designId: $scope.designInfo.designId,
+                                maleInfo: {
+                                    quantity: 0,
+                                    clothesSize: $scope.orderInfo.clothesSize
+                                },
+                                femaleInfo: {
+                                    quantity: 0,
+                                    clothesSize: $scope.orderInfo.clothesSize
+                                },
+                                kidInfo: {
+                                    quantity: 0,
+                                    clothesSize: $scope.orderInfo.clothesSize
+                                },
+                                coupons: $scope.orderInfo.usedCoupons
+                            }
+                        };
+                        if ($scope.orderInfo.clothesGender === 'male') {
+                            oParam.data.maleInfo.quantity = $scope.orderInfo.clothesQuanaity;
+                        } else if ($scope.orderInfo.clothesGender === 'female') {
+                            oParam.data.femaleInfo.quantity = $scope.orderInfo.clothesQuanaity;
+                        } else {
+                            oParam.data.kidInfo.quantity = $scope.orderInfo.clothesQuanaity;
+                        }
+
+                        Design.DesignManager.create(oParam, function(oData) {
+                            if (oData.error) {
+                                $scope.updateDesignToolRow(true);
+                                $state.go('^');
+                                $scope.aMessage.push({
+                                    type: 'danger',
+                                    content: '创建订单竟然失败了。。。亲，能稍后再尝试吗'
+                                });
+                            } else {
+                                $scope.orderInfo.orderId = oData.data._id;
+                                UIData.setData('orderInfo', $scope.orderInfo);
+                                UIData.setData('designInfo', $scope.designInfo);
+                                $state.go('payWechatOrder');
+                            }
+                        });
                     };
 
                     $scope.onPaySourceBtnClicked = function() {
@@ -101,8 +151,20 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                     };
 
                     $scope.onPayCouponBtnClicked = function() {
+                        $scope.updateDesignToolRow(false);
                         $state.go('createDesign.createDetail.payCouponList');
                     };
+
+                    $scope.calcPay = function() {
+                        var iCouponValue = 0;
+                        for (var i = 0; i < $scope.orderInfo.usedCoupons.length; i++) {
+                            iCouponValue += $scope.orderInfo.usedCoupons[i].couponValue;
+                        };
+                        $scope.orderInfo.totalPay = $scope.constant.ORIGIN_PRICE * $scope.orderInfo.clothesQuanaity - 
+                            iCouponValue;
+                    };
+
+                    $scope.calcPay();
                 }
             }
         }
@@ -138,60 +200,47 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
             'payCouponList' : {
                 templateUrl: 'views/payCouponList.html',
                 controller: function($scope, $state, Design) {
-                    $scope.aCoupons = [
-                        {
-                            type: 1,
-                            couponValue: 10,
-                            selected: true,
-                            validFrom: new Date(1428332139683),
-                            validTo: new Date(1436332139683)
-                        },
-                        {
-                            type: 1,
-                            couponValue: 50,
-                            selected: false,
-                            validFrom: new Date(1428332139683),
-                            validTo: new Date(1438332139683)
-                        },
-                        {
-                            type: 1,
-                            couponValue: 5,
-                            selected: false,
-                            validFrom: new Date(1428332139683),
-                            validTo: new Date(1438332139683)
-                        },
-                        {
-                            type: 1,
-                            couponValue: 20,
-                            selected: false,
-                            validFrom: new Date(1428332139683),
-                            validTo: new Date(1438332139683)
-                        },
-                        {
-                            type: 1,
-                            couponValue: 10,
-                            selected: false,
-                            validFrom: new Date(1428332139683),
-                            validTo: new Date(1438332139683)
-                        },
-                        {
-                            type: 1,
-                            couponValue: 35,
-                            selected: false,
-                            validFrom: new Date(1428332139683),
-                            validTo: new Date(1438332139683)
-                        },
-                    ];
+                    var oParam = {
+                        action: 'getMyCoupons',
+                        userId: $scope.test.larry._id
+                    };
+                    Design.DesignManager.query(oParam, function(oData) {
+                        oData.data.forEach(function(oItem) {
+                            oItem.selected = false;
+                            oItem.validFrom = new Date(oItem.validFrom);
+                            oItem.validTo = new Date(oItem.validTo);
+                        });
+                        $scope.aCoupons = oData.data;
+                    });
 
                     $scope.onCouponItemSelectClicked = function(oCoupon) {
-                        if (!!oCoupon.selected) {
-                            oCoupon.selected = false;
+                        if ($scope.aCoupons.length > 1) {
+                            var bPreSelected = oCoupon.selected;
+                            $scope.aCoupons.forEach(function(oItem) {
+                                oItem.selected = false;
+                            });
+                            oCoupon.selected = !bPreSelected;
                         } else {
-                            oCoupon.selected = true;
+                            oCoupon.selected = !oCoupon.selected;
                         }
+
+                        if (oCoupon.selected) {
+                            $scope.orderInfo.usedCoupons = [oCoupon];
+                            $scope.orderInfo.couponPay = oCoupon.couponValue;
+                        } else {
+                            $scope.orderInfo.usedCoupons = [];
+                            $scope.orderInfo.couponPay = 0;
+                        }
+                        
+                        // if (!!oCoupon.selected) {
+                        //     oCoupon.selected = false;
+                        // } else {
+                        //     oCoupon.selected = true;
+                        // }
                     };
 
                     $scope.onBackFromPayCouponListClicked = function() {
+                        $scope.updateDesignToolRow(false);
                         $state.go('createDesign.createDetail.orderDesign');
                     };
                 }
@@ -226,7 +275,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.test = {
             larry: {
                 openId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
-                _id: ''
+                _id: '553cb49b8fb6ac1c2d3d11bd'
             }
         };
 
@@ -278,7 +327,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.constant = {
             SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-            BK_COLOR_ARRYA: ['黑', '白']
+            BK_COLOR_ARRYA: ['黑', '白'],
+            ORIGIN_PRICE: 99
         };
         $scope.designInfo = {
             sCreatorId: 'MATT',
@@ -286,7 +336,17 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             sDefaultDesc: new Date().toUTCString(),
             sBackgroundColor: '白',
             sSize: 'XL',
-            sDescription: 'test'
+            sDescription: 'test',
+            bSaved: false
+        };
+
+        $scope.orderInfo = {
+            clothesQuanaity: 1,
+            clothesSize: 'M',
+            clothesGender: $scope.designInfo.sGender,
+            defaultQuantityAction: '加',
+            totalPay: 0,
+            usedCoupons: []
         };
 
         $scope.htmlItemStyle = {
@@ -304,7 +364,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         // $scope.bPrivateDesign = false;
         // $scope.defultDesc = new Date().toUTCString();
+
         $scope.onCreateDesignClicked = function () {
+            //GO TO SAVE PAGE
+            $scope.updateDesignToolRow(false);
+            $state.go('createDesign.createDetail.saveDetail');
+        };
+
+        $scope.onSaveDesignBtnClicked = function () {
             if ($scope.aSelectedArtifact.length < 1) {
                 $scope.aMessage.push({
                     type: 'danger',
@@ -316,12 +383,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             var oNewDesign = {
                 creatorId: '54fed66202f4c3e48e0df896',
                 color: 'white',
-                gender: 'female',
-                price: 100,
-                desc: 'test design',
-                access: 'public',
+                gender: $scope.designInfo.sGender,
+                price: $scope.constant.ORIGIN_PRICE,
+                desc: $scope.designInfo.sDescription,
+                access: $scope.designInfo.bPublicDesign ? 'public' : 'private',
                 artifacts: []
             };
+
             for(var i = 0; i < $scope.aSelectedArtifact.length; i++) {
                 var oCurArti = $scope.aSelectedArtifact[i];
                 var oArtiParam = {
@@ -351,8 +419,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 $scope.hideBusy();
 
                 //GO TO SAVE PAGE
-                $scope.updateDesignToolRow('saveDetailView');
-                $state.go('createDesign.createDetail.saveDetail');
+                // $scope.updateDesignToolRow('saveDetailView');
+                // $state.go('createDesign.createDetail.saveDetail');
+                $scope.designInfo.bSaved = true;
+                $scope.designInfo.designId = oDesign.data.designId;
+                $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
             });
         };
 
@@ -360,11 +431,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             $scope.aMessage.splice(index, 1);
         };
 
-        $scope.updateDesignToolRow = function(sTargeView) {
-            if (sTargeView === 'saveDetailView') {
+        $scope.updateDesignToolRow = function(bShow) {
+            if (!bShow) {
                 $scope.htmlItemStyle.designToolArea.visible = false;
                 $scope.htmlItemStyle.designToolArea.styleStr = "display:none;";
-            } else if(sTargeView === 'designDetailView') {
+            } else {
                 $scope.htmlItemStyle.designToolArea.visible = true;
                 $scope.htmlItemStyle.designToolArea.styleStr = "";
             }
@@ -391,12 +462,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onMaleSelected = function() {
-            $scope.designInfo.gender = 'male';
+            $scope.designInfo.sGender = 'male';
+            $scope.orderInfo.clothesGender = 'male';
             $state.go("createDesign.createDetail");
         };
 
         $scope.onFemalerSelected = function() {
-            $scope.designInfo.gender = 'female';
+            $scope.designInfo.sGender = 'female';
+            $scope.orderInfo.clothesGender = 'female';
             $state.go("createDesign.createDetail");
         };
 
@@ -811,16 +884,17 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onBack2DesignDetailClicked = function() {
-            $scope.updateDesignToolRow('designDetailView');
+            $scope.updateDesignToolRow(true);
             $state.go('^');
         };
 
         $scope.onOrderBtnClicked = function() {
             $state.go('createDesign.createDetail.orderDesign');
+            //$state.go('payWechatOrder');
         };
 
         $scope.onBack2SaveDetailClicked = function() {
-            $scope.updateDesignToolRow('designDetailView');
+            $scope.updateDesignToolRow(true);
             $state.go('^');
         };
 

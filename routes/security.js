@@ -164,14 +164,15 @@ module.exports = function(app) {
         LOG.logger.logFunc('createPreOrder', 'remote IP: ' + sRemoteIP);
 
         var sAppId = APP_ID;
-        var sAttach = 'test pay';
-        var sBody = 'femail tshirt 1';
+        var sAttach = oData.preOrderAttach;
+        var sBody = oData.preOrderBody;
         var sMchId = BIZ_ID;
         var sNonceStr = createRandomString(32);
         var sNotifyUrl = 'http://design.weavesfun.com/security';
-        var sOpenId = LARRY_OPEN_ID;
-        var sOutTradeNo = TEMP_TRADE_ID;
+        var sOpenId = oData.userOpenId;
+        var sOutTradeNo = oData.preOrderOutTradeNo;
         var sSpBillCreateIp = sRemoteIP;
+        //var sTotalFee = oData.preOrderTotalFee * 100;
         var sTotalFee = 1;
         var sTradeType = 'JSAPI';
 

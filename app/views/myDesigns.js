@@ -33,6 +33,7 @@ var myDesignList = angular.module('ntApp.myDesigns', [
     'ntApp.designDetail', 
     'ntApp.orderList',
     'ntApp.payOrder',
+    'ntApp.payWechatOrder',
     'designServices',
     'wechatServices'
 ]);
@@ -66,6 +67,11 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         url: '/payOrder',
         templateUrl: 'views/payOrder.html',
         controller: 'PayOrderCtrl'
+    })
+    .state('payWechatOrder', {
+        url: '/pay/payWechatOrder',
+        templateUrl: 'views/payWechatOrder.html',
+        controller: 'PayWechatOrderCtrl'
     })
     .state('designDetail', {
         url: '/designDetail/:designId',
@@ -231,6 +237,6 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
     };
 }]);*/
 
-myDesignList.controller('OrderDesignCtrl', ['$scope', 'Design', function($scope, Design) {
+// myDesignList.controller('OrderDesignCtrl', ['$scope', 'Design', function($scope, Design) {
     
-}]);
+// }]);

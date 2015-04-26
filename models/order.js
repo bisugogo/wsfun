@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var UserSchema = mongoose.model('User').schema;
+
+var Coupon = require('../models/Coupon.js');
+var User = require('../models/User.js');
+//var UserSchema = mongoose.model('User').schema;
+//var CouponSchema = mongoose.model('Coupon').schema;
 
 var OrderSchema = new Schema({
   creatorId: {
@@ -64,7 +68,11 @@ var OrderSchema = new Schema({
     enum    :  ['待付款', '待发货', '已发货', '交易完成'],
     require : true,
     default : '待付款'
-  }
+  },
+  coupons: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Coupon'
+  }]
 });
 
 // OrderSchema.path('model').validate(function (v) {

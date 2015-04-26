@@ -8,8 +8,11 @@
 var Design = require('../models/tshirt.js');
 var Order = require('../models/order.js');
 var User = require('../models/User.js');
+var Coupon = require('../models/Coupon.js');
+var CouponSource = require('../models/CouponSource.js');
 
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 var fs = require('fs');
 var gm = require('gm');
 var Gridfs = require('gridfs-stream');
@@ -23,6 +26,10 @@ var FILE_CONSTANT = {
     LARGE_IMAGE_WIDTH: 400,
     FINAL_DESIGN_WIDTH: 1600,
     FINAL_DESIGN_HEIGHT: 2000
+};
+
+var ORDER_CONSTANT = {
+    ORIGIN_PRICE: 99
 };
 
 module.exports = function(app) {
@@ -301,13 +308,14 @@ module.exports = function(app) {
                 color : oData.color,
                 price : oData.price,
                 desc : oData.desc,
+                gender: oData.gender,
                 access : oData.access,
                 previewImage64 : sDesignBase64,
                 designFileId : sDesignFileId
             };
             var design = new Design(oDesignJson);
 
-            design.save(function(err) {
+            design.save(function(err, oDBRet) {
 
                 if (err) {
 
@@ -320,9 +328,11 @@ module.exports = function(app) {
                 } else {
 
                     console.log("design created");
+
+                    oDesignJson.designId = oDBRet._doc._id.toString();
                     return oRes.send({
                         status : 'OK',
-                        designData : oDesignJson
+                        data : oDesignJson
                     });
 
                 }
@@ -351,49 +361,175 @@ module.exports = function(app) {
         console.log('POST - /tshirt___createOrder');
 
         var sDesignId = data.designId;
+        var sUserId = data.creatorId;
 
         var oNewOrder = {
-            creatorId : data.creatorId,
-            femalePrice : data.femalePrice,
-            malePrice : data.malePrice,
-            kidPrice : data.kidPrice,
-            totalPrice : data.totalPrice,
-            maleSize : data.maleSize,
-            maleQuantity : data.maleQuantity,
-            femaleSize : data.femaleSize,
-            femaleQuantity : data.femaleQuantity,
-            kidSize : data.kidSize,
-            kidQuantity : data.kidQuantity
+            desingId: data.designId,
+            creatorId : sUserId,
+            femalePrice : ORDER_CONSTANT.ORIGIN_PRICE,
+            malePrice : ORDER_CONSTANT.ORIGIN_PRICE,
+            kidPrice : ORDER_CONSTANT.ORIGIN_PRICE,
+            totalPrice : 0,
+            maleSize : '',
+            maleQuantity : 0,
+            femaleSize : '',
+            femaleQuantity : 0,
+            kidSize : '',
+            kidQuantity : 0,
+            coupons: data.coupons
         };
 
-        Design.findById(sDesignId, function(err, oDesign) {
-            if (!err) {
-                console.log('Create order: found target design');
-                oDesign.orders.push(oNewOrder);
-                oDesign.save(function(err) {
-                    // do something
-                    if (err) {
-                        console.log('Create order: save new order error' + err);
-                        res.send({
-                            error : err
-                        });
-                        return;
+        var aCoupons = data.coupons;
+        var aValidCoupons = [];
+        var oMaleInfo = data.maleInfo;
+        var oFemaleInfo = data.femaleInfo;
+        var oKidInfo = data.kidInfo;
+
+        if (oMaleInfo.quantity > 0) {
+            oNewOrder.maleQuantity = oMaleInfo.quantity;
+            oNewOrder.maleSize = oMaleInfo.clothesSize;
+        }
+        if (oFemaleInfo.quantity > 0) {
+            oNewOrder.maleQuantity = oFemaleInfo.quantity;
+            oNewOrder.maleSize = oFemaleInfo.clothesSize;
+        }
+        if (oKidInfo.quantity > 0) {
+            oNewOrder.maleQuantity = oKidInfo.quantity;
+            oNewOrder.maleSize = oKidInfo.clothesSize;
+        }
+
+        createOrder_1_findDesign(oNewOrder);
+
+        
+        function createOrder_1_findDesign(oNewOrder) {
+            var sTargetDesignId = oNewOrder.desingId;
+
+            Design.findById(sTargetDesignId, function(err, oDesign) {
+                if (!err) {
+                    console.log('Create order: found target design');
+
+                    var aClaimedCoupon = oNewOrder.coupons;
+                    if (aClaimedCoupon && aClaimedCoupon.length > 0) {
+                        createOrder_2_findValidCoupon(oNewOrder);
                     } else {
-                        console.log("Order created");
-                        return res.send({
-                            status : 'OK',
-                            order : oNewOrder
+                        createOrder_4_createOrder(oNewOrder);
+                    }
+                } else {
+                    console.log('Create order: target design not found!');
+                    res.send({
+                        error : err
+                    });
+                    return;
+                }
+            });
+        }
+
+        function createOrder_2_findValidCoupon(oNewOrder) {
+            var sTargetUserId = oNewOrder.creatorId;
+            User.findById(sTargetUserId).populate('coupons').exec(function(err, oUser) {
+                if (err) {
+                    LOG.logger.logFunc('createOrder_2_findValidCoupon', 'invalid user id.');
+                    res.send({
+                        error: 'invalid user id.'
+                    });
+                } else {
+                    //Only support usage of one coupon for now
+                    var aUserCoupons = oUser.coupons;
+                    for (var i = 0; i < aUserCoupons.length; i++) {
+                        if (aUserCoupons[i]._id.toString() === aCoupons[0]._id &&
+                            aUserCoupons[i].status === 'new') {
+                            aValidCoupons.push(aUserCoupons[i]);
+                            break;
+                        }
+                    };
+
+                    if (aValidCoupons.length > 0) {
+                        createOrder_3_updateCouponStatus(oNewOrder, aValidCoupons, 'used');
+                    } else {
+                        res.send({
+                            error: 'Coupon invalid'
+                        });
+                    }
+                }
+            });
+        }
+
+        function createOrder_3_updateCouponStatus(oNewOrder, aValidCoupons, sNewStatus) {
+            Coupon.findById(aValidCoupons[0]._id).exec(function(err, oCouponFound) {
+                oCouponFound.status = sNewStatus;
+                oCouponFound.save(function(err) {
+                    if (err) {
+                        LOG.logger.logFunc('createOrder_3_updateCouponStatus', 'update coupon status failed.');
+                        res.send({
+                            error: 'update coupon status failed.'
+                        });
+                    } else {
+                        LOG.logger.logFunc('createOrder', 'update coupon status successfully to ' + sNewStatus);
+                        oNewOrder.coupons = [oCouponFound];
+                        createOrder_4_createOrder(oNewOrder);
+                    }
+                });
+            });
+        }
+
+        function createOrder_4_createOrder(oNewOrderJson) {
+            var sTargetUserId = oNewOrderJson.creatorId;
+            oNewOrderJson.totalPrice = calcPrice(oNewOrderJson);
+
+            User.findById(sTargetUserId).exec(function(err, oUser) {
+                oNewOrderJson._id = new ObjectId();
+                oNewOrderJson.creatorId = oUser._id;
+                var oNewOrder2Create = new Order(oNewOrderJson);
+
+                oNewOrder2Create.save(function(err) {
+                    if (err) {
+                        LOG.logger.logFunc('createOrder_4_createOrder', 'failed to create new order object.');
+                        res.send({
+                            error: 'failed to create new order object.'
+                        });
+                    } else {
+                        oUser.orders.push(oNewOrderJson._id);
+                        oUser.save(function(err) {
+                            if (err) {
+                                LOG.logger.logFunc('createOrder_4_createOrder', 'update user order list failed.');
+                                res.send({
+                                    error: 'update user order list failed.'
+                                });
+                            } else {
+                                LOG.logger.logFunc('createOrder_4_createOrder', 'update user order list successfully.');
+                                res.send({
+                                    status: 'OK',
+                                    data: oNewOrderJson
+                                });
+                            }
                         });
                     }
                 });
-            } else {
-                console.log('Create order: target design not found!');
-                res.send({
-                    error : err
-                });
-                return;
-            }
-        });
+            });
+        }
+    };
+
+    calcPrice = function(oOrderInfo) {
+        var iRet = 0;
+        var aCoupons = oOrderInfo.coupons;
+
+        if (oOrderInfo.maleQuantity > 0) {
+            iRet += oOrderInfo.maleQuantity * oOrderInfo.malePrice;
+        }
+        if (oOrderInfo.femaleQuantity > 0) {
+            iRet += oOrderInfo.femaleQuantity * oOrderInfo.femalePrice;
+        }
+        if (oOrderInfo.kidQuantity > 0) {
+            iRet += oOrderInfo.kidQuantity * oOrderInfo.kidPrice;
+        }
+
+        if (aCoupons && aCoupons.length > 0) {
+            var oValidCoupon = aCoupons[0];//Only support usage of one coupon per order for now
+            iRet -= oValidCoupon.couponValue;
+            return iRet;
+        } else {
+            return iRet;
+        }
     };
 
     getMyOrders = function(sUserId, res) {
@@ -523,19 +659,184 @@ module.exports = function(app) {
         });
     }
 
+    createCoupon = function(data, res) {
+        console.log('POST - /tshirt___createCoupon');
+
+        var sUserId = data.userId;
+
+        var oNewCouponJson = {
+            couponNumber: data.couponNumber,
+            status: 'new',
+            couponValue: data.couponValue,
+            scope: 'unlimited',
+            validFrom: data.validFrom,
+            validTo: data.validTo
+        };
+
+        /*var oNewUser = new User({
+            _id: new ObjectId(),
+            wechatId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
+            status: 1
+        });
+
+        oNewUser.save(function(err) {
+            res.send('ok');
+        });*/
+
+        User.findById(sUserId).populate('coupons').exec(function(err, oUser) {
+            var bLegal = true;
+            if (!oUser) {
+                res.send({
+                    error: 'User not found'
+                });
+                return;
+            }
+
+            var aCoupon = oUser.coupons;
+            if (aCoupon && aCoupon.length > 0) {
+                for (var i = 0; i < aCoupon.length; i++) {
+                    if (aCoupon[i].couponNumber === data.couponNumber) {
+                        bLegal = false;//Everyone can only get coupon once
+                        break;
+                    }
+                }
+            }
+
+            if (bLegal) {
+                oNewCouponJson._ownerId = oUser._id;
+                var oNewCoupon = new Coupon(oNewCouponJson);
+                oNewCoupon.save(function (err, oDBRet) {
+                    if (err) {
+                        res.send({
+                            error: 'failed to create coupon.'
+                        });
+
+                    } else {
+                        oUser.coupons.push(oDBRet._doc._id);
+                        oUser.save(function (err) {
+                            if (err) {
+                                res.send({
+                                    error: 'failed to add coupon to user.'
+                                });
+                            }
+                            res.send({
+                                status : 'OK',
+                                data: oNewCouponJson
+                            });
+                        })
+                    }
+                });
+                
+            } else {
+                res.send({
+                    error: 'already got coupon.'
+                });
+            }
+        });
+    };
+
+    createCouponSource = function (data, res) {
+        var oNewSourceJson = {
+            couponNumber: data.couponNumber,
+            couponValue: data.couponValue,
+            scope: data.scope,
+            imgSrc: data.imgSrc,
+            validFrom: data.validFrom,
+            validTo: data.validTo
+        };
+        var oNewSource = new CouponSource(oNewSourceJson);
+        oNewSource.save(function(err) {
+            if (err) {
+                LOG.logger.logFunc('createCouponSource', 'Create coupon source failed.');
+                res.send({
+                    error: 'Create coupon source failed.'
+                });
+            } else {
+                LOG.logger.logFunc('createCouponSource', 'Create coupon source successfully.');
+                res.send({
+                    status: 'OK',
+                    data: 'Create coupon source successfully.'
+                });
+            }
+        });
+    };
+
+    getCouponSources = function(res) {
+        CouponSource.find().exec(function(err, aSource) {
+            if (err) {
+                LOG.logger.logFunc('getCouponSources', 'Get coupon sources failed.');
+                res.send({
+                    error: 'Get coupon sources failed.'
+                });
+            } else {
+                LOG.logger.logFunc('getCouponSources', 'Get coupon sources successfully.');
+                res.send({
+                    status: 'OK',
+                    data: aSource
+                });
+            }
+        });
+    };
+
+    getMyCoupons = function(userId, res) {
+        User.findById(userId).populate('coupons').exec(function(err, oUser) {
+            if (err) {
+                LOG.logger.logFunc('getMyCoupons', 'Find user by Id error.');
+                res.send({
+                    error: 'Find user by Id error.'
+                });
+            } else {
+                var aCoupon = oUser.coupons;
+                var aRet = [];
+                for (var i = 0; i < aCoupon.length; i++) {
+                    if (aCoupon[i].status === 'new') {
+                        aRet.push(aCoupon[i]);
+                    }
+                }
+                res.send({
+                    status: 'OK',
+                    data: aRet
+                });
+            }
+        });
+    };
+
     getService = function(req, res) {
         var sAction = req.query.action;
         if (sAction === 'getAllMyDesigns') {
             findAllTshirts(req, res);
         } else if (sAction === 'getMyDesigns') {
+            if (!req.query || !req.query.userId) {
+                res.send({
+                    error: 'No user id provided.'
+                });
+                return;
+            }
             var sUserId = req.query.userId;
             getMyDesigns(sUserId, res);
         } else if (sAction === 'getMyDesignById') {
             var sDesignId = req.query.designId;
             findById(sDesignId, res);
         } else if (sAction === 'getMyOrders') {
+            if (!req.query || !req.query.userId) {
+                res.send({
+                    error: 'No user id provided.'
+                });
+                return;
+            }
             var sUserId = req.query.userId;
             getMyOrders(sUserId, res);
+        } else if (sAction === 'getCouponSources') {
+            getCouponSources(res);
+        } else if (sAction === 'getMyCoupons') {
+            if (!req.query || !req.query.userId) {
+                res.send({
+                    error: 'No user id provided.'
+                });
+                return;
+            }
+            var sUserId = req.query.userId;
+            getMyCoupons(sUserId, res);
         }
     };
 
@@ -549,6 +850,10 @@ module.exports = function(app) {
                 deleteTshirt(req.body.data, res);
             } else if (sAction === 'createOrder') {
                 createOrder(req.body.data, res);
+            } else if (sAction === 'createCoupon') {
+                createCoupon(req.body.data, res);
+            } else if (sAction === 'createCouponSource') {
+                createCouponSource(req.body.data, res);
             }
         }
         console.log("design post service, action: empty.");

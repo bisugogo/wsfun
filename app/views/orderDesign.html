@@ -1,4 +1,4 @@
-<div class='row orderDesignView'>
+<div class='orderDesignView'>
     <div ui-view="extraOrderInfo"></div>
     <div class="addressValueRow">
         <div class="addressTitle">【寝殿】：</div>
@@ -30,10 +30,10 @@
                     <span>尺码</span>
                 </div>
                 <div class="sizeOptions">
-                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'极小'">极小</label>
-                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'小'">小</label>
-                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'中'">中</label>
-                    <label class="btn btn-warning" ng-model="orderInfo.defaultSize" btn-radio="'大'">大</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XXS'">极小</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XS'">小</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'M'">中</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'L'">大</label>
                 </div>
                 <div class="quantityTitle">
                     <span>数量</span>
@@ -41,7 +41,7 @@
                 <div class="sizeActions">
                     <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'加'" 
                     ng-click="onIncreaseQuantity()">加</label>
-                    <input type="text" ng-model="orderInfo.defaultQuanaity"></input>
+                    <input type="text" ng-model="orderInfo.clothesQuanaity"></input>
                     <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'减'" 
                     ng-click="onDecreaseQuantity()">减</label>
                 </div>
@@ -75,10 +75,11 @@
             </div>
         </div>
         <div class="payTotalArea">
-            <span class="payTotalCount">金额：{{orderInfo.totalPay}}</span>
+            <span class="payTotalRMBIcon">￥</span>
+            <span class="payTotalCount">{{orderInfo.totalPay}}</span>
             <div class="royalButtonWrapper payButton">
                 <div class="btn btn-warning royalButton">
-                    <span ng-click="onPayOrderBtnClicked()">国库拨款</span>
+                    <span ng-click="onCreateOrderBtnClicked()">创建订单</span>
                 </div>
             </div>
         </div>

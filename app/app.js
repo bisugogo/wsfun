@@ -9,6 +9,7 @@ var ntApp = angular.module('ntApp', [
     'ntApp.myInfo',
     'ntApp.couponList',
     'ntApp.createDesign',
+    'ntApp.activities',
     'ui.bootstrap',
     'angularFileUpload',
     'angular-carousel',
@@ -51,5 +52,10 @@ ntApp.config(function ($stateProvider, $urlRouterProvider) {
         url: "/couponList",
         templateUrl: 'views/couponList.html',
         controller: 'CouponListCtrl'
+    })
+    .state('activities', {
+        url: "/activities",
+        templateUrl: 'views/activities.html',
+        controller: 'ActivitiesControl'
     });
 });

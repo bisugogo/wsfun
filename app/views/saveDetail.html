@@ -1,23 +1,28 @@
 <div class='row saveDetailView'>
-    <div class="saveSuccessTitle">
+    <div class="saveSuccessTitle" style="{{designInfo.bSaved === true ? '' : 'display:none;'}}">
         <span>新设计的独家新衣<br>成功保存</span>
     </div>
-    <div class="designDescTitle">
+    <div class="designDescTitle" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <span class="designDescTitlePencil glyphicon glyphicon-pencil"></span>
         <span>朕的批注</span>
     </div>
-    <div class="designDescInput">
+    <div class="designDescInput" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <input type="text" class="form-control" ng-model="designInfo.sDescription">
     </div>
-    <div class="designAccess">
+    <div class="designAccess" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <label class="checkbox">
             恩准他人使用
             <input type="checkbox" ng-model="designInfo.bPublicDesign">
         </label>
     </div>
-    <div class="royalButtonWrapper goToOrderBtn">
+    <div class="royalButtonWrapper goToOrderBtn" style="{{designInfo.bSaved === true ? '' : 'display:none;'}}">
         <div class="btn btn-warning royalButton">
             <span ng-click="onOrderBtnClicked()">下旨赶制</span>
+        </div>
+    </div>
+    <div class="royalButtonWrapper goToOrderBtn" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
+        <div class="btn btn-warning royalButton">
+            <span ng-click="onSaveDesignBtnClicked()">保存设计</span>
         </div>
     </div>
     <div class="naviBtnRow">
