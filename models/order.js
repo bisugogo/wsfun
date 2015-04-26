@@ -72,7 +72,7 @@ var OrderSchema = new Schema({
   wechatStatus: {
     type: Number,
     default: 0
-  }
+  },
   coupons: [{
     type: Schema.Types.ObjectId,
     ref: 'Coupon'
