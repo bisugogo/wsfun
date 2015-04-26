@@ -324,13 +324,18 @@ module.exports = function(app) {
 
     wechatPayConfirm = function(req, res) {
         var oConfirmData = {};
-        var oData = xmlLite.parseString(req.body);
-        if (oData && oData.childs && oData.childs.length > 0) {
-            for (var i = 0; i < oData.childs.length; i++) {
-                var oCurChild = oData.childs[i];
-                oConfirmData[oCurChild.name] = oCurChild.childs[0];
-            }
+
+        for (prop in req) {
+            LOG.logger.logFunc('wechatPayConfirm', prop + ': ' + req[prop]);
         }
+
+        // var oData = xmlLite.parseString(req.body);
+        // if (oData && oData.childs && oData.childs.length > 0) {
+        //     for (var i = 0; i < oData.childs.length; i++) {
+        //         var oCurChild = oData.childs[i];
+        //         oConfirmData[oCurChild.name] = oCurChild.childs[0];
+        //     }
+        // }
         LOG.logger.logFunc('wechatPayConfirm', oConfirmData.toString());
     };
 
