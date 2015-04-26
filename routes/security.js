@@ -325,8 +325,12 @@ module.exports = function(app) {
     wechatPayConfirm = function(req, res) {
         var oConfirmData = {};
 
-        for (prop in req) {
-            LOG.logger.logFunc('wechatPayConfirm', prop + ': ' + req[prop]);
+        for (prop in req.body) {
+            LOG.logger.logFunc('wechatPayConfirm body', prop + ': ' + req.body[prop]);
+        }
+
+        for (prop in req.query) {
+            LOG.logger.logFunc('wechatPayConfirm query', prop + ': ' + req.query[prop]);
         }
 
         // var oData = xmlLite.parseString(req.body);
