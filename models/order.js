@@ -69,6 +69,10 @@ var OrderSchema = new Schema({
     require : true,
     default : '待付款'
   },
+  wechatStatus: {
+    type: Number,
+    default: 0
+  }
   coupons: [{
     type: Schema.Types.ObjectId,
     ref: 'Coupon'

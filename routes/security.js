@@ -322,6 +322,18 @@ module.exports = function(app) {
         return ipAddress;
     };
 
+    wechatPayConfirm = function(req, res) {
+        var oConfirmData = {};
+        var oData = xmlLite.parseString(req.body);
+        if (oData && oData.childs && oData.childs.length > 0) {
+            for (var i = 0; i < oData.childs.length; i++) {
+                var oCurChild = oData.childs[i];
+                oConfirmData[oCurChild.name] = oCurChild.childs[0];
+            }
+        }
+        LOG.logger.logFunc('wechatPayConfirm', oConfirmData.toString());
+    };
+
 
     getService = function(req, res) {
         var sAction = req.query.action;
@@ -353,6 +365,8 @@ module.exports = function(app) {
             } else if (sAction === 'createPreOrder') {
                 createPreOrder(req, res);
             }
+        } else {
+            wechatPayConfirm(req, res);
         }
     };
 
