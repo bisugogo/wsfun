@@ -87,8 +87,8 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
     // delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
-myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 'UIData',
-    function($scope, $location, $stateParams, $state, $http, Design, Auth, UIData) {
+myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 'UIData',
+    function($window, $scope, $location, $stateParams, $state, $http, Design, Auth, UIData) {
         var oUserInfo = UIData.getData('userInfo');
         var oAppData = UIData.getAppData();
 
@@ -100,6 +100,13 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
                 '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
             return;
         }
+
+        var oResUserInfo = {
+            userId: 'asdf',
+            wechatId: 'asdadsfasdf',
+            type: 'subs'
+        };
+        $scope.userInfo = oResUserInfo;
 
         $scope.code = sCode;
         sTempCode = sCode;
@@ -117,7 +124,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
                 };
                 UIData.setData('userInfo', oResUserInfo);
                 $scope.userInfo = oResUserInfo;
-                
+
                 // if (oUser.openid) {
                 //     $scope.code = "User OpenID: " + oUser.openid;
                 // } else if (oUser.errmsg) {
