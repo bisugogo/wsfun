@@ -101,13 +101,6 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
             return;
         }
 
-        var oResUserInfo = {
-            userId: 'asdf',
-            wechatId: 'asdadsfasdf',
-            type: 'subs'
-        };
-        $scope.userInfo = oResUserInfo;
-
         $scope.code = sCode;
         sTempCode = sCode;
 

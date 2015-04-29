@@ -106,6 +106,7 @@ module.exports = function(app) {
                                         });
                                     } else {
                                         oNewUserJson.userId = oDBRet._doc._id;
+                                        LOG.logger.logFunc('getWechatUserOpenId', 'save new user successfully ' + oNewUserJson);
                                         res.send({
                                             status: 'OK',
                                             data: oNewUserJson
@@ -115,6 +116,7 @@ module.exports = function(app) {
                             } else {
                                 //This is an old user
                                 oUser.userId = oUser._id;
+                                LOG.logger.logFunc('getWechatUserOpenId', 'get old user successfully ' + oUser);
                                 res.send({
                                     status: 'OK',
                                     data: oUser
