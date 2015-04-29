@@ -79,6 +79,7 @@ module.exports = function(app) {
                     console.log('BODY: ' + chunk);
 
                     if (chunk.errcode || chunk.errmsg) {
+                        LOG.logger.logFunc('getWechatUserOpenId', 'Wechat OAUTH failed.');
                         res.send({
                             error: 'Wechat OAUTH failed.'
                         });

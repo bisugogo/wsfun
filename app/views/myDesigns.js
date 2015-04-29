@@ -58,6 +58,17 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
             }
         }
     })
+    .state('designItemAuth', {
+        url: '/designItemAuth',
+        templateUrl: 'views/designItemAuth.html',
+        controller: function($window, $scope, $state, Design, Auth, UIData) {
+            var oAppData = UIData.getAppData();
+            $scope.authLink = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                oAppData.APP_ID + '&redirect_uri=' + 
+                encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
+                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+        }
+    })
     .state('createDesign', {
         url: '/createDesign',
         templateUrl: 'views/createDesign.html',
@@ -89,22 +100,28 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
 
 myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 'UIData',
     function($window, $scope, $location, $stateParams, $state, $http, Design, Auth, UIData) {
-        var oUserInfo = UIData.getData('userInfo');
+        //var oUserInfo = UIData.getData('userInfo');
         var oAppData = UIData.getAppData();
 
         var sCode = $location.$$search.code;
-        if (!sCode && !oAppData.TESTING) {
-            $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
-                oAppData.APP_ID + '&redirect_uri=' + 
-                encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
-                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-            return;
-        }
+
+        //alert($location.$$search);
+
+        // if (!sCode && !oAppData.TESTING) {
+        //     $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+        //         oAppData.APP_ID + '&redirect_uri=' + 
+        //         encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
+        //         '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+        //     return;
+        // }
 
         $scope.code = sCode;
         sTempCode = sCode;
 
+        
+        alert(sCode);
         if (sCode) {
+            //alert(sCode);
             var oUserReqParam = {
                 action: 'getWechatUserOpenId',
                 code: sCode
