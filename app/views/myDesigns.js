@@ -110,13 +110,21 @@ myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$statePara
                 code: sCode
             };
             var oUser = Auth.AuthManager.query(oUserReqParam, function () {
-                if (oUser.openid) {
-                    $scope.code = "User OpenID: " + oUser.openid;
-                } else if (oUser.errmsg) {
-                    $scope.code = oUser.errmsg;
-                } else {
-                    $scope.code = "nothing!!!!";
-                }
+                var oResUserInfo = {
+                    userId: oUser.userId,
+                    wechatId: oUser.wechatId,
+                    type: oUser.type
+                };
+                UIData.setData('userInfo', oResUserInfo);
+                $scope.userInfo = oResUserInfo;
+                
+                // if (oUser.openid) {
+                //     $scope.code = "User OpenID: " + oUser.openid;
+                // } else if (oUser.errmsg) {
+                //     $scope.code = oUser.errmsg;
+                // } else {
+                //     $scope.code = "nothing!!!!";
+                // }
             });
         }
         
