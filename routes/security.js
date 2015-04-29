@@ -77,7 +77,53 @@ module.exports = function(app) {
                 weChatRes.setEncoding('utf8');
                 weChatRes.on('data', function (chunk) {
                     console.log('BODY: ' + chunk);
-                    res.send(chunk);
+
+                    if (chunk.errcode || chunk.errmsg) {
+                        res.send({
+                            error: 'Wechat OAUTH failed.'
+                        });
+                        return;
+                    }
+
+                    var oQuery = User.findOne({wechatId: chunk.openid});
+                    oQuery.exec(function (err, oUser) {
+                        if (err) {
+                            res.send({error: err.message});
+                        } else {
+                            if (!oUser) {
+                                //This is a new user
+                                var oNewUserJson = {
+                                    wechatId: chunk.openid,
+                                    status: 1,
+                                    type: 'tourist'
+                                };
+                                var oNewUser = new User(oNewUserJson);
+                                oNewUser.save(function(err, oDBRet) {
+                                    if (err) {
+                                        LOG.logger.logFunc('getWechatUserOpenId', 'save new user failed');
+                                        res.send({
+                                            error: 'New user. Failed to save user.'
+                                        });
+                                    } else {
+                                        oNewUserJson.userId = oDBRet._doc._id;
+                                        res.send({
+                                            status: 'OK',
+                                            data: oNewUserJson
+                                        });
+                                    }
+                                });
+                            } else {
+                                //This is an old user
+                                oUser.userId = oUser._id;
+                                res.send({
+                                    status: 'OK',
+                                    data: oUser
+                                });
+                            }
+                        }
+                    });
+
+                    //res.send(chunk);
                 });
             }
         );

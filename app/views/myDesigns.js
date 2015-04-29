@@ -87,27 +87,39 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
     // delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
-myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 
-    function($scope, $location, $stateParams, $state, $http, Design, Auth) {
+myDesignList.controller('MyDesignsListCtrl', ['$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 'UIData',
+    function($scope, $location, $stateParams, $state, $http, Design, Auth, UIData) {
+        var oUserInfo = UIData.getData('userInfo');
+        var oAppData = UIData.getAppData();
+
         var sCode = $location.$$search.code;
+        if (!sCode && !oAppData.TESTING) {
+            $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                oAppData.APP_ID + '&redirect_uri=' + 
+                encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
+                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+            return;
+        }
+
         $scope.code = sCode;
         sTempCode = sCode;
 
-        //$http.defaults.useXDomain = true;
-        //delete $http.defaults.headers.common['X-Requested-With'];
-        var oUserReqParam = {
-            action: 'getWechatUserOpenId',
-            code: sCode
-        };
-        var oUser = Auth.AuthManager.query(oUserReqParam, function () {
-            if (oUser.openid) {
-                $scope.code = "User OpenID: " + oUser.openid;
-            } else if (oUser.errmsg) {
-                $scope.code = oUser.errmsg;
-            } else {
-                $scope.code = "nothing!!!!";
-            }
-        });
+        if (sCode) {
+            var oUserReqParam = {
+                action: 'getWechatUserOpenId',
+                code: sCode
+            };
+            var oUser = Auth.AuthManager.query(oUserReqParam, function () {
+                if (oUser.openid) {
+                    $scope.code = "User OpenID: " + oUser.openid;
+                } else if (oUser.errmsg) {
+                    $scope.code = oUser.errmsg;
+                } else {
+                    $scope.code = "nothing!!!!";
+                }
+            });
+        }
+        
 
         // $http.get("https://api.weixin.qq.com/sns/oauth2/access_token", {
         //     appid: "wxf26855bd0cda23bd",

@@ -26,7 +26,8 @@ WeChatManager.prototype.doEvent = function(req, res) {
                 console.log('no existing user found');
                 var oNewUser = new User({
                     wechatId: sWechatId,
-                    status: 1
+                    status: 1,
+                    type: 'subscriber'
                 });
 
                 oNewUser.save(function(err) {
@@ -39,22 +40,45 @@ WeChatManager.prototype.doEvent = function(req, res) {
                         return;
                     }
                 });
+            } else {
+                if (oUser.type !== 'subscriber') {
+                    oUser.type = 'subscriber';
+                    oUser.save(function(err) {
+                        if(err) {
+                            console.log('Error while saving user: ' + err);
+                            return;
+                        } else {
+                            console.log("User created");
+                            res.reply('感谢您关注 微服私纺');
+                            return;
+                        }
+                    });
+                } else {
+                    console.log('existing user found');
+                    res.reply('您已经关注了 微服私纺');
+                    return;
+                }
             }
 
-            if(!err) {
-                console.log('existing user found');
-                res.reply('您已经关注了 微服私纺');
-                return;
-            } else {
-                console.log('Internal error(%d): %s', res.statusCode, err.message);
-                return;
-                //return res.send({ error: 'Server error' });
-            }
+            // if(!err) {
+            //     console.log('existing user found');
+            //     res.reply('您已经关注了 微服私纺');
+            //     return;
+            // } else {
+            //     console.log('Internal error(%d): %s', res.statusCode, err.message);
+            //     return;
+            //     //return res.send({ error: 'Server error' });
+            // }
         });
         return;
     } else if (sEventType === 'unsubscribe') {
         console.log('Users: ' + sWechatId + ' has unsubscribed us!');
-        User.findOneAndUpdate({wechatId: sWechatId}, {status: 0}, {upsert:true}, function(err) {
+        User.findOneAndUpdate({wechatId: sWechatId}, 
+            {
+                status: 1,
+                type: 'tourist'
+            }, 
+            {upsert:true}, function(err) {
             if(err) {
                 console.log('Error while updating user status: ' + err);
                 //return;

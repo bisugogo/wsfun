@@ -10,7 +10,8 @@ oUIDataServices.factory('UIData', [
         var oUIData = {};
         var oAPPData = {
             APP_ID : 'wxf26855bd0cda23bd',
-            BIZ_ID : '1232336702'
+            BIZ_ID : '1232336702',
+            TESTING: false
         };
 
         return {
@@ -27,7 +28,13 @@ oUIDataServices.factory('UIData', [
             },
 
             getData: function(key) {
-                return oUIData[key];
+                var oRet = oUIData[key];
+                if (!oRet) {
+                    return null;
+                } else {
+                    return oRet;
+                }
+                //return oUIData[key];
             },
 
             getAppData: function() {
