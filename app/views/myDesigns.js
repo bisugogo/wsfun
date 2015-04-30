@@ -105,21 +105,21 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         var sCode = $location.$$search.code;
 
-        //alert($location.$$search);
+        alert(sCode);
 
-        // if (!sCode && !oAppData.TESTING) {
-        //     $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
-        //         oAppData.APP_ID + '&redirect_uri=' + 
-        //         encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
-        //         '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-        //     return;
-        // }
+        if (!sCode && !oAppData.TESTING) {
+            $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                oAppData.APP_ID + '&redirect_uri=' + 
+                encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
+                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+            return;
+        }
 
         $scope.code = sCode;
         sTempCode = sCode;
 
         
-        alert(sCode);
+        //alert(sCode);
         if (sCode) {
             //alert(sCode);
             var oUserReqParam = {
