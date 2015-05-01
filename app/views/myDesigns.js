@@ -89,29 +89,29 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         views: {
             'designDetail' : {
                 templateUrl: 'views/designDetail.html',
-                controller: function($scope, $location, $stateParams, $state, Design) {
+                controller: function($scope, $location, $stateParams, $state, Design, Auth) {
                     if ($state.current.name === 'myDesigns.designDetail') {
                         var sDesignId = $stateParams.designId;
                         var oResult = Design.DesignManager.query({action: 'getDesignById', designId: sDesignId}, function (oData) {
                             if (!oData.error) {
                                 //$scope.oCurrentDesign = oData.data;
-                                $scope.setCurrentDesign(oData.data);
+                                var oDesign = oData.data;
 
-                                if ($scope.oCurrentDesign.gender === 'male') {
-                                    if ($scope.oCurrentDesign.color === 'white') {
-                                        $scope.oCurrentDesign.bkImg = 'img/male_white.png';
+                                if (oDesign.gender === 'male') {
+                                    if (oDesign.color === 'white') {
+                                        oDesign.bkImg = 'img/male_white.png';
                                     } else {
-                                        $scope.oCurrentDesign.bkImg = 'img/male_black.png';
+                                        oDesign.bkImg = 'img/male_black.png';
                                     }
                                 } else {
-                                    if ($scope.oCurrentDesign.color === 'white') {
-                                        $scope.oCurrentDesign.bkImg = 'img/female_white.png';
+                                    if (oDesign.color === 'white') {
+                                        oDesign.bkImg = 'img/female_white.png';
                                     } else {
-                                        $scope.oCurrentDesign.bkImg = 'img/female_black.png';
+                                        oDesign.bkImg = 'img/female_black.png';
                                     }
                                 }
 
-                                if ($scope.oCurrentDesign.access === 'public') {
+                                if (oDesign.access === 'public') {
                                     var oCenterDom = $('.designDetailViewContent')[0];
                                     if (oCenterDom) {
                                         var iWidth = oCenterDom.clientWidth;
@@ -120,18 +120,19 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                         var iTop = iHeight * 0.3;
                                         var iDesignImageWidth = iWidth * 0.6;
 
-                                        $scope.oCurrentDesign.positionInfoStyleValue = "left:" + iLeft + "px;" + 
+                                        oDesign.positionInfoStyleValue = "left:" + iLeft + "px;" + 
                                             "top:" + iTop + "px;" + 
                                             "width:" + iDesignImageWidth + "px;";
                                     }
                                 } else {
-                                    $scope.oCurrentDesign.positionInfoStyleValue = "display:none;";
+                                    oDesign.positionInfoStyleValue = "display:none;";
                                 }
 
+                                $scope.setCurrentDesign(oDesign);
 
                                 var sCode = $location.$$search.code;
                                 if (sCode) {
-                                    alert(sCode);
+                                    //alert(sCode);
                                     //Come from OAUTH redirect
                                     var oUserReqParam = {
                                         action: 'getWechatUserOpenId',
