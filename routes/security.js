@@ -77,6 +77,7 @@ module.exports = function(app) {
                 weChatRes.setEncoding('utf8');
                 weChatRes.on('data', function (chunk) {
                     console.log('BODY: ' + chunk);
+                    console.log('BODY_OPENID: ' + chunk.openid);
 
                     if (chunk.errcode || chunk.errmsg) {
                         LOG.logger.logFunc('getWechatUserOpenId', 'Wechat OAUTH failed.');
@@ -101,7 +102,7 @@ module.exports = function(app) {
                                 var oNewUser = new User(oNewUserJson);
                                 oNewUser.save(function(err, oDBRet) {
                                     if (err) {
-                                        LOG.logger.logFunc('getWechatUserOpenId', 'save new user failed');
+                                        LOG.logger.logFunc('getWechatUserOpenId', 'save new user failed.' + err.message);
                                         res.send({
                                             error: 'New user. Failed to save user.'
                                         });
