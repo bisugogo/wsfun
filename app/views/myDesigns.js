@@ -89,7 +89,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         views: {
             'designDetail' : {
                 templateUrl: 'views/designDetail.html',
-                controller: function($scope, $location, $stateParams, $state, Design, Auth) {
+                controller: function($scope, $location, $stateParams, $state, Design, Auth, UIData) {
                     if ($state.current.name === 'myDesigns.designDetail') {
                         var sDesignId = $stateParams.designId;
                         var oResult = Design.DesignManager.query({action: 'getDesignById', designId: sDesignId}, function (oData) {
