@@ -140,10 +140,11 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                     };
                                     Auth.AuthManager.query(oUserReqParam, function (oData) {
                                         if (!oData.error) {
+                                            var oUserInfo = oData.data;
                                             var oResUserInfo = {
-                                                userId: oUser._id,
-                                                wechatId: oUser.wechatId,
-                                                type: oUser.type
+                                                userId: oUserInfo._id,
+                                                wechatId: oUserInfo.wechatId,
+                                                type: oUserInfo.type
                                             };
                                             UIData.setData('userInfo', oResUserInfo);
                                             //$scope.userInfo = oResUserInfo;
