@@ -71,7 +71,20 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
         views: {
             'orderDesign' : {
                 templateUrl: 'views/orderDesign.html',
-                controller: function($scope, $state, Design, UIData) {
+                resolve: {
+                    PreviousState: [
+                        "$state",
+                        function ($state) {
+                            var currentStateData = {
+                                name: $state.current.name,
+                                params: $state.params,
+                                url: $state.href($state.current.name, $state.params)
+                            };
+                            return currentStateData;
+                        }
+                    ]
+                },
+                controller: function($scope, $state, Design, UIData, PreviousState) {
                     //$scope.saveDetailtest = "this is test string in saveDetail.";
                     // $scope.orderInfo = {
                     //     defaultQuanaity: 1,
@@ -81,6 +94,43 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                     //     totalPay: 1001,
                     //     usedCoupons: []
                     // };
+
+                    if (PreviousState.name === 'myDesigns.designDetail') {
+                        //Come from design detail to make order
+                        var oDesignInfo = UIData.getData('currentDesign');
+                        oDesignInfo.sGender = oDesignInfo.gender;
+                        oDesignInfo.bPublicDesign = oDesignInfo.access === 'public' ? true : false;
+                        oDesignInfo.sDescription = oDesignInfo.desc;
+                        oDesignInfo.designId = oDesignInfo._id;
+                        oDesignInfo.bSaved = true;
+
+                        if (oDesignInfo.gender === 'male') {
+                            if (oDesignInfo.color === 'white') {
+                                oDesignInfo.bkImg = 'img/male_white.png';
+                            } else {
+                                oDesignInfo.bkImg = 'img/male_black.png';
+                            }
+                        } else {
+                            if (oDesignInfo.color === 'white') {
+                                oDesignInfo.bkImg = 'img/female_white.png';
+                            } else {
+                                oDesignInfo.bkImg = 'img/female_black.png';
+                            }
+                        }
+
+                        $scope.setDesignInfo(oDesignInfo);
+
+
+                        var orderInfo = {
+                            clothesQuanaity: 1,
+                            clothesSize: 'M',
+                            clothesGender: $scope.designInfo.sGender,
+                            defaultQuantityAction: '加',
+                            totalPay: 0,
+                            usedCoupons: []
+                        };
+                        $scope.setOrderInfo(orderInfo);
+                    }
 
                     $scope.onIncreaseQuantity = function() {
                         $scope.orderInfo.clothesQuanaity++;
@@ -332,7 +382,6 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             ORIGIN_PRICE: 99
         };
         $scope.designInfo = {
-            sCreatorId: 'MATT',
             bPublicDesign: true,
             sDefaultDesc: new Date().toUTCString(),
             sBackgroundColor: '白',
@@ -361,6 +410,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 visible: true,
                 styleStr: ""
             }
+        };
+
+        $scope.setDesignInfo = function(oDesign) {
+            $scope.designInfo = oDesign;
+        };
+
+        $scope.setOrderInfo = function(oOrder) {
+            $scope.orderInfo = oOrder;
         };
 
         // $scope.bPrivateDesign = false;
@@ -462,15 +519,34 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             $scope.designInfo.sSize = sSize;
         };
 
+        $scope.setDesignGenderColor = function(sGender, sColor) {
+            $scope.designInfo.sGender = sGender;
+            $scope.designInfo.gender = sGender;
+            $scope.designInfo.color = sColor;
+            $scope.orderInfo.clothesGender = sGender;
+            $scope.orderInfo.color = sColor;
+            if ($scope.designInfo.gender === 'male') {
+                if ($scope.designInfo.color === 'white') {
+                    $scope.designInfo.bkImg = 'img/male_white.png';
+                } else {
+                    $scope.designInfo.bkImg = 'img/male_black.png';
+                }
+            } else {
+                if ($scope.designInfo.color === 'white') {
+                    $scope.designInfo.bkImg = 'img/female_white.png';
+                } else {
+                    $scope.designInfo.bkImg = 'img/female_black.png';
+                }
+            }
+        };
+
         $scope.onMaleSelected = function() {
-            $scope.designInfo.sGender = 'male';
-            $scope.orderInfo.clothesGender = 'male';
+            $scope.setDesignGenderColor('male', 'white');
             $state.go("createDesign.createDetail");
         };
 
         $scope.onFemalerSelected = function() {
-            $scope.designInfo.sGender = 'female';
-            $scope.orderInfo.clothesGender = 'female';
+            $scope.setDesignGenderColor('female', 'white');
             $state.go("createDesign.createDetail");
         };
 

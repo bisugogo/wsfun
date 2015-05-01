@@ -1,75 +1,70 @@
 <div class='myDesignsView' ng-controller="MyDesignsListCtrl">
-    <!--carousel interval="myInterval">
-        <slide ng-repeat="oDesign in aMyDesigns" active="oDesign.active">
-            <img ng-src="img/test.svg" style="margin:auto;">
-            <div class="carousel-caption">
-                <h4>Slide {{$index}}</h4>
-                <p>{{oDesign.desc}}</p>
-            </div>
-        </slide>
-    </carousel-->
-    <img src="img/cloud.png" class="bottomCenterCloud">
+    <div ui-view="designDetail" class="designDetailView">
+        <img src="img/cloud.png" class="bottomCenterCloud">
 
-    <div class="myDesignListHeader">
-        <div ng-click="onIDesignedClicked()">
-            <span style="{{whatILiked === true ? '' : 'font-weight:bold;'}}">朕设计的</span>
-            <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? 'display:none;' : ''}}"></span>
+        <div class="myDesignListHeader">
+            <div ng-click="onIDesignedClicked()">
+                <span style="{{whatILiked === true ? '' : 'font-weight:bold;'}}">朕设计的</span>
+                <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? 'display:none;' : ''}}"></span>
+            </div>
+            <div ng-click="onILikedClicked()">
+                <span style="{{whatILiked === true ? 'font-weight:bold;' : ''}}">朕喜欢的</span>
+                <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? '' : 'display:none;'}}"></span>
+            </div>
+            <div>
+                <span>{{'openid: ' + userInfo.wechatId}}</span>
+            </div>
         </div>
-        <div ng-click="onILikedClicked()">
-            <span style="{{whatILiked === true ? 'font-weight:bold;' : ''}}">朕喜欢的</span>
-            <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? '' : 'display:none;'}}"></span>
-        </div>
-        <div>
-            <span>{{'User Info  id: ' + userInfo.userId + ' openid: ' + userInfo.wechatId + ' type: ' + userInfo.type}}</span>
-        </div>
-    </div>
 
-    <img src="img/cloud.png" class="topLeftCloud">
+        <img src="img/cloud.png" class="topLeftCloud">
 
-    <div class="myDesignListContent">
-        <div class="myDesignListLeft">
-            <div class="topAxis">
-                <div class="topAxisCenter"></div>
-                <div class="topAxisRight"></div>
+        
+        <div class="myDesignListContent">
+            <div class="myDesignListLeft">
+                <div class="topAxis">
+                    <div class="topAxisCenter"></div>
+                    <div class="topAxisRight"></div>
+                </div>
+                <div class="centerAxis"></div>
+                <div class="bottomAxis">
+                    <div class="bottomAxisCenter"></div>
+                    <div class="bottomAxisRight"></div>
+                </div>
             </div>
-            <div class="centerAxis"></div>
-            <div class="bottomAxis">
-                <div class="bottomAxisCenter"></div>
-                <div class="bottomAxisRight"></div>
+            <div class="myDesignListCenter">
+                <div class="topAxis">
+                    <div class="topAxisLeft"></div>
+                    <div class="topAxisCenter"></div>
+                    <div class="topAxisRight"></div>
+                </div>
+                <div class="centerContent">
+                    <ul rn-carousel class="image myDesignListCarousel" rn-carousel-transition="fadeAndSlide">
+                        <li ng-repeat="oDesign in aMyDesigns">
+                            <div class="designItem" ng-click="onDesignItemClicked(oDesign)">
+                                <img src="{{oDesign.bkImg}}" class="designBackgroundImg">
+                                <img ng-src="{{oDesign.previewImage64}}" style="{{positionInfoStyleValue}}">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottomAxis">
+                    <div class="bottomAxisLeft"></div>
+                    <div class="bottomAxisCenter"></div>
+                    <div class="bottomAxisRight"></div>
+                </div>
             </div>
-        </div>
-        <div class="myDesignListCenter">
-            <div class="topAxis">
-                <div class="topAxisLeft"></div>
-                <div class="topAxisCenter"></div>
-                <div class="topAxisRight"></div>
+            <div class="myDesignListRight">
+                <div class="topAxis">
+                    <div class="topAxisLeft"></div>
+                    <div class="topAxisCenter"></div>
+                </div>
+                <div class="centerAxis"></div>
+                <div class="bottomAxis">
+                    <div class="bottomAxisLeft"></div>
+                    <div class="bottomAxisCenter"></div>
+                </div>
             </div>
-            <div class="centerContent">
-                <ul rn-carousel class="image myDesignListCarousel" rn-carousel-transition="fadeAndSlide">
-                    <li ng-repeat="oDesign in aMyDesigns">
-                        <div class="designItem">
-                            <img src="img/female_white.png" class="designBackgroundImg">
-                            <img ng-src="{{oDesign.previewImage64}}" style="{{positionInfoStyleValue}}">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="bottomAxis">
-                <div class="bottomAxisLeft"></div>
-                <div class="bottomAxisCenter"></div>
-                <div class="bottomAxisRight"></div>
-            </div>
-        </div>
-        <div class="myDesignListRight">
-            <div class="topAxis">
-                <div class="topAxisLeft"></div>
-                <div class="topAxisCenter"></div>
-            </div>
-            <div class="centerAxis"></div>
-            <div class="bottomAxis">
-                <div class="bottomAxisLeft"></div>
-                <div class="bottomAxisCenter"></div>
-            </div>
+            
         </div>
     </div>
 

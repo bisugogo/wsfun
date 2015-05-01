@@ -1076,6 +1076,68 @@ body .createDesignView {
   color: rgb(176, 137, 67);
 }
 
+.myDesignsView .designDetailView {
+  height: 100%;
+}
+
+.myDesignsView .designDetailView .designBackgroundImage {
+  width: 100%;
+}
+
+.designDetailView .designDetailViewContent {
+  position: relative;
+}
+
+.designDetailView .designDetailViewContent .designPreviewImage {
+  position: absolute;
+}
+
+.designDetailView .designDetailViewContent .designInfo {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100px;
+  background-color: rgba(207, 176, 96, 0.5);
+}
+
+.designDetailView .designDetailViewContent .designInfo .designInfo4Tourist {
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.designDetailView .designDetailViewContent .designInfo .designInfo4Tourist > span {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+}
+
+.designDetailView .designDetailViewContent .designInfo .designDesc {
+  height: 30px;
+  margin-top: 10px;
+}
+
+.designDetailView .designDetailViewContent .designInfo .royalButtonWrapper {
+  width: 48%;
+  display: inline-block;
+  padding: 5px 5px;
+}
+
+.designDetailView .designDetailViewContent .designInfo .royalButtonWrapper > .royalButton {
+  padding: 5px 5px;
+}
+
+.designDetailView .designDetailViewContent .designInfo .designDesc > span {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+}
+
+.designDetailView .designDetailViewContent .designInfo .designDesc > span:nth-child(2){
+  float: right;
+}
+
 .myDesignsView .myDesignListContent {
   position: relative;
   height: calc(100% - 70px);

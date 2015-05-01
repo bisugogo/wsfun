@@ -90,7 +90,7 @@ module.exports = function(app) {
      * @param {Object} req HTTP request object.
      * @param {Object} res HTTP response object.
      */
-    findById = function(sDesignId, res) {
+    getDesignById = function(sDesignId, res) {
 
         //console.log("GET - /tshirt/:id");
         return Design.findById(sDesignId, function(err, oDesign) {
@@ -105,7 +105,7 @@ module.exports = function(app) {
             if (!err) {
                 return res.send({
                     status : 'OK',
-                    designDetail : oDesign
+                    data : oDesign
                 });
             } else {
 
@@ -806,17 +806,17 @@ module.exports = function(app) {
         if (sAction === 'getAllMyDesigns') {
             findAllTshirts(req, res);
         } else if (sAction === 'getMyDesigns') {
-            if (!req.query || !req.query.userId) {
-                res.send({
-                    error: 'No user id provided.'
-                });
-                return;
-            }
-            var sUserId = req.query.userId;
-            getMyDesigns(sUserId, res);
-        } else if (sAction === 'getMyDesignById') {
+            // if (!req.query || !req.query.userId) {
+            //     res.send({
+            //         error: 'No user id provided.'
+            //     });
+            //     return;
+            // }
+            // var sUserId = req.query.userId;
+            getMyDesigns("", res);
+        } else if (sAction === 'getDesignById') {
             var sDesignId = req.query.designId;
-            findById(sDesignId, res);
+            getDesignById(sDesignId, res);
         } else if (sAction === 'getMyOrders') {
             if (!req.query || !req.query.userId) {
                 res.send({

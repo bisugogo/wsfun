@@ -1,24 +1,27 @@
-<h3>Design Detail</h3>
-<p>
-  {{designId}} detail page.
-</p>
-<div class="row">
-    <div class="col-xs-12">
-        Description: {{designInfo.desc}}
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        Size: {{designInfo.size}}
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        Description: {{designInfo.access}}
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-3">
-        <button type="button" class="btn btn-primary" ng-click="onOrderBtnClicked(designInfo.designId)">detail</button>
+<div class="designDetailViewContent">
+    <img ng-src="{{oCurrentDesign.bkImg}}" class="designBackgroundImage">
+    <img src="{{oCurrentDesign.previewImage64}}" style="{{oCurrentDesign.positionInfoStyleValue}}" class="designPreviewImage">
+    <div class="designInfo">
+        <div style="{{oCurrentDesign.access === 'public' ? '' : 'display:none;'}}">
+            <div class="designDesc">
+                <span>{{oCurrentDesign.desc}}</span>
+                <span>请众爱卿膜拜</span>
+            </div>
+            <div class="designButtons">
+                <div class="royalButtonWrapper">
+                    <div class="btn btn-warning royalButton">
+                        <span ng-click="onOrderBtnClicked()">下旨赶制</span>
+                    </div>
+                </div>
+                <div class="royalButtonWrapper">
+                    <div class="btn btn-warning royalButton">
+                        <span ng-click="onSaveDesignBtnClicked()">我来设计</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="{{oCurrentDesign.access === 'private' ? '' : 'display:none;'}}" class="designInfo4Tourist">
+            <span>您正在浏览的设计是隐私的，如果您是设计者本人，请进入微服私纺公众号(weavesfun)浏览</span>
+        </div>
     </div>
 </div>
