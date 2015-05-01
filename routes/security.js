@@ -77,7 +77,8 @@ module.exports = function(app) {
                 weChatRes.setEncoding('utf8');
                 weChatRes.on('data', function (chunk) {
                     console.log('BODY: ' + chunk);
-                    console.log('BODY_OPENID: ' + chunk.openid);
+                    var oAuthReturn = JSON.parse(chunk);
+                    console.log('BODY_OPENID: ' + oAuthReturn.openid);
 
                     if (chunk.errcode || chunk.errmsg) {
                         LOG.logger.logFunc('getWechatUserOpenId', 'Wechat OAUTH failed.');
@@ -87,7 +88,7 @@ module.exports = function(app) {
                         return;
                     }
 
-                    var oQuery = User.findOne({wechatId: chunk.openid});
+                    var oQuery = User.findOne({wechatId: oAuthReturn.openid});
                     oQuery.exec(function (err, oUser) {
                         if (err) {
                             res.send({error: err.message});
@@ -95,7 +96,7 @@ module.exports = function(app) {
                             if (!oUser) {
                                 //This is a new user
                                 var oNewUserJson = {
-                                    wechatId: chunk.openid,
+                                    wechatId: oAuthReturn.openid,
                                     status: 1,
                                     type: 'tourist'
                                 };
