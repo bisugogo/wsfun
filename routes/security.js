@@ -240,7 +240,10 @@ module.exports = function(app) {
         var sMchId = BIZ_ID;
         var sNonceStr = createRandomString(32);
         var sNotifyUrl = 'http://design.weavesfun.com/security';
+
         var sOpenId = oData.userOpenId;
+        LOG.logger.logFunc('createPreOrder', 'user openid: ' + sOpenId);
+
         var sOutTradeNo = oData.preOrderOutTradeNo;
         var sSpBillCreateIp = sRemoteIP;
         //var sTotalFee = oData.preOrderTotalFee * 100;
@@ -390,7 +393,13 @@ module.exports = function(app) {
         if (!ipAddress) {
             ipAddress = req.socket.remoteAddress;
         }
-        return ipAddress;
+
+        var aParts = ipAddress.split(':');
+        if (aParts.length > 1) {
+            return aParts[aParts.length - 1];
+        } else {
+            return ipAddress;
+        }
     };
 
     wechatPayConfirm = function(req, res) {
