@@ -203,7 +203,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         var sCode = $location.$$search.code;
 
-        //alert(sCode);
+        alert(sCode);
 
         // if (!sCode && !oAppData.TESTING) {
         //     $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 

@@ -49,10 +49,16 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
         template: '<div>Authenticating...</div>',
         controller: function($window) {
             if (!sTempCode) {
-                $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
-                'wxf26855bd0cda23bd' + '&redirect_uri=' + 
-                encodeURIComponent('http://design.weavesfun.com/#/createDesign') + 
-                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                setTimeout(function() {
+                    $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                    'wxf26855bd0cda23bd' + '&redirect_uri=' + 
+                    encodeURIComponent('http://design.weavesfun.com/#/createDesign') + 
+                    '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                }, 2000);
+                // $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                // 'wxf26855bd0cda23bd' + '&redirect_uri=' + 
+                // encodeURIComponent('http://design.weavesfun.com/#/createDesign') + 
+                // '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
             }
         }
     })
@@ -346,6 +352,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         var oAppData = UIData.getAppData();
         var sCode = $location.$$search.code;
+        alert(sCode);
         if (sCode || oAppData.TESTING) {
             var oUserReqParam = {};
 
