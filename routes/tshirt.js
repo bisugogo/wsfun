@@ -569,6 +569,23 @@ module.exports = function(app) {
         });
     };
 
+    getOrderById = function(sOrderId, res) {
+        Order.findById(sOrderId, function(err, oOrder) {
+            if (err) {
+                LOG.logger.logFunc('getOrderById', err.message);
+                res.send({
+                    error: 'getOrderById' + err.message
+                });
+            } else {
+                oOrder.orderId = oOrder._id;
+                res.send({
+                    status: 'OK',
+                    data: oOrder
+                });
+            }
+        });
+    };
+
     /**
      * Update a tshirt by its ID
      * 
@@ -837,6 +854,15 @@ module.exports = function(app) {
             }
             var sUserId = req.query.userId;
             getMyCoupons(sUserId, res);
+        } else if (sAction === 'getOrderById') {
+            if (!req.query || !req.query.orderId) {
+                res.send({
+                    error: 'No order id provided.'
+                });
+                return;
+            }
+            var sOrderId = req.query.orderId;
+            getOrderById(sOrderId, res);
         }
     };
 

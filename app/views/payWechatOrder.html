@@ -1,32 +1,38 @@
 <div class="payWechatFinalView">
-    <div class="orderSuccessTitle">
-        您的订单创建成功
-    </div>
+    <img ng-src="{{designInfo.bkImg}}" class="designBackgroundImage">
+    <img src="{{designInfo.previewImage64}}" style="{{designInfo.positionInfoStyleValue}}" class="designPreviewImage">
     <div class="orderContent">
-        <div class="designPreview">
-            <img ng-src="">
-        </div>
-        <div class="orderInfoPreview">
-            <div class="basicInfo">
-                <span>{{orderInfo.clothesGender === 'male' ? '男士T恤' : '女士T恤'}}</span>
-                <span>{{orderInfo.clothesSize}} 号</span>
-                <span>{{orderInfo.clothesQuanaity}} 件</span>
+        <div class="orderContentPositionDiv">
+            <div class="orderSuccessTitle">
+                您的订单创建成功
             </div>
-            <div class="originTotalPrice">
-                <span>原价： ￥</span>
-                <span>{{orderInfo.originTotalPay}}</span>
+            <div class="orderInfoPreview">
+                <div class="basicInfo">
+                    <span>{{orderInfo.clothesGender === 'male' ? '男士T恤' : '女士T恤'}}</span>
+                    <span>{{orderInfo.clothesSize}} 号</span>
+                    <span>{{orderInfo.clothesQuanaity}} 件</span>
+                </div>
+                <div class="originTotalPrice">
+                    <span>原价： ￥</span>
+                    <span>{{orderInfo.originTotalPay}}</span>
+                </div>
+                <div class="couponPay" style="{{orderInfo.usedCoupons.length > 0 ? '' : 'display:none;'}}">
+                    <span>制衣券抵用： ￥</span>
+                    <span>{{orderInfo.couponPay}}</span>
+                </div>
+                <div class="actualPay">
+                    <span>总计支付： ￥</span>
+                    <span>{{orderInfo.totalPay}}</span>
+                </div>
+                <div class="paySuccessDiv" style="{{orderInfo.payStatus === 'notPayed' ? 'display:none;' : ''}}">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span>付款成功，吾皇圣明</span>
+                </div>
             </div>
-            <div class="couponPay" style="{{orderInfo.usedCoupons.length > 0 ? '' : 'display:none;'}}">
-                <span>制衣券抵用： ￥</span>
-                <span>{{orderInfo.couponPay}}</span>
-            </div>
-            <div class="actualPay">
-                <span>总计支付： ￥</span>
-                <span>{{orderInfo.totalPay}}</span>
+            <div class="payButtonDiv" style="{{orderInfo.payStatus === 'notPayed' ? '' : 'display:none;'}}">
+                <span class="payButton" ng-click="onPayClicked()" >国库拨款</span>
             </div>
         </div>
     </div>
-    <div class="payButtonDiv">
-        <span class="payButton" ng-click="onPayClicked()">国库拨款</span>
-    </div>
+    
 </div>

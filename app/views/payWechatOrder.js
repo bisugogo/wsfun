@@ -12,7 +12,8 @@ var payWechatOrder = angular.module('ntApp.payWechatOrder', [
 //     });
 // }]);
 
-payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Auth', 'UIData', function($scope, $state, md5, Auth, UIData) {
+payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Design', 'Auth', 'UIData', 
+    function($scope, $state, md5, Design, Auth, UIData) {
     var oAppInfo = UIData.getAppData();
 
     //Regist Wechat Interface
@@ -41,6 +42,7 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Aut
     });
 
     $scope.orderInfo = UIData.getData('orderInfo');
+    $scope.orderInfo.payStatus = 'notPayed';
     $scope.orderInfo.originTotalPay = $scope.orderInfo.totalPay;
     var iCouponPay = 0;
     for (var i = 0; i < $scope.orderInfo.usedCoupons.length; i++) {
@@ -49,6 +51,19 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Aut
     $scope.orderInfo.couponPay = iCouponPay;
     $scope.orderInfo.originTotalPay += iCouponPay;
     $scope.designInfo = UIData.getData('designInfo');
+
+    var oCenterDom = $('.payWechatFinalView')[0];
+    if (oCenterDom) {
+        var iWidth = oCenterDom.clientWidth;
+        var iHeight = iWidth * 1021 / 642;
+        var iLeft = iWidth * 0.21;
+        var iTop = iHeight * 0.3;
+        var iDesignImageWidth = iWidth * 0.6;
+
+        $scope.designInfo.positionInfoStyleValue = "left:" + iLeft + "px;" + 
+            "top:" + iTop + "px;" + 
+            "width:" + iDesignImageWidth + "px;";
+    }
 
     var oPreOrderAttach = {
         orderId: $scope.orderInfo.orderId,
@@ -106,8 +121,33 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Aut
             signType: sSignType,
             paySign: sSign,
             success: function(res) {
-                var i = 0;
+                $scope.checkPayStatusTimeLimit = 5;
+                $scope.checkPayStatus();
             }
         });
     };
+
+    $scope.checkPayStatus = function() {
+        $scope.checkPayStatusTimeLimit--;
+        if ($scope.checkPayStatusTimeLimit > -1) {
+            var oParam = {
+                action: 'getOrderById',
+                orderId: $scope.orderInfo.orderId
+            };
+            Design.DesignManager.query(oParam, function(oData) {
+                if (oData.error) {
+                    alert(oData.error);
+                } else {
+                    var oOrder = oData.data;
+                    if (oOrder.status !== '待付款') {
+                        $scope.orderInfo.payStatus = 'payed';
+                        $scope.checkPayStatusTimeLimit = -1;
+                        clearTimeout($scope.curTimeoutId);
+                    } else {
+                        $scope.curTimeoutId = setTimeout($scope.checkPayStatus, 1000);
+                    }
+                }
+            });
+        }
+    }
 }]);

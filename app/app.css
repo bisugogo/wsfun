@@ -1443,7 +1443,25 @@ body .createDesignView {
   bottom: 0px;
   left: 0px;
   right: 0px;
-  background-color: rgb(176, 137, 67);
+  background-color: white;
+}
+
+.payWechatFinalView .orderContentPositionDiv {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.payWechatFinalView .designBackgroundImage {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: -1;
+}
+
+.payWechatFinalView .designPreviewImage {
+  position: absolute;
 }
 
 .payWechatFinalView .orderSuccessTitle {
@@ -1454,18 +1472,40 @@ body .createDesignView {
 }
 
 .payWechatFinalView .payButtonDiv {
-  margin-left: 10px;
-  margin-right: 10px;
-  width: auto;
+  position: absolute;
+  margin-left: 10%;
+  width: 80%;
   height: 35px;
   text-align: center;
   background-color: white;
   border: 2px solid rgb(229, 169, 59);
+  bottom: 30px;
+}
+
+.payWechatFinalView .payButtonDiv:active {
+  background-color: rgb(207, 176, 96);
+  border: 2px solid white;
+}
+
+.payWechatFinalView .payButtonDiv > span:active {
+  color: white;
 }
 
 .payWechatFinalView .payButtonDiv > span {
   color: rgb(176, 137, 67);
   font-size: 20px;
+}
+
+.payWechatFinalView .orderContent {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: rgba(207, 176, 96, 0.7);
 }
 
 .payWechatFinalView .orderContent .designPreview {
@@ -1475,7 +1515,7 @@ body .createDesignView {
 
 .payWechatFinalView .orderContent .orderInfoPreview {
   display: inline-block;
-  width: 59%;
+  width: 100%;
 }
 
 .payWechatFinalView .orderContent .orderInfoPreview > div {
@@ -1497,6 +1537,23 @@ body .createDesignView {
   font-size: 20px;
   font-weight: bold;
   margin-left: 0px;
+}
+
+.payWechatFinalView .orderContent .orderInfoPreview .paySuccessDiv {
+  width: 100%;
+  text-align: center;
+}
+
+.payWechatFinalView .orderContent .orderInfoPreview .paySuccessDiv > span {
+  color: white;
+}
+
+.payWechatFinalView .orderContent .orderInfoPreview .paySuccessDiv > span:first-child {
+  font-size: 35px;
+}
+
+.payWechatFinalView .orderContent .orderInfoPreview .paySuccessDiv > span:nth-child(2) {
+  font-size: 20px;
 }
 
 .activitiesView {
