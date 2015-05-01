@@ -127,6 +127,28 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                 } else {
                                     $scope.oCurrentDesign.positionInfoStyleValue = "display:none;";
                                 }
+
+
+                                var sCode = $location.$$search.code;
+                                if (sCode) {
+                                    alert(sCode);
+                                    //Come from OAUTH redirect
+                                    var oUserReqParam = {
+                                        action: 'getWechatUserOpenId',
+                                        code: sCode
+                                    };
+                                    var oUser = Auth.AuthManager.query(oUserReqParam, function () {
+                                        var oResUserInfo = {
+                                            userId: oUser.userId,
+                                            wechatId: oUser.wechatId,
+                                            type: oUser.type
+                                        };
+                                        UIData.setData('userInfo', oResUserInfo);
+                                        //$scope.userInfo = oResUserInfo;
+                                        UIData.setData('currentDesign', $scope.oCurrentDesign);
+                                        $state.go('createDesign.createDetail.orderDesign');
+                                    });
+                                }
                             }
                             // $scope.aMyDesigns = aDesigns.designList;
                             // var oCenterDom = $('.myDesignListCenter')[0];
@@ -146,27 +168,6 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
 
 
                     $scope.designId = $stateParams.designId;
-
-                    var sCode = $location.$$search.code;
-                    if (sCode) {
-                        alert(sCode);
-                        //Come from OAUTH redirect
-                        var oUserReqParam = {
-                            action: 'getWechatUserOpenId',
-                            code: sCode
-                        };
-                        var oUser = Auth.AuthManager.query(oUserReqParam, function () {
-                            var oResUserInfo = {
-                                userId: oUser.userId,
-                                wechatId: oUser.wechatId,
-                                type: oUser.type
-                            };
-                            UIData.setData('userInfo', oResUserInfo);
-                            //$scope.userInfo = oResUserInfo;
-                            UIData.setData('currentDesign', $scope.oCurrentDesign);
-                            $state.go('createDesign.createDetail.orderDesign');
-                        });
-                    }
                     
                 }
             }
