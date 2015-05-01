@@ -134,6 +134,26 @@ module.exports = function(app) {
         );
     };
 
+    getTestUserOpenId = function(sUserId, res) {
+        var oQuery = User.findById({
+            _id: sUserId
+        });
+        oQuery.exec(function(err, oUser) {
+            if (err) {
+                LOG.logger.logFunc('getTestUserOpenId ', err.message);
+                res.send({
+                    error: 'getTestUserOpenId ' + err.message
+                });
+            } else {
+                LOG.logger.logFunc('getTestUserOpenId ', ' get test user info successfully');
+                res.send({
+                    status: 'OK',
+                    data: oUser
+                });
+            }
+        });
+    };
+
     getJsAPITicket = function() {
         var oJsAPITicket = Cache.getCache('JS_API_TICKET');
         if (!oJsAPITicket) {
@@ -406,6 +426,9 @@ module.exports = function(app) {
             console.log("********************");
 
             getWechatUserOpenId(sCode, res);
+        } else if (sAction === 'getTestUserOpenId') {
+            var sUserId = req.query.userId;
+            getTestUserOpenId(sUserId, res);
         } else if (sAction === 'getJsAPISignature') {
             getJsAPISignature(req, res);
         } else if (sAction === 'getUserIdByWechatId') {

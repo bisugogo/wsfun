@@ -191,6 +191,14 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
 myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', '$stateParams', '$state', '$http', 'Design', 'Auth', 'UIData',
     function($window, $scope, $location, $stateParams, $state, $http, Design, Auth, UIData) {
         //var oUserInfo = UIData.getData('userInfo');
+        $scope.test = {
+            larry: {
+                openId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
+                _id: '553cb49b8fb6ac1c2d3d11bd'
+            }
+        };
+
+
         var oAppData = UIData.getAppData();
 
         var sCode = $location.$$search.code;
@@ -210,18 +218,25 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         if ($state.current.name === 'myDesigns') {
             if (sCode || oAppData.TESTING) {
-                var oUserReqParam = {
-                    action: 'getWechatUserOpenId',
-                    code: sCode
-                };
-                var oUser = Auth.AuthManager.query(oUserReqParam, function () {
-                    var oResUserInfo = {
-                        userId: oUser.userId,
-                        wechatId: oUser.wechatId,
-                        type: oUser.type
+                var oUserReqParam = {};
+
+                if (oAppData.TESTING) {
+                    oUserReqParam = {
+                        action: 'getTestUserOpenId',
+                        userId: $scope.test.larry._id
                     };
+                } else {
+                    oUserReqParam = {
+                        action: 'getWechatUserOpenId',
+                        code: sCode
+                    };
+                }
+                
+                Auth.AuthManager.query(oUserReqParam, function (oData) {
+                    var oResUserInfo = oData.data;
+                    oResUserInfo.userId = oResUserInfo._id;
                     UIData.setData('userInfo', oResUserInfo);
-                    $scope.userInfo = oResUserInfo;
+                    //$scope.userInfo = oResUserInfo;
                 });
 
                 var oResult = Design.DesignManager.query({action: 'getMyDesigns'}, function (aDesigns) {

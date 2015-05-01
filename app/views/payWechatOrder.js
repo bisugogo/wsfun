@@ -57,8 +57,9 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Aut
     };
 
     $scope.onPayClicked = function() {
+        var oUserInfo = UIData.getData('userInfo');
         var oParam4PreOrder = {
-            userOpenId: 'oMOsBtzA2Kbns3Dulc2s6upB5ZBw',
+            userOpenId: oUserInfo.wechatId,
             preOrderBody: $scope.orderInfo.clothesGender + ' Tshirt',
             preOrderAttach: JSON.stringify(oPreOrderAttach),
             preOrderOutTradeNo: $scope.orderInfo.orderId,

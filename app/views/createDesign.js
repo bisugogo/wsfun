@@ -151,10 +151,11 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                         // };
                         // $scope.orderInfo.totalPay = $scope.constant.ORIGIN_PRICE * $scope.orderInfo.clothesQuanaity - 
                         //     iCouponValue;
+                        var oUserInfo = UIData.getData('userInfo');
                         var oParam = {
                             action: 'createOrder',
                             data: {
-                                creatorId: $scope.test.larry._id,
+                                creatorId: oUserInfo.userId,
                                 designId: $scope.designInfo.designId,
                                 maleInfo: {
                                     quantity: 0,
