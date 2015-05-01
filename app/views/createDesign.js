@@ -43,7 +43,20 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 }
             }
         }
-    }).state('createDesign.createDetail.myGallery', {
+    })
+    .state('createDesignAuth', {
+        url: '/createDesignAuth',
+        template: '<div>Authenticating...</div>',
+        controller: function($window) {
+            if (!sTempCode) {
+                $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                'wxf26855bd0cda23bd' + '&redirect_uri=' + 
+                encodeURIComponent('http://design.weavesfun.com/#/createDesign') + 
+                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+            }
+        }
+    })
+    .state('createDesign.createDetail.myGallery', {
         views: {
             'personalGallery': {
                 templateUrl: 'views/personalGallery.html',
@@ -254,7 +267,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 controller: function($scope, $state, Design) {
                     var oParam = {
                         action: 'getMyCoupons',
-                        userId: $scope.test.larry._id
+                        userId: $scope.userInfo.userId
                     };
                     Design.DesignManager.query(oParam, function(oData) {
                         oData.data.forEach(function(oItem) {
@@ -331,6 +344,31 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             }
         };
 
+        var oAppData = UIData.getAppData();
+        var sCode = $location.$$search.code;
+        if (sCode || oAppData.TESTING) {
+            var oUserReqParam = {};
+
+            if (oAppData.TESTING) {
+                oUserReqParam = {
+                    action: 'getTestUserOpenId',
+                    userId: $scope.test.larry._id
+                };
+            } else {
+                oUserReqParam = {
+                    action: 'getWechatUserOpenId',
+                    code: sCode
+                };
+            }
+            
+            Auth.AuthManager.query(oUserReqParam, function (oData) {
+                var oResUserInfo = oData.data;
+                oResUserInfo.userId = oResUserInfo._id;
+                UIData.setData('userInfo', oResUserInfo);
+                $scope.userInfo = oResUserInfo;
+            });
+        }
+
         $scope.aSelectedArtifact = [];
         $scope.aMessage = [];
         $scope.busyViewStyle = "display:none;"
@@ -343,39 +381,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             $scope.busyViewStyle = "display:none;";
         };
 
-    //Regist Wechat Interface
-    /*var oParam = {
-        action: 'getJsAPISignature'
-    };
-
-    
-    var oSig = Auth.AuthManager.query(oParam, function () {
-        console.log(oSig.signature);
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: 'wxf26855bd0cda23bd', // 必填，公众号的唯一标识
-            timestamp: oSig.timestamp, // 必填，生成签名的时间戳
-            nonceStr: oSig.nonceStr, // 必填，生成签名的随机串
-            signature: oSig.signature,// 必填，签名，见附录1
-            jsApiList: ["chooseImage", "previewImage", "uploadImage", "downloadImage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });
-
-        wx.ready(function() {
-            console.log('js sdk configuration set up successfully.');
-        });
-
-        wx.error(function(res){
-            console.log('js sdk configuration set up failed!!!');
-        });
-    });*/
-
-        var oAuthParam = {
-            action: 'getUserIdByWechatId',
-            wechatId: $scope.test.larry.openId
-        };
-        Auth.AuthManager.query(oAuthParam, function(oData) {
-            $scope.test.larry._id = oData.data._id;
-        });
+        // var oAuthParam = {
+        //     action: 'getUserIdByWechatId',
+        //     wechatId: $scope.test.larry.openId
+        // };
+        // Auth.AuthManager.query(oAuthParam, function(oData) {
+        //     $scope.test.larry._id = oData.data._id;
+        // });
 
         $scope.constant = {
             SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
@@ -454,8 +466,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 var oArtiParam = {
                     fileId: oCurArti.fileId,
                     relativeWidth: oCurArti.imgWidth / $scope.htmlItemStyle.availableArea.width,
-                    relativeTop: (oCurArti.styleValue.top - 140) / $scope.htmlItemStyle.availableArea.height,
-                    relativeLeft: (oCurArti.styleValue.left - 76) / $scope.htmlItemStyle.availableArea.width
+                    relativeTop: (oCurArti.styleValue.top - $scope.htmlItemStyle.availableArea.top) / $scope.htmlItemStyle.availableArea.height,
+                    relativeLeft: (oCurArti.styleValue.left - $scope.htmlItemStyle.availableArea.left) / $scope.htmlItemStyle.availableArea.width
                 };
                 oNewDesign.artifacts.push(oArtiParam);
             }
@@ -511,8 +523,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             Design.DesignManager.delete(oParam);
         };
 
-        $scope.changeBackgroundColor = function(sColor) {
-            $scope.designInfo.sBackgroundColor = sColor;
+        $scope.onChangeColorClicked = function() {
+            var sCurColor = $scope.designInfo.color;
+            var sTargetColor = sCurColor === 'white' ? 'black' : 'white';
+            var sCurGender = $scope.designInfo.gender;
+            $scope.setDesignGenderColor(sCurGender, sTargetColor);
             ///getFileContent($scope.test.fileId);
         };
 
@@ -579,8 +594,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                         file: file,
                         data : {
                             'action': 'uploadFile',
-                            'fileName': $scope.test.larry._id + new Date().getTime(),
-                            'creatorId': $scope.test.larry._id
+                            'fileName': $scope.userInfo.userId + '_' +  new Date().getTime(),
+                            'creatorId': $scope.userInfo.userId
                         }
                     }).progress(function (evt) {
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -655,7 +670,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.getMyArtifactThumbnails = function() {
             var oParam = {
                 action: 'getMyArtifactThumbnails',
-                userId: $scope.test.larry._id
+                userId: $scope.userInfo.userId
             };
             var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
                 //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
@@ -910,24 +925,24 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onTouched = function($event) {
             console.log('touched!');
-            alert("touched");
+            //alert("touched");
             //event.gesture.preventDefault();
         };
 
         $scope.onTap = function($event) {
             console.log('touched!');
-            alert("touched");
+            //alert("touched");
             //event.gesture.preventDefault();
         };
 
         $scope.onSelectedArtiItemPinchOut = function($event, oArtifact) {
             console.log('pinch out');
-            alert('pinch out');
+            //alert('pinch out');
         };
 
         $scope.onSelectedArtiItemPinchIn = function($event, oArtifact) {
             console.log('pinch in');
-            alert('pinch out');
+            //alert('pinch out');
         };
 
         $scope.onEditArtifactItemClicked = function(oArtifact) {

@@ -153,7 +153,7 @@ body .createDesignView {
 }
 
 .createDesignView .genderButtonRow > div span {
-  font-size: 25px;
+  font-size: 35px;
   border-top: 3px solid rgb(176, 137, 67);
   border-bottom: 3px solid rgb(176, 137, 67);
   padding-top: 4px;
@@ -208,6 +208,12 @@ body .createDesignView {
   width: 100%;
 }
 
+.createDetailView .switchColorButton {
+  font-size: 35px;
+  position: fixed;
+  top: 40%;
+}
+
 .createDetailView .toolRow {
   position: fixed;
   bottom: 0px;
@@ -216,7 +222,7 @@ body .createDesignView {
 }
 
 .createDetailView .toolRow > div {
-  width: 19%;
+  width: 24%;
   display: inline-block;
   text-align: center;
 }
@@ -227,16 +233,14 @@ body .createDesignView {
 }
 
 .createDetailView .toolRow > div:nth-child(2) > span,
-.createDetailView .toolRow > div:nth-child(3) > span,
-.createDetailView .toolRow > div:nth-child(4) > span {
+.createDetailView .toolRow > div:nth-child(3) > span {
   border: 2px solid rgb(176, 137, 67);
   border-radius: 20px;
   padding: 4px;
 }
 
 .createDetailView .toolRow > div:nth-child(2) > span:active,
-.createDetailView .toolRow > div:nth-child(3) > span:active,
-.createDetailView .toolRow > div:nth-child(4) > span:active {
+.createDetailView .toolRow > div:nth-child(3) > span:active {
   color: white;
   background-color: rgb(176, 137, 67);
 }

@@ -1,0 +1,258 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?ip94m6');
+	src:url('../fonts/icomoon.eot?#iefixip94m6') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?ip94m6') format('woff'),
+		url('../fonts/icomoon.ttf?ip94m6') format('truetype'),
+		url('../fonts/icomoon.svg?ip94m6#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ideas:before {
+	content: "\e600";
+}
+
+.icon-ideas2 .path1:before {
+	content: "\e601";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-ideas2 .path2:before {
+	content: "\e602";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-camera:before {
+	content: "\e603";
+}
+
+.icon-camera2 .path1:before {
+	content: "\e604";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-camera2 .path2:before {
+	content: "\e605";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-text:before {
+	content: "\e606";
+}
+
+.icon-text2 .path1:before {
+	content: "\e607";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-text2 .path2:before {
+	content: "\e608";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-code:before {
+	content: "\e609";
+}
+
+.icon-code2 .path1:before {
+	content: "\e60a";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-code2 .path2:before {
+	content: "\e60b";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-checkbox:before {
+	content: "\e60c";
+}
+
+.icon-changecolor .path1:before {
+	content: "\e60d";
+	color: rgb(35, 31, 32);
+}
+.icon-changecolor .path2:before {
+	content: "\e60e";
+	margin-left: -1em;
+	color: rgb(35, 31, 32);
+}
+.icon-changecolor .path3:before {
+	content: "\e60f";
+	margin-left: -1em;
+	color: rgb(35, 31, 32);
+}
+.icon-changecolor .path4:before {
+	content: "\e610";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+.icon-changecolor .path5:before {
+	content: "\e611";
+	margin-left: -1em;
+	color: rgb(35, 31, 32);
+}
+
+.icon-t-shirt2:before {
+	content: "\e612";
+}
+
+.icon-add:before {
+	content: "\e613";
+}
+
+.icon-delete:before {
+	content: "\e614";
+}
+
+.icon-edit .path1:before {
+	content: "\e615";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-edit .path2:before {
+	content: "\e616";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-cancel .path1:before {
+	content: "\e617";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-cancel .path2:before {
+	content: "\e618";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-edit2:before {
+	content: "\e619";
+}
+
+.icon-follow:before {
+	content: "\e61a";
+}
+
+.icon-info:before {
+	content: "\e61b";
+}
+
+.icon-key:before {
+	content: "\e61c";
+}
+
+.icon-like:before {
+	content: "\e61d";
+}
+
+.icon-ok .path1:before {
+	content: "\e61e";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-ok .path2:before {
+	content: "\e61f";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-ok2:before {
+	content: "\e620";
+}
+
+.icon-rotate .path1:before {
+	content: "\e621";
+	color: rgba(0, 0, 0, 0.5);
+}
+.icon-rotate .path2:before {
+	content: "\e622";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-save:before {
+	content: "\e623";
+}
+
+.icon-sendout2:before {
+	content: "\e624";
+}
+
+.icon-like2:before {
+	content: "\e625";
+}
+
+.icon-tdesign .path1:before {
+	content: "\e626";
+	color: rgb(35, 31, 32);
+}
+.icon-tdesign .path2:before {
+	content: "\e627";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-buy .path1:before {
+	content: "\e628";
+	color: rgb(35, 31, 32);
+}
+.icon-buy .path2:before {
+	content: "\e629";
+	margin-left: -1em;
+	color: rgb(255, 255, 255);
+}
+
+.icon-unfollow:before {
+	content: "\e62a";
+}
+
+.icon-f1:before {
+	content: "\e62b";
+}
+
+.icon-m1:before {
+	content: "\e62c";
+}
+
+.icon-f:before {
+	content: "\e62d";
+}
+
+.icon-m:before {
+	content: "\e62e";
+}
+
+.icon-sendout:before {
+	content: "\e62f";
+}
+
+.icon-checkmark:before {
+	content: "\e630";
+}
+
+.icon-checkmark2:before {
+	content: "\e631";
+}
+
+.icon-undo:before {
+	content: "\e632";
+}
+
+.icon-undo2:before {
+	content: "\e633";
+}
+
