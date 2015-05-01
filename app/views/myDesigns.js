@@ -138,16 +138,20 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                         action: 'getWechatUserOpenId',
                                         code: sCode
                                     };
-                                    var oUser = Auth.AuthManager.query(oUserReqParam, function () {
-                                        var oResUserInfo = {
-                                            userId: oUser.userId,
-                                            wechatId: oUser.wechatId,
-                                            type: oUser.type
-                                        };
-                                        UIData.setData('userInfo', oResUserInfo);
-                                        //$scope.userInfo = oResUserInfo;
-                                        UIData.setData('currentDesign', $scope.oCurrentDesign);
-                                        $state.go('createDesign.createDetail.orderDesign');
+                                    Auth.AuthManager.query(oUserReqParam, function (oData) {
+                                        if (!oData.error) {
+                                            var oResUserInfo = {
+                                                userId: oUser._id,
+                                                wechatId: oUser.wechatId,
+                                                type: oUser.type
+                                            };
+                                            UIData.setData('userInfo', oResUserInfo);
+                                            //$scope.userInfo = oResUserInfo;
+                                            UIData.setData('currentDesign', $scope.oCurrentDesign);
+                                            $state.go('createDesign.createDetail.orderDesign');
+                                        } else {
+                                            alert(oData.error);
+                                        }
                                     });
                                 }
                             }
