@@ -80,12 +80,12 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         controller: 'PayOrderCtrl'
     })
     .state('payWechatOrder', {
-        url: '/pay/payWechatOrder',
+        url: '/pay/payWechatOrder?showwxpaytitle',
         templateUrl: 'views/payWechatOrder.html',
         controller: 'PayWechatOrderCtrl'
     })
     .state('myDesigns.designDetail', {
-        url: '/designDetail/:designId',
+        url: '/designDetail/:designId?showwxpaytitle',
         views: {
             'designDetail' : {
                 templateUrl: 'views/designDetail.html',
@@ -336,7 +336,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         $scope.onDesignItemClicked = function(oDesign) {
             $scope.oCurrentDesign = oDesign;
-            $state.go('myDesigns.designDetail', {designId: oDesign._id});
+            $state.go('myDesigns.designDetail', {designId: oDesign._id, showwxpaytitle: 1});
         };
 
         $scope.onOrderBtnClicked = function() {

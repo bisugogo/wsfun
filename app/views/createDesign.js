@@ -193,7 +193,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                                 $scope.orderInfo.creatorId = oData.data.creatorId;
                                 UIData.setData('orderInfo', $scope.orderInfo);
                                 UIData.setData('designInfo', $scope.designInfo);
-                                $state.go('payWechatOrder');
+                                $state.go('payWechatOrder', {showwxpaytitle : 1});
                             }
                         });
                     };

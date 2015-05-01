@@ -7,6 +7,7 @@
 
 var https = require('https');
 var xmlLite = require("node-xml-lite");
+var Order = require('../models/order.js');
 var User = require('../models/User.js');
 var Cache = require('../util/globalCache.js').cache;
 var crypto = require('crypto');
@@ -422,6 +423,48 @@ module.exports = function(app) {
             }
         }
         LOG.logger.logFunc('wechatPayConfirm', oConfirmData.toString());
+
+        var sOrderId = oConfirmData['out_trade_no'];
+        var oQuery = Order.findById(sOrderId);
+        oQuery.exec(function(err, oOrder) {
+            if (err) {
+                LOG.logger.logFunc('wechatPayConfirm', err.message);
+            } else {
+                if (!oOrder) {
+                    LOG.logger.logFunc('wechatPayConfirm', 'Order with Id:' + sOrderId + ' not found!');
+                } else {
+                    if (oOrder.status === '待付款') {
+                        oOrder.status = '待发货';
+                        oOrder.save(function(err) {
+                            if (err) {
+                                LOG.logger.logFunc('wechatPayConfirm', 'Update order status failed');
+                            } else {
+                                var oPostData = '<xml>';
+                                oPostData += '<return_code>';
+                                oPostData += escapeXMLValue('SUCCESS');
+                                oPostData += '</return_code>';
+                                oPostData += '<return_msg>';
+                                oPostData += escapeXMLValue('OK');
+                                oPostData += '</return_msg>';
+                                oPostData += '</xml>';
+                                res.send(oPostData);
+                            }
+                        });
+                    } else {
+                        //Already confirmed before.
+                        var oPostData = '<xml>';
+                        oPostData += '<return_code>';
+                        oPostData += escapeXMLValue('SUCCESS');
+                        oPostData += '</return_code>';
+                        oPostData += '<return_msg>';
+                        oPostData += escapeXMLValue('OK');
+                        oPostData += '</return_msg>';
+                        oPostData += '</xml>';
+                        res.send(oPostData);
+                    }
+                }
+            }
+        });
     };
 
 
