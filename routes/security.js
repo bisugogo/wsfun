@@ -132,7 +132,7 @@ module.exports = function(app) {
         );
     };
 
-    getJsAPITicket= function() {
+    getJsAPITicket = function() {
         var oJsAPITicket = Cache.getCache('JS_API_TICKET');
         if (!oJsAPITicket) {
             console.log('No cached js api signature found!');
