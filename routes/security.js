@@ -12,6 +12,8 @@ var User = require('../models/User.js');
 var Cache = require('../util/globalCache.js').cache;
 var crypto = require('crypto');
 var LOG = require('../util/wsLog');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 
 var APP_ID = 'wxf26855bd0cda23bd';
 var SECRET = '498e6f493c29733d46e212c441f505e8';
@@ -97,6 +99,7 @@ module.exports = function(app) {
                             if (!oUser) {
                                 //This is a new user
                                 var oNewUserJson = {
+                                    _id: new ObjectId(),
                                     wechatId: oAuthReturn.openid,
                                     status: 1,
                                     type: 'tourist'
