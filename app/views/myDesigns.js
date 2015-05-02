@@ -49,12 +49,19 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
     .state('myDesignsAuth', {
         url: '/myDesignsAuth',
         template: '<div>Authenticating...</div>',
-        controller: function($window) {
+        controller: function($window, $location) {
             if (!sTempCode) {
+                var sState = '';
+                alert($location.$$search.type);
+                if ($location.$$search.type === 'all') {
+                    sState = 'all';
+                } else if ($location.$$search.type === 'mine') {
+                    sState = 'mine';
+                }
                 $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
                 'wxf26855bd0cda23bd' + '&redirect_uri=' + 
                 encodeURIComponent('http://design.weavesfun.com/#/myDesigns') + 
-                '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                '&response_type=code&scope=snsapi_base&state=' + sState + '#wechat_redirect';
             }
         }
     })
