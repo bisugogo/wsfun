@@ -46,7 +46,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
     })
     .state('createDesignAuth', {
         url: '/createDesignAuth',
-        template: '<div>Authenticating...</div>',
+        template: '<div></div>',
         controller: function($window) {
             if (!sTempCode) {
                 setTimeout(function() {

@@ -48,7 +48,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
     })
     .state('myDesignsAuth', {
         url: '/myDesignsAuth',
-        template: '<div>Authenticating...</div>',
+        template: '<div></div>',
         controller: function($window, $location) {
             if (!sTempCode) {
                 var sState = '';

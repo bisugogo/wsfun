@@ -173,8 +173,8 @@ module.exports = function(app) {
         oData.requestedTime = new Date().getTime();
         fs.mkdirSync('img/' + oData.requestedTime);
 
-        var sOutParam2 = '-size 400x500 xc:none img/female_black.png -geometry 10%x-50+5 -composite '
-            + 'img/female_white.png -geometry 10%x+350+5 -composite img/test.png';
+        // var sOutParam2 = '-size 400x500 xc:none img/female_black.png -geometry 10%x-50+5 -composite '
+        //     + 'img/female_white.png -geometry 10%x+350+5 -composite img/test.png';
 
         var sOutParam = '-size ' + FILE_CONSTANT.FINAL_DESIGN_WIDTH + 'x' + FILE_CONSTANT.FINAL_DESIGN_HEIGHT +
             ' xc:none ';

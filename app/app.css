@@ -1,6 +1,10 @@
 /* app css stylesheet */
 body .createDesignView {
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
+}
+
+body.weavesFunBody {
+  color: white;
 }
 
 .container-fluid {
@@ -69,7 +73,7 @@ body .createDesignView {
 .busyView > div:first-child > span {
   font-size: 25px;
   font-weight: bold;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
 }
 
 .busyView > img {
@@ -140,22 +144,35 @@ body .createDesignView {
   text-align: center;
   height: 100%;
   padding-top: 10%;
-  background-color: rgb(176, 137, 67);
+  background-color: rgba(215, 180, 104, 0.5);
   color: white;
+  position: relative;
 }
 
 .createDesignView .pleaseDesign > div > span {
   font-size: 25px;
 }
 
-.createDesignView .genderButtonRow > div img {
-  width: 80%;
+.createDesignView .verticalLogo {
+  bottom: 10px;
+  left: 12px;
+  position: absolute;
+  width: 55%;
 }
 
-.createDesignView .genderButtonRow > div span {
-  font-size: 35px;
-  border-top: 3px solid rgb(176, 137, 67);
-  border-bottom: 3px solid rgb(176, 137, 67);
+.createDesignView .genderButtonRow .maleButton .text,
+.createDesignView .genderButtonRow .femaleButton .text {
+  font-size: 28px;
+  color: black;
+  border-top: 3px solid rgb(215, 180, 104);
+  border-bottom: 3px solid rgb(215, 180, 104);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.createDesignView .genderButtonRow .maleButton .icon,
+.createDesignView .genderButtonRow .femaleButton .icon {
+  font-size: 100px;
   padding-top: 4px;
   padding-bottom: 4px;
 }
@@ -229,12 +246,12 @@ body .createDesignView {
 
 .createDetailView .toolRow > div > span {
   font-size: 22px;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
 }
 
 .createDetailView .toolRow > div:nth-child(2) > span,
 .createDetailView .toolRow > div:nth-child(3) > span {
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
   border-radius: 20px;
   padding: 4px;
 }
@@ -242,7 +259,7 @@ body .createDesignView {
 .createDetailView .toolRow > div:nth-child(2) > span:active,
 .createDetailView .toolRow > div:nth-child(3) > span:active {
   color: white;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
 }
 
 .createDetailView .personalGalleryRow {
@@ -298,7 +315,7 @@ body .createDesignView {
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemPencil,
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemResize {
   font-size: 18px;
-  background-color: rgba(176, 137, 67, 0.5);
+  background-color: rgba(215, 180, 104, 0.5);
   padding: 5px 5px 5px 5px;
   display: inline;
   border-radius: 18px;
@@ -311,7 +328,7 @@ body .createDesignView {
   position: relative;
   border-width: 2px;
   border-style: dotted;
-  border-color: rgb(176, 137, 67);
+  border-color: rgb(215, 180, 104);
 }
 
 .createDetailView .previewDesignBtn {
@@ -405,7 +422,7 @@ body .createDesignView {
 .createDetailView .payCouponListView .naviBtnRow > span,
 .createDetailView .paySourceListView .naviBtnRow > span {
   font-size: 25px;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span:first-child,
@@ -585,7 +602,7 @@ body .createDesignView {
 .orderDesignView .defaultOrderQuantityRow .leftAxis > .axisBottom,
 .orderDesignView .defaultOrderQuantityRow .rightAxis > .axisBottom {
   height: 5px;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
   margin-left: 3px;
   margin-right: 3px;
   width: auto;
@@ -598,7 +615,7 @@ body .createDesignView {
   border-top-style: solid;
   border-bottom-width: 2px;
   border-bottom-style: solid;
-  border-color: rgb(176, 137, 67);
+  border-color: rgb(215, 180, 104);
   height: calc(100% - 10px);
   height: -webkit-calc(100% - 10px);
   height: -moz-calc(100% - 10px);
@@ -634,7 +651,7 @@ body .createDesignView {
   width: -o-calc(100% - 30px);
   left: 15px;
   top: 5px;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
 }
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent > div {
@@ -727,7 +744,7 @@ body .createDesignView {
   border-radius: 0px;
   border: 1px solid white;
   width: 22%;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
 }
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions > label.active,
@@ -761,7 +778,7 @@ body .createDesignView {
   border-radius: 15px;
   background-color: white;
   font-size: 15px;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
 }
 
 .orderDesignView .payOptionRow {
@@ -879,13 +896,13 @@ body .createDesignView {
 
 .createDetailView .payCouponListView .couponItemDiv .couponItemContent > .couponItem {
   height: 35px;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
   width: auto;
   margin-left: 15px;
   margin-right: 15px;
   text-align: center;
   background-color: white;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
   font-size: 16px;
   padding-top: 5px;
 }
@@ -914,8 +931,8 @@ body .createDesignView {
   border-radius: 18px;
   background-color: white;
   padding: 5px;
-  border: 2px solid rgb(176, 137, 67);
-  color: rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
+  color: rgb(215, 180, 104);
 }
 
 .createDetailView .payCouponListView .couponItemDiv .couponItemCheck > .selectMask {
@@ -932,7 +949,7 @@ body .createDesignView {
   padding: 10px 15px 10px 15px;
   border-width: 2px;
   border-style: solid;
-  border-color: rgba(176, 137, 67, 0.5);
+  border-color: rgba(215, 180, 104, 0.5);
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -941,7 +958,7 @@ body .createDesignView {
   overflow: hidden;
   position: relative;
   background-color: white;
-  border-color: rgb(176, 137, 67);
+  border-color: rgb(215, 180, 104);
   border-radius: 0px;
   border-width: 2px;
   width: 100%;
@@ -966,7 +983,7 @@ body .createDesignView {
 }
 
 .royalButtonWrapper > .royalButton > span {
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
   font-size: large;
   font-weight: bold;
 }
@@ -980,7 +997,7 @@ body .createDesignView {
 }
 
 .uploadedImageArea .titleDiv > span {
-  font-family: SimSun;
+  font-family: DFKai-SB;
   font-size: large;
   color: white;
   font-weight: bold;
@@ -1053,7 +1070,7 @@ body .createDesignView {
 .myDesignsView .myDesignListHeader {
   width: 100%;
   height: 40px;
-  border-bottom: 2px solid rgb(176, 137, 67);
+  border-bottom: 2px solid rgb(215, 180, 104);
   text-align: center;
 }
 
@@ -1068,7 +1085,7 @@ body .createDesignView {
   position: absolute;
   top: 18px;
   left: 24px;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
 }
 
 .myDesignsView .myDesignListFooter {
@@ -1077,7 +1094,7 @@ body .createDesignView {
 
 .myDesignsView .myDesignListHeader > div > span {
   font-size: 15px;
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
 }
 
 .myDesignsView .designDetailView {
@@ -1194,7 +1211,7 @@ body .createDesignView {
 
 .myDesignListLeft > .centerAxis {
   height: 70%;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
   margin-right: 13px;
 }
 
@@ -1202,14 +1219,14 @@ body .createDesignView {
 .myDesignListLeft > .bottomAxis > .bottomAxisCenter {
   height: 16px;
   width: 22px;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
 }
 
 .myDesignListLeft > .topAxis > .topAxisRight,
 .myDesignListLeft > .bottomAxis > .bottomAxisRight {
   height: 10px;
   width: 10px;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
   left: 22px;
   top: 4px;
   position: absolute;
@@ -1217,7 +1234,7 @@ body .createDesignView {
 
 .myDesignListRight > .centerAxis {
   height: 70%;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
   margin-left: 13px;
 }
 
@@ -1225,7 +1242,7 @@ body .createDesignView {
 .myDesignListRight > .bottomAxis > .bottomAxisLeft {
   height: 10px;
   width: 10px;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
   position: absolute;
   top: 4px;
   left: 4px;
@@ -1235,7 +1252,7 @@ body .createDesignView {
 .myDesignListRight > .bottomAxis > .bottomAxisCenter {
   height: 16px;
   width: 22px;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
   left: 13px;
   top: 0px;
   position: absolute;
@@ -1251,7 +1268,7 @@ body .createDesignView {
 .myDesignListCenter > .bottomAxis > .bottomAxisCenter {
   height: 100%;
   width: 100%;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
 }
 
 .myDesignListCenter > .topAxis > .topAxisLeft,
@@ -1262,7 +1279,7 @@ body .createDesignView {
   height: 10px;
   position: absolute;
   top: 4px;
-  background-color: rgb(176, 137, 67);
+  background-color: rgb(215, 180, 104);
 }
 
 .myDesignListCenter > .topAxis > .topAxisLeft,
@@ -1282,7 +1299,7 @@ body .createDesignView {
 
 .myDesignListCenter > .centerContent {
   height: 85%;
-  border: 2px solid rgb(176, 137, 67);
+  border: 2px solid rgb(215, 180, 104);
 }
 
 .myDesignListCarousel {
@@ -1496,7 +1513,7 @@ body .createDesignView {
 }
 
 .payWechatFinalView .payButtonDiv > span {
-  color: rgb(176, 137, 67);
+  color: rgb(215, 180, 104);
   font-size: 20px;
 }
 
@@ -1591,6 +1608,10 @@ body .createDesignView {
   width: 100%;
 }
 
+.managementView span {
+  color: black;
+}
+
 .managementView .orderContainer {
   height: calc(100% - 35px);
   height: -webkit-calc(100% - 35px);
@@ -1600,4 +1621,9 @@ body .createDesignView {
 
 .managementView .orderContainer .orderItem > div {
   display: inline-block;
+  height: 80px;
+}
+
+.managementView .orderContainer .orderItem .orderImageDiv img {
+  height: 100%;
 }

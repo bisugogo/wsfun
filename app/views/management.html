@@ -3,9 +3,16 @@
         
     </div>
     <div class="orderContainer">
+        <div>
+            <span>预览</span>
+            <span>用户ID</span>
+            <span>订单状态</span>
+            <span>性别</span>
+            <span>订单描述</span>
+        </div>
         <div ng-repeat="oOrder in aOrders" class="orderItem">
             <div class="orderImageDiv">
-                
+                <img src="img/female_white.png">
             </div>
             <div class="orderInfo">
                 <span>{{oOrder.status}}</span>
