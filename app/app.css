@@ -7,6 +7,15 @@ body.weavesFunBody {
   color: white;
 }
 
+.modal-title {
+  color: black;
+  font-size: 15px;
+}
+
+.modal-dialog {
+  top: 80px;
+}
+
 .container-fluid {
   padding-left: 0px;
   padding-right: 0px;
@@ -215,8 +224,14 @@ body.weavesFunBody {
   text-align: right;
 }
 
+.createDetailView .backButton {
+  position: relative;
+  left: -7%;
+}
+
 .createDetailView .rightBtn{
-  float: right;
+  position: relative;
+  left: 30%;
 }
 
 .createDetailView .newDesignInfoArea {
@@ -228,7 +243,7 @@ body.weavesFunBody {
 .createDetailView .switchColorButton {
   font-size: 35px;
   position: fixed;
-  top: 40%;
+  top: 2px;
 }
 
 .createDetailView .toolRow {
@@ -249,9 +264,14 @@ body.weavesFunBody {
   color: rgb(215, 180, 104);
 }
 
+.createDetailView .toolRow .backButton > span {
+  font-size: 25px;
+  font-weight: bold;
+}
+
 .createDetailView .toolRow > div:nth-child(2) > span,
 .createDetailView .toolRow > div:nth-child(3) > span {
-  border: 2px solid rgb(215, 180, 104);
+  border: 1px solid rgb(215, 180, 104);
   border-radius: 20px;
   padding: 4px;
 }
@@ -270,8 +290,8 @@ body.weavesFunBody {
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 80px;
-  background-color: rgba(207, 176, 96, 0.7);
+  bottom: 45px;
+  background-color: rgba(215, 180, 104, 0.5);
   z-index: 1000;
 }
 
@@ -291,8 +311,35 @@ body.weavesFunBody {
   text-align: center;
 }
 
+.createDetailView .personalGalleryRow .uploadRowArea .uploadTip {
+  color: white;
+  font-size: 13px;
+}
+
 .createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper {
-  margin-top: 30px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 45px;
+  padding: 3px 3px 3px 3px;
+}
+
+.createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper .fileUploadBtn {
+  padding: 3px 3px 3px 3px;
+}
+
+.createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper > .royalButton > span {
+  font-size: 13px;
+}
+
+.createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper span{
+  word-wrap: break-word;
+  line-height: 20px;
+  white-space: initial;
+}
+
+.createDetailView .personalGalleryRow .uploadRowArea .uploadTip {
+  display: inline-block;
+  width: 70%;
 }
 
 .createDetailView .selectedArtifactArea {
@@ -310,6 +357,10 @@ body.weavesFunBody {
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+.createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemPencil {
+  visibility: hidden;
 }
 
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemPencil,
@@ -979,6 +1030,8 @@ body.weavesFunBody {
   font-size: 20px;
   cursor: pointer;
   opacity: 0;
+  width: 100%;
+  height: 100%;
   filter: alpha(opacity=0);
 }
 
@@ -989,16 +1042,19 @@ body.weavesFunBody {
 }
 
 .uploadedImageArea {
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .uploadedImageArea .titleDiv {
   text-align: center;
+  border-top: 1px solid white;
+  margin-bottom: 3px;
+  padding-top: 3px;
 }
 
 .uploadedImageArea .titleDiv > span {
   font-family: DFKai-SB;
-  font-size: large;
+  font-size: 13px;
   color: white;
   font-weight: bold;
 }
@@ -1032,6 +1088,8 @@ body.weavesFunBody {
 
 .uploadedImageArea .carouselIndicator {
   text-align: center;
+  position: relative;
+  bottom: 15px;
 }
 
 .uploadedImageArea .carouselIndicator > .rn-carousel-indicator > span {

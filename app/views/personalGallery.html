@@ -7,13 +7,16 @@
                     <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles" class="uploadInput"></input>
                 </div>
             </div>
+            <div class="uploadTip">
+                <span>请保证照片上传质量<br>（推荐2M左右）</span>
+            </div>
         </div>
         <div class="uploadedImageArea">
             <div class="titleDiv">
                 <span class="titleSpan">已上传图像</span>
             </div>
             <div class="myArtifactsCarouselDiv" ng-if="aMyArtifact.length > 0">
-                <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide" rn-carousel-controls 
+                <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide"  
                 rn-carousel-index="aMyArtifactCarouselIndex">
                     <li ng-repeat="oImageGroup in aMyArtifact">
                         <div class="myArtifactsGroupTop">

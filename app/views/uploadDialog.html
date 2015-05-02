@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h3 class="modal-title">文件上传中 ...</h3>
+    <span class="modal-title">文件上传中 ...</span>
 </div>
 <div class="modal-body">
     进度
-    <progressbar animate="true" value="uploadProgress" type="success"><b>{{uploadProgress}}%</b></progressbar>
+    <progressbar animate="true" value="uploadProgress" type="warning"><b>{{uploadProgress}}%</b></progressbar>
 </div>
 <div class="modal-footer">
     <!--button class="btn btn-primary" ng-click="ok()">OK</button-->
-    <button class="btn btn-warning" ng-click="cancel()">隐藏</button>
+    <span class="glyphicon glyphicon-remove" style="color:black" ng-click="cancel()"></span>
 </div>

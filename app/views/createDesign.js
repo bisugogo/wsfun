@@ -642,7 +642,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                         if (oInstance) {
                             oInstance.dismiss('cancel');
                         } else {
-                            $modalInstance.dismiss('cancel');
+                            $scope.modalInstance.dismiss('cancel');
                         }
                     };
                 },
