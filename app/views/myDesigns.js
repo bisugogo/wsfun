@@ -52,7 +52,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         controller: function($window, $location) {
             if (!sTempCode) {
                 var sState = '';
-                alert($location.$$search.type);
+                //alert($location.$$search.type);
                 if ($location.$$search.type === 'all') {
                     sState = 'all';
                 } else if ($location.$$search.type === 'mine') {
