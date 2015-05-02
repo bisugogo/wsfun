@@ -352,7 +352,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         var oAppData = UIData.getAppData();
         var sCode = $location.$$search.code;
-        alert(sCode);
+        //alert(sCode);
         if (sCode || oAppData.TESTING) {
             var oUserReqParam = {};
 
@@ -459,8 +459,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             }
 
             var oNewDesign = {
-                creatorId: '54fed66202f4c3e48e0df896',
-                color: 'white',
+                creatorId: $scope.userInfo.userId,
+                color: $scope.designInfo.color,
                 gender: $scope.designInfo.sGender,
                 price: $scope.constant.ORIGIN_PRICE,
                 desc: $scope.designInfo.sDescription,

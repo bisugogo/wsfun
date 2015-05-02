@@ -3,8 +3,8 @@ var User = require('../models/User.js');
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var OrderSchema = mongoose.model('Order').schema;
-var UserSchema = mongoose.model('User').schema;
+//var OrderSchema = mongoose.model('Order').schema;
+//var UserSchema = mongoose.model('User').schema;
 
 var DesignSchema = new Schema({
   creatorId: {

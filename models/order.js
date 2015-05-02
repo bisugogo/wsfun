@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var Coupon = require('../models/Coupon.js');
 var User = require('../models/User.js');
+var Design = require('../models/tshirt.js');
 //var UserSchema = mongoose.model('User').schema;
 //var CouponSchema = mongoose.model('Coupon').schema;
 
@@ -10,6 +11,10 @@ var OrderSchema = new Schema({
   creatorId: {
     type: Schema.Types.ObjectId,
     ref: 'User'
+  },
+  designId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Design'
   },
   payerId: {
     type: String,

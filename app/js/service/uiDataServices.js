@@ -14,6 +14,11 @@ oUIDataServices.factory('UIData', [
             TESTING: true
         };
 
+        var oQuerySent = {
+            userInfo: false,
+            designList: false
+        };
+
         return {
             // getGetParam: function(){
             //     return oGetParam;
@@ -39,6 +44,14 @@ oUIDataServices.factory('UIData', [
 
             getAppData: function() {
                 return oAPPData;
+            },
+
+            getQuerySentData: function(sKey) {
+                return oQuerySent[sKey];
+            },
+
+            setQuerySentData: function(sKey, oValue) {
+                oQuerySent[sKey] = oValue;
             }
         };
 }]);

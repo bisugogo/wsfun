@@ -1577,3 +1577,27 @@ body .createDesignView {
   width: 100%;
   height: 100%;
 }
+
+.managementView {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.managementView .toolRow {
+  height: 35px;
+  width: 100%;
+}
+
+.managementView .orderContainer {
+  height: calc(100% - 35px);
+  height: -webkit-calc(100% - 35px);
+  height: -moz-calc(100% - 35px);
+  height: -o-calc(100% - 35px);
+}
+
+.managementView .orderContainer .orderItem > div {
+  display: inline-block;
+}

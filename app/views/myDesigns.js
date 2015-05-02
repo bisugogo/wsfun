@@ -198,12 +198,12 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
             }
         };
 
-
         var oAppData = UIData.getAppData();
 
         var sCode = $location.$$search.code;
+        var sListParam = $location.$$search.state;
 
-        alert(sCode);
+        //alert(sCode);
 
         // if (!sCode && !oAppData.TESTING) {
         //     $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
@@ -232,53 +232,79 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                     };
                 }
                 
-                Auth.AuthManager.query(oUserReqParam, function (oData) {
-                    var oResUserInfo = oData.data;
-                    oResUserInfo.userId = oResUserInfo._id;
-                    UIData.setData('userInfo', oResUserInfo);
-                    //$scope.userInfo = oResUserInfo;
-                });
+                var bUserQuerySent = UIData.getQuerySentData('userInfo');
+                if (!bUserQuerySent) {
+                    //Prevent sending request the second time
+                    UIData.setQuerySentData('userInfo', true);
+                    Auth.AuthManager.query(oUserReqParam, function (oData) {
+                        var oResUserInfo = oData.data;
+                        oResUserInfo.userId = oResUserInfo._id;
+                        UIData.setData('userInfo', oResUserInfo);
+                        $scope.userInfo = oResUserInfo;
 
-                var oResult = Design.DesignManager.query({action: 'getMyDesigns'}, function (aDesigns) {
-                    // var newWidth = 600 + oResult.designList.length + 1;
-                    // for (var i = 0; i < oResult.designList.length; i++) {
-                    //     oResult.designList[i].image = 'http://placekitten.com/' + newWidth + '/300';
-                    // }
-                    //$scope.aMyDesigns = oResult.designList;
-                    $scope.aMyDesigns = aDesigns.designList;
-
-                    for (var i = 0; i < $scope.aMyDesigns.length; i++) {
-                        var oCurItem = $scope.aMyDesigns[i];
-                        if (oCurItem.gender === 'male') {
-                            if (oCurItem.color === 'white') {
-                                oCurItem.bkImg = 'img/male_white.png';
-                            } else {
-                                oCurItem.bkImg = 'img/male_black.png';
-                            }
-                        } else {
-                            if (oCurItem.color === 'white') {
-                                oCurItem.bkImg = 'img/female_white.png';
-                            } else {
-                                oCurItem.bkImg = 'img/female_black.png';
-                            }
+                        var oMineParam = {};
+                        if (sListParam === 'mine') {
+                            oMineParam = {
+                                action: 'getMyDesigns',
+                                userId: oResUserInfo.userId
+                            };
+                            var oResult = Design.DesignManager.query(oMineParam, function (oData) {
+                                $scope.handleDesignListCallback(oData);
+                            });
                         }
-                    }
+                    });
+                }
+                
 
-                    var oCenterDom = $('.myDesignListCenter')[0];
-                    if (oCenterDom) {
-                        var iWidth = oCenterDom.clientWidth;
-                        var iHeight = iWidth * 1021 / 642;
-                        var iLeft = iWidth * 0.21;
-                        var iTop = iHeight * 0.3;
-                        var iDesignImageWidth = iWidth * 0.6;
-
-                        $scope.positionInfoStyleValue = "left:" + iLeft + "px;" + 
-                            "top:" + iTop + "px;" + 
-                            "width:" + iDesignImageWidth + "px;";
+                if (sListParam !== 'mine') {
+                    var bDesignListQuerySent = UIData.getQuerySentData('designList');
+                    if (!bDesignListQuerySent) {
+                        //Prevent sending request the second time
+                        UIData.setQuerySentData('designList', true);
+                        var oParam = {
+                            action: 'getDesigns'
+                        };
+                        var oResult = Design.DesignManager.query(oParam, function (oData) {
+                            $scope.handleDesignListCallback(oData);
+                        });
                     }
-                });
+                }
             }
         }
+
+        $scope.handleDesignListCallback = function(oData) {
+            $scope.aMyDesigns = oData.designList;
+
+            for (var i = 0; i < $scope.aMyDesigns.length; i++) {
+                var oCurItem = $scope.aMyDesigns[i];
+                if (oCurItem.gender === 'male') {
+                    if (oCurItem.color === 'white') {
+                        oCurItem.bkImg = 'img/male_white.png';
+                    } else {
+                        oCurItem.bkImg = 'img/male_black.png';
+                    }
+                } else {
+                    if (oCurItem.color === 'white') {
+                        oCurItem.bkImg = 'img/female_white.png';
+                    } else {
+                        oCurItem.bkImg = 'img/female_black.png';
+                    }
+                }
+            }
+
+            var oCenterDom = $('.myDesignListCenter')[0];
+            if (oCenterDom) {
+                var iWidth = oCenterDom.clientWidth;
+                var iHeight = iWidth * 1021 / 642;
+                var iLeft = iWidth * 0.21;
+                var iTop = iHeight * 0.3;
+                var iDesignImageWidth = iWidth * 0.6;
+
+                $scope.positionInfoStyleValue = "left:" + iLeft + "px;" + 
+                    "top:" + iTop + "px;" + 
+                    "width:" + iDesignImageWidth + "px;";
+            }
+        };
 
         
         

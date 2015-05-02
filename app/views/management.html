@@ -1,0 +1,26 @@
+<div class="managementView">
+    <div class="toolRow">
+        
+    </div>
+    <div class="orderContainer">
+        <div ng-repeat="oOrder in aOrders" class="orderItem">
+            <div class="orderImageDiv">
+                
+            </div>
+            <div class="orderInfo">
+                <span>{{oOrder.status}}</span>
+            </div>
+            <div class="orderStatus">
+                <span>{{oOrder.designId.gender}}</span>
+                <span>{{oOrder.designId.color}}</span>
+                <span>{{oOrder.designId.desc}}</span>
+            </div>
+            <div class="download">
+                <span class="glyphicon glyphicon-download-alt"></span>
+            </div>
+            <div class="submit">
+                <span class="glyphicon glyphicon-floppy-disk">提交</span>
+            </div>
+        </div>
+    </div>
+</div>

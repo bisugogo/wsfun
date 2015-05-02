@@ -59,16 +59,36 @@ module.exports = function(app) {
     };
 
     getMyDesigns = function(sUserId, res) {
-        console.log("GET - /tshirts_getMyDesigns");
+        LOG.logger.logFunc('getMyDesigns');
         /*
          * return Design.find({creatorId: sUserId}, function(err, aDesign) { if(!err) { return res.send({ status: 'OK',
          * designList: aDesign }); } else { res.statusCode = 500; console.log('Internal error(%d):
          * %s',res.statusCode,err.message); return res.send({ error: 'Server error' }); } });
          */
 
-        return Design.find().populate('creatorId').find({
-            access : 'public'
-        }).exec(function(err, aDesign) {
+        return Design.find({
+            creatorId: sUserId
+        }).populate('creatorId').exec(function(err, aDesign) {
+            if (!err) {
+                return res.send({
+                    status : 'OK',
+                    designList : aDesign
+                });
+            } else {
+                res.statusCode = 500;
+                console.log('Internal error(%d): %s', res.statusCode, err.message);
+                return res.send({
+                    error : 'Server error'
+                });
+            }
+        });
+    };
+
+    getDesigns = function(req, res) {
+        LOG.logger.logFunc('getDesigns');
+        return Design.find({
+            access: 'public'
+        }).populate('creatorId').exec(function(err, aDesign) {
             if (!err) {
                 return res.send({
                     status : 'OK',
@@ -364,7 +384,7 @@ module.exports = function(app) {
         var sUserId = data.creatorId;
 
         var oNewOrder = {
-            desingId: data.designId,
+            designId: data.designId,
             creatorId : sUserId,
             femalePrice : ORDER_CONSTANT.ORIGIN_PRICE,
             malePrice : ORDER_CONSTANT.ORIGIN_PRICE,
@@ -402,7 +422,7 @@ module.exports = function(app) {
 
         
         function createOrder_1_findDesign(oNewOrder) {
-            var sTargetDesignId = oNewOrder.desingId;
+            var sTargetDesignId = oNewOrder.designId;
 
             Design.findById(sTargetDesignId, function(err, oDesign) {
                 if (!err) {
@@ -479,6 +499,7 @@ module.exports = function(app) {
             User.findById(sTargetUserId).exec(function(err, oUser) {
                 oNewOrderJson._id = new ObjectId();
                 oNewOrderJson.creatorId = oUser._id;
+                //oNewOrderJson.designId = new ObjectId(oNewOrderJson.designId);
                 var oNewOrder2Create = new Order(oNewOrderJson);
 
                 oNewOrder2Create.save(function(err) {
@@ -584,6 +605,40 @@ module.exports = function(app) {
                 });
             }
         });
+    };
+
+    getOrders = function(req, res) {
+        var sParamType = req.query.type;
+        var oFindParam = {};
+        if (sParamType === 'paid') {
+            oFindParam.status = '待发货';
+        } else if (sParamType === 'shipped') {
+            oFindParam.status = '已发货';
+        } else if (sParamType === 'all') {
+
+        }
+
+        var oQuery = null;
+        if (!oFindParam.status) {
+            oQuery = Order.find();
+        } else {
+            oQuery = Order.find(oFindParam);
+        }
+        oQuery.populate('designId');
+        oQuery.exec(function(err, aOrders) {
+            if (err) {
+                LOG.logger.logFunc('getOrders', err.message);
+                res.send({
+                    error: 'getOrders:' + err.message
+                });
+            } else {
+                res.send({
+                    status: 'OK',
+                    data: aOrders
+                });
+            }
+        });
+        
     };
 
     /**
@@ -823,14 +878,16 @@ module.exports = function(app) {
         if (sAction === 'getAllMyDesigns') {
             findAllTshirts(req, res);
         } else if (sAction === 'getMyDesigns') {
-            // if (!req.query || !req.query.userId) {
-            //     res.send({
-            //         error: 'No user id provided.'
-            //     });
-            //     return;
-            // }
-            // var sUserId = req.query.userId;
-            getMyDesigns("", res);
+            if (!req.query || !req.query.userId) {
+                res.send({
+                    error: 'No user id provided.'
+                });
+                return;
+            }
+            var sUserId = req.query.userId;
+            getMyDesigns(sUserId, res);
+        } else if (sAction === 'getDesigns') {
+            getDesigns(req, res);
         } else if (sAction === 'getDesignById') {
             var sDesignId = req.query.designId;
             getDesignById(sDesignId, res);
@@ -863,6 +920,8 @@ module.exports = function(app) {
             }
             var sOrderId = req.query.orderId;
             getOrderById(sOrderId, res);
+        } else if (sAction === 'getOrders') {
+            getOrders(req, res);
         }
     };
 
