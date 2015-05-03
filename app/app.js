@@ -63,5 +63,17 @@ ntApp.config(function ($stateProvider, $urlRouterProvider) {
         url: "/activities",
         templateUrl: 'views/activities.html',
         controller: 'ActivitiesControl'
+    })
+    .state('orderListAuth', {
+        url: '/orderListAuth',
+        template: '<div></div>',
+        controller: function($window, $location) {
+            if (!sTempCode) {
+                $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                'wxf26855bd0cda23bd' + '&redirect_uri=' + 
+                encodeURIComponent('http://design.weavesfun.com/#/orderList') + 
+                '&response_type=code&scope=snsapi_base&state=mine#wechat_redirect';
+            }
+        }
     });
 });

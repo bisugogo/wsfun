@@ -599,7 +599,26 @@ module.exports = function(app) {
     };
 
     getMyOrders = function(sUserId, res) {
-        console.log("GET - /tshirts_getMyOrders");
+        var oQuery = Order.find({
+            creatorId: sUserId
+        });
+
+        oQuery.populate('designId');
+
+        oQuery.exec(function(err, aOrder) {
+            if (err) {
+                LOG.logger.logFunc('getMyOrders', err.message);
+                res.send({
+                    error: 'getMyOrders' + err.message
+                });
+            } else {
+                res.send({
+                    status: 'OK',
+                    data: aOrder
+                });
+            }
+        });
+        /*console.log("GET - /tshirts_getMyOrders");
         return Design.find({
             'orders.creatorId' : sUserId
         }).select('_id desc orders').exec(function(err, aDesign) {
@@ -632,7 +651,7 @@ module.exports = function(app) {
                     error : 'Server error'
                 });
             }
-        });
+        });*/
     };
 
     getOrderById = function(sOrderId, res) {

@@ -1009,7 +1009,7 @@ body.weavesFunBody {
 }
 
 .royalButtonWrapper {
-  padding: 10px 15px 10px 15px;
+  padding: 4px 6px 4px 6px;
   border-width: 2px;
   border-style: solid;
   border-color: rgba(215, 180, 104, 0.5);
@@ -1025,6 +1025,7 @@ body.weavesFunBody {
   border-radius: 0px;
   border-width: 2px;
   width: 100%;
+  padding: 3px 4px 3px 4px;
 }
 
 .royalButtonWrapper > .royalButton:active,
@@ -1049,7 +1050,7 @@ body.weavesFunBody {
 
 .royalButtonWrapper > .royalButton > span {
   color: rgb(215, 180, 104);
-  font-size: large;
+  font-size: 13px;
   font-weight: bold;
 }
 
@@ -1389,17 +1390,6 @@ body.weavesFunBody {
   width: 100%;
 }
 
-.myDesignListRowImg {
-  width: 25%;
-}
-
-.myDesignListTitleRow {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .userInfoDerive > div {
   height: 100%;
 }
@@ -1735,4 +1725,121 @@ body.weavesFunBody {
 .managementView .orderContainer .orderItem .submit span {
   color: blue;
   cursor: pointer;
+}
+
+.myOrdersView {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.myOrdersView .myOrdersListHeader {
+  width: 100%;
+  height: 30px;
+  border-bottom: 2px solid rgb(215, 180, 104);
+  text-align: center;
+}
+
+.myOrdersView .myOrdersListHeader span {
+  color: rgb(215, 180, 104);
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.myOrdersView .myOrdersListContent {
+  height: calc(100% - 30px);
+  height: -webkit-calc(100% - 30px);
+  height: -moz-calc(100% - 30px);
+  height: -o-calc(100% - 30px);
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel {
+  height: 100%;
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel .orderGroup {
+  height: 100%;
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel .orderGroup .orderItem {
+  height: 33%;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel .orderGroup .orderItemDiv {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(215, 180, 104);
+  position: relative;
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel .orderGroup .orderItemDiv .designPreview {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  padding-left: 5px;
+  padding-top: 5px;
+  width: 25%;
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel .orderGroup .orderItemDiv .designPreview > div {
+  background-color: white;
+  position: relative;
+}
+
+.myOrdersView .myOrdersListContent .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 25%;
+  text-align: center;
+  width: 75%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .designPreview img:first-child {
+  width: 100%;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .designPreview .previewImage {
+  position: absolute;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv .title span {
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv .subTitle {
+  font-size: 13px;
+  color: black;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv .subTitleValue {
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv .rmbTitle {
+  color: white;
+  font-size: 12px;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv .totalPrice {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.myOrdersView .myOrdersListCarousel .orderGroup .orderItemDiv .orderInfoDiv .orderTip {
+  color: white;
+  font-size: 12px;
 }

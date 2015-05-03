@@ -1,46 +1,50 @@
-<div class="row">
-    <div class="col-xs-4">
-        <span>ppp1</span>
+<div class='myOrdersView' ng-controller="OrderListCtrl">
+
+    <div class="myOrdersListHeader">
+        <span>所有订单</span>
     </div>
-    <div class="col-xs-4">
-        <span>ppp2</span>
-    </div>
-    <div class="col-xs-4">
-        <span>ppp3</span>
-    </div>
-</div>
-<div class="row" ng-controller="OrderListCtrl">
-    <div class="col-xs-12">
-        <div class='row myDesignListTitleRow'>
-            <div class="col-xs-3"></div>
-            <div class="col-xs-9">
-                <div class='row'>
-                    <div class="col-xs-3">设计名称</div>
-                    <div class="col-xs-3">长度</div>
-                    <div class="col-xs-3">时间</div>
-                    <div class="col-xs-3">状态</div>
-                </div>
-            </div>
-        </div>
-        <div ng-repeat="oOrder in aOrders">
-            <div class='row'>
-                <div class="col-xs-3">
-                    <img ng-src="img/create_bk.png" class="myDesignListRowImg" ng-click="onDesignItemClicked(oDesign)">
-                </div>
-                <div class="col-xs-9">
-                    <div class='row'>
-                        <div class="col-xs-3">{{oOrder.sDesignDesc}}</div>
-                        <div class="col-xs-3">{{oOrder.totalPrice}}</div>
-                        <div class="col-xs-3">{{oOrder.lastModified}}</div>
-                        <div class="col-xs-3">{{oOrder.status}}</div>
+    
+    <div class="myOrdersListContent">
+        <ul rn-carousel class="image myOrdersListCarousel" rn-carousel-transition="fadeAndSlide">
+            <li ng-repeat="oOrderGroup in aOrderGroups">
+                <div class="orderGroup">
+                    <div ng-repeat="oOrder in oOrderGroup" class="orderItem">
+                        <div class="orderItemDiv">
+                            <div class="designPreview">
+                                <div class="designPreviewDiv">
+                                    <img src="{{oOrder.designId.bkImg}}">
+                                    <img src="{{oOrder.designId.previewImage64}}" style="{{oOrder.previewPosition}}" 
+                                    class="previewImage">
+                                </div>
+                            </div>
+                            <div class="orderInfoDiv">
+                                <div class="title">
+                                    <span>{{oOrder.uiTitle}}</span>
+                                </div>
+                                <div>
+                                    <span class="subTitle">尺码</span>
+                                    <span class="subTitleValue">{{oOrder.uiSize}}</span>
+                                    <span class="subTitle">数量</span>
+                                    <span class="subTitleValue">{{oOrder.uiQuantity}}</span>
+                                </div>
+                                <div>
+                                    <span class="subTitle">所需金额</span>
+                                    <span class="rmbTitle">￥</span>
+                                    <span class="totalPrice">{{oOrder.totalPrice}}</span>
+                                </div>
+                                <div>
+                                    <span class="orderTip">{{oOrder.tip}}</span>
+                                </div>
+                                <div class="royalButtonWrapper payButton">
+                                    <div class="btn btn-warning royalButton">
+                                        <span ng-click="onButtonClicked(oOrder)">{{oOrder.buttonText}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-4">
-        <a ui-sref="myDesigns">我的设计</a>
+            </li>
+        </ul>
     </div>
 </div>

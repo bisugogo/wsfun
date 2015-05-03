@@ -16,7 +16,8 @@ oUIDataServices.factory('UIData', [
 
         var oQuerySent = {
             userInfo: false,
-            designList: false
+            designList: false,
+            orderList: false
         };
 
         return {
