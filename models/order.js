@@ -20,6 +20,10 @@ var OrderSchema = new Schema({
     type: String,
     default: ''
   },
+  mailInfo: {
+    type: String,
+    default: ''
+  },
   malePrice:    {
     type    : Number,
     require : true
@@ -63,6 +67,46 @@ var OrderSchema = new Schema({
   kidQuantity :   {
     type    : String,
     equire : true
+  },
+  contact: {
+    type: String,
+    require: true
+  },
+  contactMobile: {
+    type: String,
+    require: true
+  },
+  country: {
+    type: String,
+    default: 'China'
+  },
+  province: {
+    type: String,
+    require: true
+  },
+  city: {
+    type: String,
+    require: true
+  },
+  district: {
+    type: String,
+    default: ''
+  },
+  postCode: {
+    type: String,
+    default: ''
+  },
+  detailAddress: {
+    type: String,
+    require: true
+  },
+  createdTime: {
+    type    : Date,
+    default : Date.now
+  },
+  payTime: {
+    type    : Date,
+    default : ''
   },
   lastModified: {
     type    : Date,

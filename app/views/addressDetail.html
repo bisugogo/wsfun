@@ -17,13 +17,13 @@
         </div>
         <div>
             <span>市</span>
-            <input type="text" class="form-control" ng-model="orderInfo.sProvince">
+            <input type="text" class="form-control" ng-model="orderInfo.sCity">
         </div>
     </div>
     <div class="districtAndCode">
         <div>
             <span>区</span>
-            <input type="text" class="form-control" ng-model="orderInfo.sCity">
+            <input type="text" class="form-control" ng-model="orderInfo.sDistrict">
         </div>
         <div>
             <span>邮编</span>
@@ -35,10 +35,10 @@
             <span>详细地址</span>
         </div>
         <div>
-            <input type="text" class="form-control" ng-model="orderInfo.sDetailAddress">
+            <textarea class="form-control" rows="3" ng-model="orderInfo.sDetailAddress"></textarea>
         </div>
     </div>
-    <div class="saveAddressBtn">
+    <div class="saveAddressBtn" ng-click="onSaveAddressButtonClicked()">
         <span class="glyphicon glyphicon-floppy-disk"></span>
     </div>
     <div class="naviBtnRow">

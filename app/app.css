@@ -214,6 +214,7 @@ body.weavesFunBody {
   bottom: 40px;
   padding-left: 20px;
   padding-right: 20px;
+  z-index: 9999;
 }
 
 .createDesignView .genderButtonRow {
@@ -243,7 +244,7 @@ body.weavesFunBody {
 .createDetailView .switchColorButton {
   font-size: 35px;
   position: fixed;
-  top: 2px;
+  top: 6px;
 }
 
 .createDetailView .toolRow {
@@ -331,7 +332,8 @@ body.weavesFunBody {
   font-size: 13px;
 }
 
-.createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper span{
+.createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper span, 
+.saveDetailView .royalButtonWrapper span {
   word-wrap: break-word;
   line-height: 20px;
   white-space: initial;
@@ -404,7 +406,7 @@ body.weavesFunBody {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: rgba(207, 176, 96, 0.8);
+  background-color: rgba(215, 180, 104, 0.5);
   z-index: 1000;
 }
 
@@ -438,7 +440,8 @@ body.weavesFunBody {
 }
 
 .createDetailView .saveDetailView .designAccess {
-  text-align: center;
+  text-align: left;
+  margin-left: 15px;
 }
 
 .createDetailView .saveDetailView .designAccess > label {
@@ -448,13 +451,20 @@ body.weavesFunBody {
 
 .createDetailView .saveDetailView .designAccess > label > input {
   margin-left: 0px;
-} 
+  position: relative;
+}
 
+.createDetailView .saveDetailView .saveDesignBtn,
 .createDetailView .saveDetailView .goToOrderBtn {
   margin-top: 10%;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 36%;
+  margin-right: 36%;
+  padding: 5px 5px;
   width: auto;
+}
+
+.createDetailView .saveDetailView .saveDesignBtn .royalButton {
+  padding: 3px 3px;
 }
 
 .createDetailView .saveDetailView .naviBtnRow,
@@ -473,6 +483,7 @@ body.weavesFunBody {
 .createDetailView .payCouponListView .naviBtnRow > span,
 .createDetailView .paySourceListView .naviBtnRow > span {
   font-size: 25px;
+  font-weight: bold;
   color: rgb(215, 180, 104);
 }
 
@@ -483,6 +494,7 @@ body.weavesFunBody {
 .createDetailView .paySourceListView .naviBtnRow > span:first-child {
   float: left;
   left: -25px;
+  position: relative;
 }
 
 .createDetailView .saveDetailView .naviBtnRow > span:nth-child(2),
@@ -506,7 +518,7 @@ body.weavesFunBody {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: rgba(207, 176, 96, 0.8);
+  background-color: rgba(215, 180, 104, 0.5);
   z-index: 1000;
 }
 
@@ -1677,11 +1689,50 @@ body.weavesFunBody {
   height: -o-calc(100% - 35px);
 }
 
+.managementView .orderContainer .headerRow {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.managementView .orderContainer .orderItem {
+  border-bottom: 1px solid black;
+}
+
+.managementView .orderContainer .headerRow > div {
+  display: inline-block;
+  width: 100px;
+}
+
+.managementView .orderContainer .headerRow span {
+  font-weight: bold;
+}
+
+.managementView .orderContainer .headerRow > div:nth-child(11) {
+  width: 200px;
+}
+
 .managementView .orderContainer .orderItem > div {
   display: inline-block;
-  height: 80px;
+  height: 100px;
+  width: 100px;
+  vertical-align: bottom;
+  border-right: 1px solid rgb(213, 213, 213);
+}
+
+.managementView .orderContainer .orderItem > div:nth-child(11) {
+  width: 200px;
 }
 
 .managementView .orderContainer .orderItem .orderImageDiv img {
   height: 100%;
+}
+
+.managementView .orderContainer .orderItem > div > span {
+  word-wrap: break-word;
+}
+
+.managementView .orderContainer .orderItem .download span,
+.managementView .orderContainer .orderItem .submit span {
+  color: blue;
+  cursor: pointer;
 }

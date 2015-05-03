@@ -382,10 +382,27 @@ module.exports = function(app) {
 
         var sDesignId = data.designId;
         var sUserId = data.creatorId;
+        //var sMailInfo = data.mailInfo;
+
+        var sContact = data.contact;
+        var sContactMobile = data.contactMobile;
+        var sProvince = data.province;
+        var sCity = data.city;
+        var sDistrict = data.district;
+        var sPostCode = data.postCode;
+        var sDetailAddress = data.detailAddress;
 
         var oNewOrder = {
             designId: data.designId,
             creatorId : sUserId,
+            //mailInfo: sMailInfo,
+            contact: sContact,
+            contactMobile: sContactMobile,
+            province: sProvince,
+            city: sCity,
+            district: sDistrict,
+            postCode: sPostCode,
+            detailAddress: sDetailAddress,
             femalePrice : ORDER_CONSTANT.ORIGIN_PRICE,
             malePrice : ORDER_CONSTANT.ORIGIN_PRICE,
             kidPrice : ORDER_CONSTANT.ORIGIN_PRICE,
@@ -410,12 +427,12 @@ module.exports = function(app) {
             oNewOrder.maleSize = oMaleInfo.clothesSize;
         }
         if (oFemaleInfo.quantity > 0) {
-            oNewOrder.maleQuantity = oFemaleInfo.quantity;
-            oNewOrder.maleSize = oFemaleInfo.clothesSize;
+            oNewOrder.femaleQuantity = oFemaleInfo.quantity;
+            oNewOrder.femaleSize = oFemaleInfo.clothesSize;
         }
         if (oKidInfo.quantity > 0) {
-            oNewOrder.maleQuantity = oKidInfo.quantity;
-            oNewOrder.maleSize = oKidInfo.clothesSize;
+            oNewOrder.kidQuantity = oKidInfo.quantity;
+            oNewOrder.kidSize = oKidInfo.clothesSize;
         }
 
         createOrder_1_findDesign(oNewOrder);
@@ -550,6 +567,34 @@ module.exports = function(app) {
             return iRet;
         } else {
             return iRet;
+        }
+    };
+
+    updateOrderStatus = function(oData, res) {
+        if (oData) {
+            var sOrderId = oData.orderId;
+            var sTargetStatus = oData.targetStatus;
+            Order.findByIdAndUpdate(sOrderId, {
+                status: sTargetStatus,
+                lastModified: new Date()
+            }, {'new': true}, function(err, oDBRet) {
+                if (err) {
+                    LOG.logger.logFunc('updateOrderStatus', err.message);
+                    res.send({
+                        error: 'updateOrderStatus failed ' + err.message
+                    });
+                } else {
+                    res.send({
+                        status: 'OK',
+                        data: oDBRet
+                    });
+                }
+            });
+        } else {
+            LOG.logger.logFunc('updateOrderStatus', 'No Param provided.');
+            res.send({
+                error: 'No Param provided.'
+            });
         }
     };
 
@@ -939,6 +984,8 @@ module.exports = function(app) {
                 createCoupon(req.body.data, res);
             } else if (sAction === 'createCouponSource') {
                 createCouponSource(req.body.data, res);
+            } else if (sAction === 'updateOrderStatus') {
+                updateOrderStatus(req.body.data, res);
             }
         }
         console.log("design post service, action: empty.");

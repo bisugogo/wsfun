@@ -3,7 +3,7 @@
         
     </div>
     <div class="orderContainer">
-        <div>
+        <div class="headerRow">
             <div>
                 <span>预览</span>
             </div>
@@ -11,32 +11,83 @@
                 <span>用户ID</span>
             </div>
             <div>
+                <span>联系人</span>
+            </div>
+            <div>
+                <span>电话</span>
+            </div>
+            <div>
                 <span>订单状态</span>
             </div>
             <div>
-                <span>性别</span>
+                <span>订单信息</span>
             </div>
             <div>
-                <span>订单描述</span>
+                <span>设计描述</span>
+            </div>
+            <div>
+                <span>订单创建时间</span>
+            </div>
+            <div>
+                <span>付款时间</span>
+            </div>
+            <div>
+                <span>最近修改时间</span>
+            </div>
+            <div>
+                <span>邮寄地址</span>
             </div>
         </div>
         <div ng-repeat="oOrder in aOrders" class="orderItem">
             <div class="orderImageDiv">
                 <img src="img/female_white.png">
             </div>
-            <div class="orderInfo">
-                <span>{{oOrder.status}}</span>
+            <div class="orderCreator">
+                <span>{{oOrder.creatorId}}</span>
+            </div>
+            <div class="orderContact">
+                <span>{{oOrder.contact}}</span>
+            </div>
+            <div class="orderContactPhone">
+                <span>{{oOrder.contactMobile}}</span>
             </div>
             <div class="orderStatus">
-                <span>{{oOrder.designId.gender}}</span>
-                <span>{{oOrder.designId.color}}</span>
+                <span>{{oOrder.status}}</span>
+                <div class="btn-group" dropdown is-open="status.isopen" 
+                style="{{oOrder.status === '待付款' ? 'display:none;' : ''}}">
+                    <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                        {{oOrder.targetStatus ? oOrder.targetStatus : '更改'}}<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="onOrderStatusChange(oOrder, '已发货')">已发货</a></li>
+                        <li><a ng-click="onOrderStatusChange(oOrder, '交易完成')">交易完成</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="orderSizeCount">
+                <span>{{oOrder.sizeCount}}</span>
+            </div>
+            <div class="orderDesc">
                 <span>{{oOrder.designId.desc}}</span>
             </div>
+            <div class="orderCreatedTime">
+                <span>{{oOrder.createdTime}}</span>
+            </div>
+            <div class="orderPayTime">
+                <span>{{oOrder.payTime}}</span>
+            </div>
+            <div class="orderLastModifiedTime">
+                <span>{{oOrder.lastModified}}</span>
+            </div>
+            <div class="orderMailAddress">
+                <span>{{oOrder.mailAddressString}}</span>
+            </div>
             <div class="download">
-                <span class="glyphicon glyphicon-download-alt"></span>
+                <span class="glyphicon glyphicon-download-alt" ng-click="downloadDesignFile(oOrder)">下载打印图像</span>
             </div>
             <div class="submit">
-                <span class="glyphicon glyphicon-floppy-disk">提交</span>
+                <button type="button" class="btn btn-primary glyphicon glyphicon-floppy-disk" 
+                ng-click="onUpdateOrderStatusClicked(oOrder)">提交</button>
             </div>
         </div>
     </div>

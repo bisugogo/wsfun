@@ -10,6 +10,7 @@
 var mongoose = require('mongoose');
 var fs = require('fs');
 var gm = require('gm');
+var ObjectId = mongoose.Types.ObjectId;
 var Gridfs = require('gridfs-stream');
 var cp = require('child_process');
 var path = require('path')
@@ -386,6 +387,42 @@ module.exports = function(app) {
 
 
     // };
+
+    downloadDesignFile = function(sFiled, res) {
+        var db = mongoose.connection.db;
+
+        // The native mongo driver which is used by mongoose
+        var mongoDriver = mongoose.mongo;
+        var gfs = new Gridfs(db, mongoDriver);
+
+        //var oFileId = new ObjectID(sFiled);
+
+        var readstream = gfs.createReadStream({
+            _id: sFiled
+        });
+
+        res.setHeader("content-type", "application/octet-stream");
+        res.setHeader("content-disposition", "attachment; filename=text.png");
+        //res.setHeader("content-encoding", "gzip");
+        readstream.pipe(res);
+
+        // var bufs = [];
+        // readstream.on('data', function(d){
+        //     bufs.push(d);
+        // });
+        // readstream.on('end', function(){
+        //     var buf = Buffer.concat(bufs);
+        //     res.send(buf);
+        // });
+
+        // res.on('data', function(data) {  
+        //         file.write(data);  
+        //     }).on('end', function() {  
+        //         file.end();  
+        //         console.log(file_name + ' downloaded to ' + DOWNLOAD_DIR);  
+        //     });  
+        // });
+    };
     
     getService = function(req, res) {
         var sAction = req.query.action;
@@ -398,6 +435,10 @@ module.exports = function(app) {
         } else if (sAction === 'getMyArtifactThumbnails') {
             LOG.logger.logFunc('getMyArtifactThumbnails');
             getMyArtifactThumbnails(req, res);
+        } else if (sAction === 'downloadDesignFile') {
+            LOG.logger.logFunc('downloadDesignFile');
+            var sFileId = req.query.designFileId;
+            downloadDesignFile(sFileId, res);
         }
     };
 

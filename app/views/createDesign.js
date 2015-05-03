@@ -116,6 +116,8 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
 
                     if (PreviousState.name === 'myDesigns.designDetail') {
                         //Come from design detail to make order
+                        $scope.updateDesignToolRow(false);
+
                         var oDesignInfo = UIData.getData('currentDesign');
                         oDesignInfo.sGender = oDesignInfo.gender;
                         oDesignInfo.bPublicDesign = oDesignInfo.access === 'public' ? true : false;
@@ -170,12 +172,26 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                         // };
                         // $scope.orderInfo.totalPay = $scope.constant.ORIGIN_PRICE * $scope.orderInfo.clothesQuanaity - 
                         //     iCouponValue;
+                        var bValid = $scope.validateAddressInfo();
+                        if (!bValid) {
+                            return;
+                        }
+
+                        //var sMailInfo = $scope.getMailInfoJsonStr();
+
                         var oUserInfo = UIData.getData('userInfo');
                         var oParam = {
                             action: 'createOrder',
                             data: {
                                 creatorId: oUserInfo.userId,
                                 designId: $scope.designInfo.designId,
+                                contact: $scope.orderInfo.sContact,
+                                contactMobile: $scope.orderInfo.sMobile,
+                                province: $scope.orderInfo.sProvince,
+                                city: $scope.orderInfo.sCity,
+                                district: $scope.orderInfo.sDistrict,
+                                postCode: $scope.orderInfo.sPostCode,
+                                detailAddress: $scope.orderInfo.sDetailAddress,
                                 maleInfo: {
                                     quantity: 0,
                                     clothesSize: $scope.orderInfo.clothesSize
@@ -326,6 +342,12 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 templateUrl: 'views/addressDetail.html',
                 controller: function($scope, $state, Design) {
                     //$scope.saveDetailtest = "this is test string in saveDetail.";
+                    $scope.onSaveAddressButtonClicked = function() {
+                        var bValid = $scope.validateAddressInfo();
+                        if (bValid) {
+                            $scope.onBackFromAddreeDetailClicked();
+                        }
+                    };
                 }
             }
         }
@@ -1003,7 +1025,133 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onBackFromAddreeDetailClicked = function() {
+            var bValid = $scope.validateAddressInfo();
+            if (bValid) {
+                $scope.getAddressInfoSummary();
+            }
             $state.go('createDesign.createDetail.orderDesign');
+        };
+
+        $scope.getAddressInfoSummary = function() {
+            var oOrderInfo = $scope.orderInfo;
+            if (!oOrderInfo) {
+                return '';
+            } else {
+                var sInfo = '';
+                sInfo += oOrderInfo.sContact;
+                sInfo += ' ';
+                sInfo += oOrderInfo.sMobile;
+                sInfo += ' ';
+                sInfo += oOrderInfo.sDetailAddress;
+
+                oOrderInfo.mailInfoSummary = sInfo.substr(0, 20);
+                oOrderInfo.mailInfoSummary += '...'
+                return oOrderInfo.mailInfoSummary;
+            }
+        };
+
+        $scope.validateAddressInfo = function() {
+            var oOrderInfo = $scope.orderInfo;
+            if (!oOrderInfo.sContact || oOrderInfo.sContact === '') {
+                $scope.aMessage.push({
+                    type: 'danger',
+                    content: '您还没有提供联系人姓名'
+                });
+                return false;
+            }
+            
+            if (!oOrderInfo.sMobile || oOrderInfo.sMobile === '') {
+                $scope.aMessage.push({
+                    type: 'danger',
+                    content: '您还没有提供联系人手机号码'
+                });
+                return false;
+            } else {
+                var oPhoneReg = /^1[3|4|5|8][0-9]\d{8,8}$/;
+                var bPhoneTest = oPhoneReg.test(oOrderInfo.sMobile);
+                if (!bPhoneTest) {
+                    $scope.aMessage.push({
+                        type: 'danger',
+                        content: '请输入正确的联系人手机号码'
+                    });
+                    return false;
+                }
+            }
+
+            if ((!oOrderInfo.sProvince || oOrderInfo.sProvince === '') && 
+                (!oOrderInfo.sCity || oOrderInfo.sCity === '')) {
+                $scope.aMessage.push({
+                    type: 'danger',
+                    content: '您还没有提供省、市位置'
+                });
+                return false;
+            };
+
+            if (!oOrderInfo.sProvince || oOrderInfo.sProvince === '') {
+                if ((oOrderInfo.sCity !== '北京市' && oOrderInfo.sCity !== '北京省' && oOrderInfo.sCity !== '北京') &&
+                    (oOrderInfo.sCity !== '天津市' && oOrderInfo.sCity !== '天津省' && oOrderInfo.sCity !== '天津') && 
+                    (oOrderInfo.sCity !== '上海市' && oOrderInfo.sCity !== '上海省' && oOrderInfo.sCity !== '上海') && 
+                    (oOrderInfo.sCity !== '重庆市' && oOrderInfo.sCity !== '重庆省' && oOrderInfo.sCity !== '重庆')) {
+                    $scope.aMessage.push({
+                        type: 'danger',
+                        content: '您还没有提供省、市位置'
+                    });
+                    return false;
+                } else {
+                    oOrderInfo.sProvince = oOrderInfo.sCity;
+                }
+            }
+
+            if (!oOrderInfo.sCity || oOrderInfo.sCity === '') {
+                if ((oOrderInfo.sProvince !== '北京市' && oOrderInfo.sProvince !== '北京省' && oOrderInfo.sProvince !== '北京') &&
+                    (oOrderInfo.sProvince !== '天津市' && oOrderInfo.sProvince !== '天津省' && oOrderInfo.sProvince !== '天津') && 
+                    (oOrderInfo.sProvince !== '上海市' && oOrderInfo.sProvince !== '上海省' && oOrderInfo.sProvince !== '上海') && 
+                    (oOrderInfo.sProvince !== '重庆市' && oOrderInfo.sProvince !== '重庆省' && oOrderInfo.sProvince !== '重庆')) {
+                    $scope.aMessage.push({
+                        type: 'danger',
+                        content: '您还没有提供省、市位置'
+                    });
+                    return false;
+                } else {
+                    oOrderInfo.sCity = oOrderInfo.sProvince;
+                }
+            }
+
+            if (!oOrderInfo.sDistrict || oOrderInfo.sDistrict === '') {
+                $scope.aMessage.push({
+                    type: 'danger',
+                    content: '您还没有输入区'
+                });
+                return false;
+            };
+            
+            if (!oOrderInfo.sDetailAddress || oOrderInfo.sDetailAddress === '') {
+                $scope.aMessage.push({
+                    type: 'danger',
+                    content: '您还没有具体邮寄地址'
+                });
+                return false;
+            };
+
+            return true;
+        };
+
+        $scope.getMailInfoJsonStr = function() {
+            var oOrderInfo = $scope.orderInfo;
+            if (!oOrderInfo) {
+                return '';
+            } else {
+                var oInfo = {};
+                oInfo.contact = oOrderInfo.sContact;
+                oInfo.mobile = oOrderInfo.sMobile;
+                oInfo.province = oOrderInfo.sProvince;
+                oInfo.city = oOrderInfo.sCity;
+                oInfo.district = oOrderInfo.sDistrict;
+                oInfo.postCode = oOrderInfo.sPostCode;
+                oInfo.detailAddress = oOrderInfo.sDetailAddress;
+                var sInfo = JSON.stringify(oInfo);
+                return sInfo;
+            }
         };
 }]);
 

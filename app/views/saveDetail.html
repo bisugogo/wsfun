@@ -4,15 +4,15 @@
     </div>
     <div class="designDescTitle" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <span class="designDescTitlePencil glyphicon glyphicon-pencil"></span>
-        <span>朕的批注</span>
+        <span>设计描述</span>
     </div>
     <div class="designDescInput" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <input type="text" class="form-control" ng-model="designInfo.sDescription">
     </div>
     <div class="designAccess" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <label class="checkbox">
-            恩准他人使用
             <input type="checkbox" ng-model="designInfo.bPublicDesign">
+            允许他人购买
         </label>
     </div>
     <div class="royalButtonWrapper goToOrderBtn" style="{{designInfo.bSaved === true ? '' : 'display:none;'}}">
@@ -20,7 +20,7 @@
             <span ng-click="onOrderBtnClicked()">下旨赶制</span>
         </div>
     </div>
-    <div class="royalButtonWrapper goToOrderBtn" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
+    <div class="royalButtonWrapper saveDesignBtn" style="{{designInfo.bSaved === true ? 'display:none;' : ''}}">
         <div class="btn btn-warning royalButton">
             <span ng-click="onSaveDesignBtnClicked()">保存设计</span>
         </div>

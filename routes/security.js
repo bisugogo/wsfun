@@ -438,6 +438,8 @@ module.exports = function(app) {
                 } else {
                     if (oOrder.status === '待付款') {
                         oOrder.status = '待发货';
+                        oOrder.lastModified = new Date();
+                        oOrder.payTime = new Date();
                         oOrder.save(function(err) {
                             if (err) {
                                 LOG.logger.logFunc('wechatPayConfirm', 'Update order status failed');

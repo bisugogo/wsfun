@@ -1,9 +1,9 @@
 <div class='orderDesignView'>
     <div ui-view="extraOrderInfo"></div>
     <div class="addressValueRow">
-        <div class="addressTitle">【寝殿】：</div>
-        <div class="addressValue">
-            <span>上海市黄浦区1001号</span>
+        <div class="addressTitle" ng-click="onEditAddressDetailClicked()">邮寄信息：</div>
+        <div class="addressValue" ng-click="onEditAddressDetailClicked()">
+            <span>{{orderInfo.mailInfoSummary}}</span>
         </div>
         <div class="editAddress">
             <span class="glyphicon glyphicon-triangle-bottom" ng-click="onEditAddressDetailClicked()"></span>

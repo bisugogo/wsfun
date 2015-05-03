@@ -20,11 +20,12 @@ designServices.factory('Design', ['$resource',
             DesignManager: $resource('tshirt', {}, {
                 query: {method:'GET', /*params: getPreparedGetParam(), */},
                 create: {method:'POST'},
+                update: {method: 'POST'},
                 delete: {method: 'POST'}
             }),
             
             FileManager: $resource('file', {}, {
-                query: {method:'GET'},
+                query: {method:'GET', /*headers: {'Accept-Encoding': 'gzip'}*/},
                 create: {method:'POST'}
             })
         };
