@@ -177,6 +177,17 @@ orderList.controller('OrderListCtrl', ['$scope', '$location', '$state', 'Design'
                     creatorId: oOrder.creatorId,
                     clothesGender: oOrder.designId.gender
                 };
+
+                var iMaleCount = parseInt(oOrder.maleQuantity);
+                var iFemaleCount = parseInt(oOrder.femaleQuantity);
+                if (iMaleCount > 0) {
+                    oOrderInfo.clothesSize = oOrder.maleSize;
+                    oOrderInfo.clothesQuanaity = oOrder.maleQuantity;
+                } else {
+                    oOrderInfo.clothesSize = oOrder.femaleSize;
+                    oOrderInfo.clothesQuanaity = oOrder.femaleQuantity;
+                }
+                
                 UIData.setData('orderInfo', oOrderInfo);
                 UIData.setData('designInfo', oOrder.designId);
                 $state.go('payWechatOrder', {showwxpaytitle : 1});
