@@ -36,6 +36,19 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                     oItem.sizeCount += oItem.femaleSize + '号 ';
                     oItem.sizeCount += iFemaleCount + '件';
                 }
+
+                var oCenterDom = $('.headerRow > div:first-child')[0];
+                if (oCenterDom) {
+                    var iWidth = oCenterDom.clientWidth;
+                    var iHeight = iWidth * 1021 / 642;
+                    var iLeft = iWidth * 0.21;
+                    var iTop = iHeight * 0.3;
+                    var iDesignImageWidth = iWidth * 0.6;
+
+                    oItem.previewImagePosition = "left:" + iLeft + "px;" + 
+                        "top:" + iTop + "px;" + 
+                        "width:" + iDesignImageWidth + "px;";
+                }
             };
         });
 

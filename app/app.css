@@ -457,8 +457,8 @@ body.weavesFunBody {
 .createDetailView .saveDetailView .saveDesignBtn,
 .createDetailView .saveDetailView .goToOrderBtn {
   margin-top: 10%;
-  margin-left: 36%;
-  margin-right: 36%;
+  margin-left: 42%;
+  margin-right: 42%;
   padding: 5px 5px;
   width: auto;
 }
@@ -917,8 +917,8 @@ body.weavesFunBody {
 }
 
 .orderDesignView .payOptionRow .royalButtonWrapper.payButton {
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 24%;
+  margin-right: 23%;
   width: auto;
   padding: 5px 5px 5px 5px;
 }
@@ -1050,7 +1050,7 @@ body.weavesFunBody {
 
 .royalButtonWrapper > .royalButton > span {
   color: rgb(215, 180, 104);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -1637,6 +1637,13 @@ body.weavesFunBody {
   font-size: 20px;
 }
 
+.payWechatFinalView .orderContent .orderInfoPreview .traceOrderTip {
+  position: absolute;
+  bottom: 80px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .activitiesView {
   position: fixed;
   top: 0px;
@@ -1688,6 +1695,10 @@ body.weavesFunBody {
   border-bottom: 1px solid black;
 }
 
+.managementView .orderContainer .headerRow > div:first-child {
+  width: 80px;
+}
+
 .managementView .orderContainer .headerRow > div {
   display: inline-block;
   width: 100px;
@@ -1701,9 +1712,12 @@ body.weavesFunBody {
   width: 200px;
 }
 
+.managementView .orderContainer .orderItem > div:first-child {
+  width: 80px;
+}
+
 .managementView .orderContainer .orderItem > div {
   display: inline-block;
-  height: 100px;
   width: 100px;
   vertical-align: bottom;
   border-right: 1px solid rgb(213, 213, 213);
@@ -1713,8 +1727,16 @@ body.weavesFunBody {
   width: 200px;
 }
 
-.managementView .orderContainer .orderItem .orderImageDiv img {
-  height: 100%;
+.managementView .orderContainer .orderItem .orderImageDiv .imageContainer {
+  position: relative;
+}
+
+.managementView .orderContainer .orderItem .orderImageDiv .bkImage {
+  width: 100%;
+}
+
+.managementView .orderContainer .orderItem .orderImageDiv .previewImage {
+  position: absolute;
 }
 
 .managementView .orderContainer .orderItem > div > span {

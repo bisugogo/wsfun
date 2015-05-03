@@ -40,7 +40,10 @@
         </div>
         <div ng-repeat="oOrder in aOrders" class="orderItem">
             <div class="orderImageDiv">
-                <img src="img/female_white.png">
+                <div class="imageContainer">
+                    <img src="img/female_white.png" class="bkImage">
+                    <img src="{{oOrder.designId.previewImage64}}" style="{{oOrder.previewImagePosition}}" class="previewImage">
+                </div>
             </div>
             <div class="orderCreator">
                 <span>{{oOrder.creatorId}}</span>
