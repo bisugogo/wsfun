@@ -22,7 +22,7 @@ var LOG = require('../util/wsLog');
 
 var FILE_CONSTANT = {
     SMALL_IMAGE_WIDTH: 50,
-    MID_IMAGE_WIDTH: 300,
+    MID_IMAGE_WIDTH: 250,
     LARGE_IMAGE_WIDTH: 400,
     FINAL_DESIGN_WIDTH: 1600,
     FINAL_DESIGN_HEIGHT: 2000
@@ -348,6 +348,12 @@ module.exports = function(app) {
                 } else {
 
                     console.log("design created");
+                    // var output = '';
+                    // for (property in oDesignJson) {
+                    //     output += property + ': ' + oDesignJson[property]+';\n';
+                    // }
+                    // //console.log(output);
+                    // LOG.logger.logFunc('saveDesign', output);
 
                     oDesignJson.designId = oDBRet._doc._id.toString();
                     return oRes.send({
