@@ -1,6 +1,23 @@
 <div class="managementView">
     <div class="toolRow">
-        
+        <div class="sortTypeDiv">
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                    {{sortTypeText}}<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="onSortTypeChange('all')">全部</a></li>
+                    <li><a ng-click="onSortTypeChange('paid')">已付款</a></li>
+                    <li><a ng-click="onSortTypeChange('shipped')">已发货</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="uploadArtifactDiv">
+            <div class="fileUploadBtn btn btn-warning royalButton">
+                <span>上传公共素材</span>
+                <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles" class="uploadInput"></input>
+            </div>
+        </div>
     </div>
     <div class="orderContainer">
         <div class="headerRow">
@@ -21,6 +38,9 @@
             </div>
             <div>
                 <span>订单信息</span>
+            </div>
+            <div>
+                <span>订单金额</span>
             </div>
             <div>
                 <span>设计描述</span>
@@ -56,8 +76,7 @@
             </div>
             <div class="orderStatus">
                 <span>{{oOrder.status}}</span>
-                <div class="btn-group" dropdown is-open="status.isopen" 
-                style="{{oOrder.status === '待付款' ? 'display:none;' : ''}}">
+                <div class="btn-group" dropdown style="{{oOrder.status === '待付款' ? 'display:none;' : ''}}">
                     <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
                         {{oOrder.targetStatus ? oOrder.targetStatus : '更改'}}<span class="caret"></span>
                     </button>
@@ -69,6 +88,9 @@
             </div>
             <div class="orderSizeCount">
                 <span>{{oOrder.sizeCount}}</span>
+            </div>
+            <div class="orderTotalPrice">
+                <span>{{oOrder.totalPrice}}</span>
             </div>
             <div class="orderDesc">
                 <span>{{oOrder.designId.desc}}</span>
@@ -93,5 +115,8 @@
                 ng-click="onUpdateOrderStatusClicked(oOrder)">提交</button>
             </div>
         </div>
+    </div>
+    <div class="alerts">
+        <alert ng-repeat="oMsg in aMessage" type="{{oMsg.type}}" close="closeAlert($index)">{{oMsg.content}}</alert>
     </div>
 </div>

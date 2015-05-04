@@ -11,6 +11,10 @@ var ArtifactSchema = new Schema({
     type: String,
     default: ''
   },
+  access: {
+    type: String,
+    default: 'public'
+  },
   fileId: {
     type: String,
     require: true

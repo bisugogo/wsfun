@@ -66,9 +66,12 @@ module.exports = function(app) {
          * %s',res.statusCode,err.message); return res.send({ error: 'Server error' }); } });
          */
 
-        return Design.find({
+        var oQuery = Design.find({
             creatorId: sUserId
-        }).populate('creatorId').exec(function(err, aDesign) {
+        });
+        oQuery.sort({'modified': -1});
+        oQuery.populate('creatorId');
+        oQuery.exec(function(err, aDesign) {
             if (!err) {
                 return res.send({
                     status : 'OK',
@@ -86,9 +89,12 @@ module.exports = function(app) {
 
     getDesigns = function(req, res) {
         LOG.logger.logFunc('getDesigns');
-        return Design.find({
+        var oQuery = Design.find({
             access: 'public'
-        }).populate('creatorId').exec(function(err, aDesign) {
+        });
+        oQuery.sort({'modified': -1});
+        oQuery.populate('creatorId');
+        oQuery.exec(function(err, aDesign) {
             if (!err) {
                 return res.send({
                     status : 'OK',
@@ -356,19 +362,20 @@ module.exports = function(app) {
                     // LOG.logger.logFunc('saveDesign', output);
 
                     oDesignJson.designId = oDBRet._doc._id.toString();
-                    var base64ChunkSize = 100000;
-                    if (oDBRet.previewImage64.length > base64ChunkSize) {
-                        oDesignJson.previewImage64Array = [];
-                        var batchCount = Math.floor(oDBRet.previewImage64.length / base64ChunkSize);
-                        for (var i = 0; i < batchCount; i++) {
-                            var iStart = i * base64ChunkSize;
-                            oDesignJson.previewImage64Array.push(oDBRet.previewImage64.substr(iStart, iStart + base64ChunkSize));
-                        }
-                        if (oDBRet.previewImage64.length % base64ChunkSize > 0) {
-                            oDesignJson.previewImage64Array.push(oDBRet.previewImage64.substr(batchCount * base64ChunkSize, oDBRet.previewImage64.length));
-                        }
-                        delete oDesignJson.previewImage64;
-                    }
+                    // var base64ChunkSize = 100000;
+                    // if (oDBRet.previewImage64.length > base64ChunkSize) {
+                    //     oDesignJson.previewImage64Array = [];
+                    //     var batchCount = Math.floor(oDBRet.previewImage64.length / base64ChunkSize);
+                    //     for (var i = 0; i < batchCount; i++) {
+                    //         var iStart = i * base64ChunkSize;
+                    //         oDesignJson.previewImage64Array.push(oDBRet.previewImage64.substr(iStart, iStart + base64ChunkSize));
+                    //     }
+                    //     if (oDBRet.previewImage64.length % base64ChunkSize > 0) {
+                    //         oDesignJson.previewImage64Array.push(oDBRet.previewImage64.substr(batchCount * base64ChunkSize, oDBRet.previewImage64.length));
+                    //     }
+                    //     delete oDesignJson.previewImage64;
+                    // }
+                    delete oDesignJson.previewImage64;
                     return oRes.send({
                         status : 'OK',
                         data : oDesignJson
@@ -621,7 +628,7 @@ module.exports = function(app) {
         var oQuery = Order.find({
             creatorId: sUserId
         });
-
+        oQuery.sort({'lastModified': -1});
         oQuery.populate('designId');
 
         oQuery.exec(function(err, aOrder) {

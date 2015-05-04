@@ -516,18 +516,20 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             };
             $scope.showBusy();
             Design.DesignManager.create(oParam, function(oDesign) {
-                $scope.hideBusy();
-
-                //GO TO SAVE PAGE
-                // $scope.updateDesignToolRow('saveDetailView');
-                // $state.go('createDesign.createDetail.saveDetail');
-                $scope.designInfo.bSaved = true;
-                $scope.designInfo.designId = oDesign.data.designId;
-                if (oDesign.data.previewImage64Array && oDesign.data.previewImage64Array.length > 1) {
-                    $scope.designInfo.previewImage64 = oDesign.data.previewImage64Array.join('');
-                } else {
-                    $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
+                if (oDesign.status === 'OK') {
+                    $scope.hideBusy();
+                    $scope.designInfo.bSaved = true;
+                    $scope.designInfo.designId = oDesign.data.designId;
                 }
+
+                // $scope.hideBusy();
+                // $scope.designInfo.bSaved = true;
+                // $scope.designInfo.designId = oDesign.data.designId;
+                // if (oDesign.data.previewImage64Array && oDesign.data.previewImage64Array.length > 1) {
+                //     $scope.designInfo.previewImage64 = oDesign.data.previewImage64Array.join('');
+                // } else {
+                //     $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
+                // }
             });
         };
 

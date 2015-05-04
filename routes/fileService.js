@@ -117,9 +117,16 @@ module.exports = function(app) {
 
         var oMetadata = JSON.parse(oGFSFile.metadata.data);
         var oCreatorObjectId = oMetadata.creatorId;
+        var sFileName = oMetadata.fileName;
+        var sAccess = 'private';
+        if (oMetadata.access && oMetadata.access === 'public') {
+            sAccess = 'public';
+        }
         var oNewArti = new Artifact({
             fileId: oGFSFile._id.toString(),
+            fileName: sFileName,
             creatorId: oCreatorObjectId,
+            access: sAccess,
             smallImage64: 'data:image/png;base64,' + sSmallBase64,
             midImage64: 'data:image/png;base64,' + sMidBase64,
             largeImage64: 'data:image/png;base64,' + sLargeBase64,
@@ -132,6 +139,7 @@ module.exports = function(app) {
                 LOG.logger.logFunc('saveArtifact', 'save new arti successful!');
 
                 res.send({
+                    status: 'OK',
                     data: {
                         fileId: oGFSFile._id.toString(),
                         midImage64: 'data:image/png;base64,' + sMidBase64,

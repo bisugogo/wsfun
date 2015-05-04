@@ -6,13 +6,20 @@ oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, 
 
 }]);
 
-oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state', 'Design', 
-    function($scope, $stateParams, $state, Design) {
+oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state', '$modal', '$upload', 'Design', 
+    function($scope, $stateParams, $state, $modal, $upload, Design) {
+        $scope.sortTypeText = '已付款';
+        $scope.aMessage = [];
+
         var oParam = {
             action: 'getOrders',
-            type: 'all'
+            type: 'paid'
         }
         Design.DesignManager.query(oParam, function(oData) {
+            $scope.handleOrderListCallback(oData);
+        });
+
+        $scope.handleOrderListCallback = function(oData) {
             $scope.aOrders = oData.data;
             for (var i = 0; i < $scope.aOrders.length; i++) {
                 var oItem = $scope.aOrders[i];
@@ -50,7 +57,7 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                         "width:" + iDesignImageWidth + "px;";
                 }
             };
-        });
+        };
 
         $scope.downloadDesignFile = function(oOrder) {
             var sDesignFileId = oOrder.designId.designFileId;
@@ -101,6 +108,105 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                     }
                 });
             }
+        };
+
+        $scope.onSortTypeChange = function(sSortType) {
+            var oParam = {
+                action: 'getOrders',
+                type: 'all'
+            }
+            if (sSortType === 'all') {
+                oParam.type = 'all';
+                $scope.sortTypeText = '全部';
+            } else if (sSortType === 'paid') {
+                oParam.type = 'paid';
+                $scope.sortTypeText = '已付款';
+            } else if (sSortType === 'shipped') {
+                oParam.type = 'shipped';
+                $scope.sortTypeText = '已发货';
+            } else {
+                oParam.type = 'all';
+                $scope.sortTypeText = '全部';
+            }
+
+            Design.DesignManager.query(oParam, function(oData) {
+                $scope.handleOrderListCallback(oData);
+            });
+        };
+
+        $scope.fileSelected = function(aFile) {
+            if (aFile && aFile.length > 0) {
+                $scope.open();
+
+                for (var i = 0; i < aFile.length; i++) {
+                    var file = aFile[i];
+                    var sFileName = file.name;
+                    $upload.upload({
+                        method: 'POST',
+                        url: 'uploadFile',
+                        file: file,
+                        data : {
+                            'action': 'uploadFile',
+                            'fileName': sFileName,
+                            'access': 'public'
+                        }
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        $scope.uploadDialogData.uploadProgress = progressPercentage;
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (oData, status, headers, config) {
+                        //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                        
+
+                        $scope.uploadDialogData.cancel($scope.modalInstance);//Close upload progress dialog
+                        $scope.uploadDialogData = null;
+
+                        if (oData.status === 'OK') {
+                            $scope.aMessage.push({
+                                type: 'danger',
+                                content: '公共素材上传成功！'
+                            });
+                        }
+                    });
+                }
+            }
+        };
+
+        $scope.open = function () {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'views/uploadDialog.html',
+                controller: function($scope) {
+                    $scope.uploadProgress = 0;
+                    $scope.$parent.uploadDialogData = $scope;
+
+                    $scope.cancel = function (oInstance) {
+                        if (oInstance) {
+                            oInstance.dismiss('cancel');
+                        } else {
+                            $scope.modalInstance.dismiss('cancel');
+                        }
+                    };
+                },
+                size: 'lg',
+                scope: $scope
+                // resolve: {
+                //     items: function () {
+                //         return $scope.items;
+                //     }
+                // }
+            });
+            $scope.modalInstance = modalInstance;
+
+            // modalInstance.result.then(function (selectedItem) {
+            // $scope.selected = selectedItem;
+            // }, function () {
+            // $log.info('Modal dismissed at: ' + new Date());
+            // });
+        };
+
+        $scope.closeAlert = function(index) {
+            $scope.aMessage.splice(index, 1);
         };
     }
 

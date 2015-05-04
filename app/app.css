@@ -208,7 +208,8 @@ body.weavesFunBody {
   
 }
 
-.createDetailView .alerts {
+.createDetailView .alerts,
+.managementView .alerts {
   position: absolute;
   width: 100%;
   bottom: 40px;
@@ -1675,6 +1676,28 @@ body.weavesFunBody {
   width: 100%;
 }
 
+.managementView .toolRow .sortTypeDiv,
+.managementView .toolRow .uploadArtifactDiv {
+  display: inline-block;
+}
+
+.managementView .toolRow .fileUploadBtn {
+  position: relative;
+}
+
+.managementView .toolRow .fileUploadBtn .uploadInput {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .managementView span {
   color: black;
 }
@@ -1684,6 +1707,7 @@ body.weavesFunBody {
   height: -webkit-calc(100% - 35px);
   height: -moz-calc(100% - 35px);
   height: -o-calc(100% - 35px);
+  overflow: auto;
 }
 
 .managementView .orderContainer .headerRow {
@@ -1721,9 +1745,10 @@ body.weavesFunBody {
   width: 100px;
   vertical-align: bottom;
   border-right: 1px solid rgb(213, 213, 213);
+  text-align: center;
 }
 
-.managementView .orderContainer .orderItem > div:nth-child(11) {
+.managementView .orderContainer .orderItem > div:nth-child(12) {
   width: 200px;
 }
 
