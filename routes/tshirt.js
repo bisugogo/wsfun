@@ -356,6 +356,19 @@ module.exports = function(app) {
                     // LOG.logger.logFunc('saveDesign', output);
 
                     oDesignJson.designId = oDBRet._doc._id.toString();
+                    var base64ChunkSize = 100000;
+                    if (oDBRet.previewImage64.length > base64ChunkSize) {
+                        oDesignJson.previewImage64Array = [];
+                        var batchCount = Math.floor(oDBRet.previewImage64.length / base64ChunkSize);
+                        for (var i = 0; i < batchCount; i++) {
+                            var iStart = i * base64ChunkSize;
+                            oDesignJson.previewImage64Array.push(oDBRet.previewImage64.substr(iStart, iStart + base64ChunkSize));
+                        }
+                        if (oDBRet.previewImage64.length % base64ChunkSize > 0) {
+                            oDesignJson.previewImage64Array.push(oDBRet.previewImage64.substr(batchCount * base64ChunkSize, oDBRet.previewImage64.length));
+                        }
+                        delete oDesignJson.previewImage64;
+                    }
                     return oRes.send({
                         status : 'OK',
                         data : oDesignJson

@@ -523,7 +523,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 // $state.go('createDesign.createDetail.saveDetail');
                 $scope.designInfo.bSaved = true;
                 $scope.designInfo.designId = oDesign.data.designId;
-                $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
+                if (oDesign.data.previewImage64Array && oDesign.data.previewImage64Array.length > 1) {
+                    $scope.designInfo.previewImage64 = oDesign.data.previewImage64Array.join('');
+                } else {
+                    $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
+                }
             });
         };
 
