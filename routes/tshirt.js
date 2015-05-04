@@ -375,7 +375,8 @@ module.exports = function(app) {
                     //     }
                     //     delete oDesignJson.previewImage64;
                     // }
-                    delete oDesignJson.previewImage64;
+
+                    //delete oDesignJson.previewImage64;
                     return oRes.send({
                         status : 'OK',
                         data : oDesignJson

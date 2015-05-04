@@ -520,12 +520,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     $scope.hideBusy();
                     $scope.designInfo.bSaved = true;
                     $scope.designInfo.designId = oDesign.data.designId;
+                    $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
                 } else {
-                    var output = '';
-                    for (property in oDesign) {
-                        output += property + ': ' + oDesign[property]+';\n';
-                    }
-                    alert(output);
+                    // var output = '';
+                    // for (property in oDesign) {
+                    //     output += property + ': ' + oDesign[property]+';\n';
+                    // }
+                    // alert(output);
                 }
 
                 // $scope.hideBusy();
