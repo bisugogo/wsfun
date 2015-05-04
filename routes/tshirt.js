@@ -144,6 +144,60 @@ module.exports = function(app) {
         });
     };
 
+    guessDesignCreated = function(oData, res) {
+        var sCreatorId = oData.creatorId;
+        var sDesc = oData.desc;
+        var sColor = oData.color;
+        var sAccess = oData.access;
+        var sGender = oData.gender;
+        var iRequestSentTime = oData.requestSentTime;
+
+        var oQuery = Design.find({
+            creatorId: sCreatorId,
+            desc: sDesc,
+            color: sColor,
+            access: sAccess,
+            gender: sGender
+        });
+        oQuery.sort({'modified': -1});
+        oQuery.exec(function(err, oDBRet) {
+            if (err) {
+                LOG.logger.logFunc('guessDesignCreated', err.message);
+                res.send({
+                    error: 'guessDesignCreated ' + err.message
+                });
+            } else {
+                if (!oDBRet) {
+                    res.send({
+                        status: 'OK',
+                        data: 'NOT_FOUND'
+                    });
+                } else {
+                    var oGuessItem = null;
+                    if (oDBRet.length && oDBRet.length > 1) {
+                        oGuessItem = oDBRet[0];
+                    } else {
+                        
+                    }
+                    var oCreateTime = oGuessItem.modified;
+                    var iDelta = oCreateTime.getTime() - iRequestSentTime;
+                    LOG.logger.logFunc('guessDesignCreated', 'delta time: ' + iDelta);
+                    if (iDelta < 25*1000) {
+                        res.send({
+                            status: 'OK',
+                            data: oGuessItem
+                        });
+                    } else {
+                        res.send({
+                            status: 'OK',
+                            data: 'NOT_FOUND'
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     /**
      * Creates a new tshirt from the data request
      * 
@@ -1037,6 +1091,8 @@ module.exports = function(app) {
                 createCouponSource(req.body.data, res);
             } else if (sAction === 'updateOrderStatus') {
                 updateOrderStatus(req.body.data, res);
+            } else if (sAction === 'guessDesignCreated') {
+                guessDesignCreated(req.body.data, res);
             }
         } else {
             console.log("design post service, action: empty.");

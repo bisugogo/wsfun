@@ -1,0 +1,38 @@
+<div class="row personalGalleryRow publicGalleryRow">
+    <div class="col-xs-12">
+        <div class="uploadedImageArea">
+            <div class="titleDiv">
+                <span class="titleSpan">精选设计</span>
+            </div>
+            <div class="myArtifactsCarouselDiv" ng-if="aPublicArtifact.length > 0">
+                <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide"  
+                rn-carousel-index="aPublicArtifactCarouselIndex">
+                    <li ng-repeat="oImageGroup in aPublicArtifact">
+                        <div class="myArtifactsGroupTop">
+                            <img src="{{oImageGroup[0].largeImage64}}" style="margin:auto;" 
+                            ng-click="onArtifactSelected(oImageGroup[0])">
+                            <img src="{{oImageGroup[1].largeImage64}}" style="margin:auto;" 
+                            ng-click="onArtifactSelected(oImageGroup[1])">
+                        </div>
+                        <div class="myArtifactsGroupBottom">
+                            <img src="{{oImageGroup[2].largeImage64}}" style="margin:auto;" 
+                            ng-click="onArtifactSelected(oImageGroup[2])">
+                            <img src="{{oImageGroup[3].largeImage64}}" style="margin:auto;" 
+                            ng-click="onArtifactSelected(oImageGroup[3])">
+                        </div>
+                        <div class="myArtifactsGroupBottom">
+                            <img src="{{oImageGroup[4].largeImage64}}" style="margin:auto;" 
+                            ng-click="onArtifactSelected(oImageGroup[4])">
+                            <img src="{{oImageGroup[5].largeImage64}}" style="margin:auto;" 
+                            ng-click="onArtifactSelected(oImageGroup[5])">
+                        </div>
+                        <!--img src="{{oImage.largeImage64}}" style="margin:auto;" 
+                        ng-click="onArtifactSelected(oImage)"-->
+                    </li>
+                </ul>
+                <div rn-carousel-indicators ng-if="aPublicArtifact.length > 1" slides="aPublicArtifact" 
+                rn-carousel-index="aPublicArtifactCarouselIndex" class="carouselIndicator"></div>
+            </div>
+        </div>
+    </div>
+</div>

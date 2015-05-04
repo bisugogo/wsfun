@@ -164,7 +164,7 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                         if (oData.status === 'OK') {
                             $scope.aMessage.push({
                                 type: 'danger',
-                                content: '公共素材上传成功！'
+                                content: '公共素材 ' + sFileName + ' 上传成功！'
                             });
                         }
                     });

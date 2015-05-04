@@ -234,6 +234,25 @@ module.exports = function(app) {
         });
     };
 
+    getPublicArtifactThumbnails = function(req, res) {
+        var db = mongoose.connection.db;
+        var oQuery = Artifact.find({'access': 'public'});
+        oQuery.select('_id fileId midImage64 largeImage64');
+        oQuery.exec(function (err, aArtifact) {
+            if (err) {
+                res.send({error: err.message});
+            } else {
+                var oRet = {
+                    data: []
+                }
+                if(!!aArtifact && aArtifact.length > 0) {
+                    oRet.data = aArtifact;
+                }
+                res.send(oRet);
+            }
+        });
+    };
+
     createCustomDesign = function(req, res) {
         var oData = req.body.data;
 
@@ -443,6 +462,9 @@ module.exports = function(app) {
         } else if (sAction === 'getMyArtifactThumbnails') {
             LOG.logger.logFunc('getMyArtifactThumbnails');
             getMyArtifactThumbnails(req, res);
+        } else if (sAction === 'getPublicArtifactThumbnails') {
+            LOG.logger.logFunc('getPublicArtifactThumbnails');
+            getPublicArtifactThumbnails(req, res);
         } else if (sAction === 'downloadDesignFile') {
             LOG.logger.logFunc('downloadDesignFile');
             var sFileId = req.query.designFileId;

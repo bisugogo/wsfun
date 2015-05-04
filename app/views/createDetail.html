@@ -7,6 +7,7 @@
         </div>
 
         <div ui-view="personalGallery"></div>
+        <div ui-view="publicGallery"></div>
         <div ui-view="saveDetail"></div>
         <div ui-view="orderDesign"></div>
         <div ui-view="orderMore"></div>
@@ -65,7 +66,7 @@
                 <span class="icon-undo" ng-click="onCreateDesignBackClicked()"></span>
             </div>
             <div class="highlightButton">
-                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star" ng-click="onOpenPublicGallery()"></span>
             </div>
             <div class="cameraButton">
                 <span class="glyphicon glyphicon-camera" ng-click="onOpenMyGallery()"></span>

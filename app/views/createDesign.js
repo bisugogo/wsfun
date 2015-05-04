@@ -40,6 +40,11 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                         $scope.getMyArtifactThumbnails();
                         $state.go('createDesign.createDetail.myGallery');
                     };
+
+                    $scope.onOpenPublicGallery = function() {
+                        $scope.getPublicArtifactThumbnails();
+                        $state.go('createDesign.createDetail.publicGallery');
+                    };
                 }
             }
         }
@@ -71,7 +76,18 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 }
             }
         }
-    }).state('createDesign.createDetail.saveDetail', {
+    })
+    .state('createDesign.createDetail.publicGallery', {
+        views: {
+            'publicGallery': {
+                templateUrl: 'views/publicGallery.html',
+                controller: function($scope, $state, Design) {
+                    var i = 0;
+                }
+            }
+        }
+    })
+    .state('createDesign.createDetail.saveDetail', {
         url: '/saveDetail',
         // templateUrl: 'views/createDetail.html',
         // controller: 'CreateDetailCtrl'
@@ -518,6 +534,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             Design.DesignManager.create(oParam, function(oDesign) {
                 if (oDesign.status === 'OK') {
                     $scope.hideBusy();
+                    clearTimeout($scope.lastCreateDesignTimer);
                     $scope.designInfo.bSaved = true;
                     $scope.designInfo.designId = oDesign.data.designId;
                     $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
@@ -538,7 +555,37 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 //     $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
                 // }
             });
+            
+            $scope.lastCreateDesignTime = new Date().getTime();
+            $scope.lastCreateDesignTimer = setTimeout(function() {
+                $scope.saftyCheckOfBusy(oNewDesign);
+            }, 20000);
         };
+
+        $scope.saftyCheckOfBusy = function(oTargetDesign) {
+            if ($scope.busyViewStyle === "") {
+                oTargetDesign.requestSentTime = $scope.lastCreateDesignTime;
+                var oParam = {
+                    action: 'guessDesignCreated',
+                    data: oTargetDesign
+                };
+                Design.DesignManager.update(oParam, function(oData) {
+                    if (oData.error) {
+                        $scope.hideBusy();
+                        $scope.designInfo.bSaved = false;
+                        $scope.aMessage.push({
+                            type: 'danger',
+                            content: oData.error
+                        });
+                    } else {
+                        $scope.hideBusy();
+                        $scope.designInfo.bSaved = true;
+                        $scope.designInfo.designId = oData.data.designId;
+                        $scope.designInfo.previewImage64 = oData.data.previewImage64;
+                    }
+                });
+            }
+        }
 
         $scope.closeAlert = function(index) {
             $scope.aMessage.splice(index, 1);
@@ -721,6 +768,17 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             });
         };
 
+        $scope.getPublicArtifactThumbnails = function() {
+            var oParam = {
+                action: 'getPublicArtifactThumbnails'
+            };
+            var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
+                //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+                $scope.aPublicArtifact = $scope.groupArtifactThumbnails(oContent.data, 6);
+                $scope.aPublicArtifactCarouselIndex = 0;
+            });
+        };
+
         $scope.groupArtifactThumbnails = function(aThumbnail, iGroupSize) {
             var oRet = [];
             var iSize = 4;
@@ -732,10 +790,13 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
                 for (var i = 0; i < iCount - 1; i++) {
                     var oGroup = [];
-                    oGroup.push(aThumbnail[i*iSize]);
-                    oGroup.push(aThumbnail[i*iSize + 1]);
-                    oGroup.push(aThumbnail[i*iSize + 2]);
-                    oGroup.push(aThumbnail[i*iSize + 3]);
+                    for (var j = 0; j < iSize; j++) {
+                        oGroup.push(aThumbnail[i*iSize + j]);
+                    }
+                    // oGroup.push(aThumbnail[i*iSize]);
+                    // oGroup.push(aThumbnail[i*iSize + 1]);
+                    // oGroup.push(aThumbnail[i*iSize + 2]);
+                    // oGroup.push(aThumbnail[i*iSize + 3]);
 
                     oRet.push(oGroup);
                 }

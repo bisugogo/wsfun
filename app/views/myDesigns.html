@@ -36,6 +36,7 @@
                 </div>
                 <div class="centerContent">
                     <ul rn-carousel class="image myDesignListCarousel" rn-carousel-transition="fadeAndSlide">
+                        <span class="noDesignFound" style="{{aMyDesigns.length < 1 ? '' : 'display:none;'}}">竟然目前还没有设计，不如我来设计吧</span>
                         <li ng-repeat="oDesign in aMyDesigns">
                             <div class="designItem" ng-click="onDesignItemClicked(oDesign)">
                                 <img src="{{oDesign.bkImg}}" class="designBackgroundImg">
