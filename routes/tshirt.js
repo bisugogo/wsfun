@@ -1012,6 +1012,11 @@ module.exports = function(app) {
             getOrderById(sOrderId, res);
         } else if (sAction === 'getOrders') {
             getOrders(req, res);
+        } else {
+            console.log("design get service, action: empty.");
+            res.send({
+                error: 'NOT supported get action.'
+            })
         }
     };
 
@@ -1032,8 +1037,13 @@ module.exports = function(app) {
             } else if (sAction === 'updateOrderStatus') {
                 updateOrderStatus(req.body.data, res);
             }
+        } else {
+            console.log("design post service, action: empty.");
+            res.send({
+                error: 'NOT supported post action.'
+            })
         }
-        console.log("design post service, action: empty.");
+        
     };
 
     //Link routes and actions
