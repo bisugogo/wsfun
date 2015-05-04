@@ -238,7 +238,7 @@ module.exports = function(app) {
             });
 
             readstream.on('error', function(err) {
-                console.log(err);
+                console.log('readstream error while creating design: ' + err);
             });
 
             var sPath = 'img/' + oData.requestedTime + '/' + sFileId + '.jpg';
