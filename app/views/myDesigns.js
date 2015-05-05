@@ -124,7 +124,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                         var iWidth = oCenterDom.clientWidth;
                                         var iHeight = iWidth * 1021 / 642;
                                         var iLeft = iWidth * 0.21;
-                                        var iTop = iHeight * 0.3;
+                                        var iTop = iHeight * 0.22;
                                         var iDesignImageWidth = iWidth * 0.6;
 
                                         oDesign.positionInfoStyleValue = "left:" + iLeft + "px;" + 
@@ -354,7 +354,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                 var iWidth = oCenterDom.clientWidth;
                 var iHeight = iWidth * 1021 / 642;
                 var iLeft = iWidth * 0.21;
-                var iTop = iHeight * 0.3;
+                var iTop = iHeight * 0.22;
                 var iDesignImageWidth = iWidth * 0.6;
 
                 $scope.positionInfoStyleValue = "left:" + iLeft + "px;" + 

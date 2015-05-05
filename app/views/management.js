@@ -49,7 +49,7 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                     var iWidth = oCenterDom.clientWidth;
                     var iHeight = iWidth * 1021 / 642;
                     var iLeft = iWidth * 0.21;
-                    var iTop = iHeight * 0.3;
+                    var iTop = iHeight * 0.22;
                     var iDesignImageWidth = iWidth * 0.6;
 
                     oItem.previewImagePosition = "left:" + iLeft + "px;" + 

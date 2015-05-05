@@ -80,7 +80,7 @@ body.weavesFunBody {
 }
 
 .busyView > div:first-child > span {
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   color: rgb(215, 180, 104);
 }
@@ -88,6 +88,7 @@ body.weavesFunBody {
 .busyView > img {
   width: 40%;
   position: relative;
+  top: -60px;
   animation: busyCloud 8s;
   animation-timing-function: linear;
   animation-delay: 1s;
@@ -420,10 +421,16 @@ body.weavesFunBody {
   margin-top: 10%;
 }
 
-.createDetailView .saveDetailView .saveSuccessTitle > span {
+.createDetailView .saveDetailView .saveSuccessTitle span {
   font-size: 25px;
   font-weight: bold;
   color: white;
+}
+
+.createDetailView .saveDetailView .saveSuccessTitle .titleLine1,
+.createDetailView .saveDetailView .saveSuccessTitle .titleLine2 {
+  width: 100%;
+  text-align: center;
 }
 
 .createDetailView .saveDetailView .designDescTitle {
@@ -466,6 +473,8 @@ body.weavesFunBody {
   margin-right: 42%;
   padding: 5px 5px;
   width: auto;
+  position: absolute;
+  bottom: 20px;
 }
 
 .createDetailView .saveDetailView .saveDesignBtn .royalButton {
@@ -650,7 +659,7 @@ body.weavesFunBody {
   font-size: 20px;
   padding: 6px;
   color: rgb(207, 176, 96);
-  border: 2px solid;
+  border: 1px solid;
 }
 
 .orderDesignView .defaultOrderQuantityRow {

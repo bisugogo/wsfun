@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot?ip94m6');
-	src:url('../fonts/icomoon.eot?#iefixip94m6') format('embedded-opentype'),
-		url('../fonts/icomoon.woff?ip94m6') format('woff'),
-		url('../fonts/icomoon.ttf?ip94m6') format('truetype'),
-		url('../fonts/icomoon.svg?ip94m6#icomoon') format('svg');
+	src:url('../fonts/icomoon.eot?-xav3mp');
+	src:url('../fonts/icomoon.eot?#iefix-xav3mp') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?-xav3mp') format('woff'),
+		url('../fonts/icomoon.ttf?-xav3mp') format('truetype'),
+		url('../fonts/icomoon.svg?-xav3mp#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,236 +23,253 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ideas:before {
+.icon-te:before {
 	content: "\e600";
 }
 
-.icon-ideas2 .path1:before {
+.icon-tjin:before {
 	content: "\e601";
-	color: rgba(0, 0, 0, 0.5);
-}
-.icon-ideas2 .path2:before {
-	content: "\e602";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
-.icon-camera:before {
+.icon-tsuo:before {
+	content: "\e602";
+}
+
+.icon-txu:before {
 	content: "\e603";
 }
 
-.icon-camera2 .path1:before {
+.icon-tZUI:before {
 	content: "\e604";
-	color: rgba(0, 0, 0, 0.5);
-}
-.icon-camera2 .path2:before {
-	content: "\e605";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
-.icon-text:before {
+.icon-tbu:before {
+	content: "\e605";
+}
+
+.icon-tji:before {
 	content: "\e606";
 }
 
-.icon-text2 .path1:before {
+.icon-tzheng:before {
 	content: "\e607";
-	color: rgba(0, 0, 0, 0.5);
-}
-.icon-text2 .path2:before {
-	content: "\e608";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
-.icon-code:before {
+.icon-ideas:before {
+	content: "\e608";
+}
+
+.icon-ideas2:before {
 	content: "\e609";
 }
 
-.icon-code2 .path1:before {
+.icon-camera:before {
 	content: "\e60a";
-	color: rgba(0, 0, 0, 0.5);
-}
-.icon-code2 .path2:before {
-	content: "\e60b";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
-.icon-checkbox:before {
+.icon-camera2:before {
+	content: "\e60b";
+}
+
+.icon-text:before {
 	content: "\e60c";
 }
 
-.icon-changecolor .path1:before {
+.icon-text2:before {
 	content: "\e60d";
-	color: rgb(35, 31, 32);
 }
-.icon-changecolor .path2:before {
+
+.icon-code:before {
 	content: "\e60e";
-	margin-left: -1em;
-	color: rgb(35, 31, 32);
 }
-.icon-changecolor .path3:before {
+
+.icon-unfollow:before {
 	content: "\e60f";
+}
+
+.icon-follow:before {
+	content: "\e610";
+}
+
+.icon-changecolor:before {
+	content: "\e611";
+	color: rgb(35, 31, 32);
+}
+.icon-changecolor:before {
+	content: "\e612";
 	margin-left: -1em;
 	color: rgb(35, 31, 32);
 }
-.icon-changecolor .path4:before {
-	content: "\e610";
+.icon-changecolor:before {
+	content: "\e613";
 	margin-left: -1em;
 	color: rgb(255, 255, 255);
 }
-.icon-changecolor .path5:before {
-	content: "\e611";
+.icon-changecolor:before {
+	content: "\e614";
 	margin-left: -1em;
 	color: rgb(35, 31, 32);
 }
 
-.icon-t-shirt2:before {
-	content: "\e612";
-}
-
-.icon-add:before {
-	content: "\e613";
-}
-
-.icon-delete:before {
-	content: "\e614";
-}
-
-.icon-edit .path1:before {
+.icon-buy:before {
 	content: "\e615";
-	color: rgba(0, 0, 0, 0.5);
+	color: rgb(35, 31, 32);
 }
-.icon-edit .path2:before {
+.icon-buy:before {
 	content: "\e616";
 	margin-left: -1em;
 	color: rgb(255, 255, 255);
 }
 
-.icon-cancel .path1:before {
+.icon-like:before {
 	content: "\e617";
-	color: rgba(0, 0, 0, 0.5);
-}
-.icon-cancel .path2:before {
-	content: "\e618";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
-.icon-edit2:before {
+.icon-add:before {
+	content: "\e618";
+}
+
+.icon-cancel:before {
 	content: "\e619";
 }
 
-.icon-follow:before {
+.icon-checkbox:before {
 	content: "\e61a";
 }
 
-.icon-info:before {
+.icon-checkmark:before {
 	content: "\e61b";
 }
 
-.icon-key:before {
+.icon-checkmark2:before {
 	content: "\e61c";
 }
 
-.icon-like:before {
+.icon-undo:before {
 	content: "\e61d";
 }
 
-.icon-ok .path1:before {
+.icon-sendout:before {
 	content: "\e61e";
-	color: rgba(0, 0, 0, 0.5);
-}
-.icon-ok .path2:before {
-	content: "\e61f";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
-.icon-ok2:before {
+.icon-delete:before {
+	content: "\e61f";
+}
+
+.icon-save:before {
 	content: "\e620";
 }
 
-.icon-rotate .path1:before {
+.icon-tdesign:before {
 	content: "\e621";
-	color: rgba(0, 0, 0, 0.5);
+	color: rgb(35, 31, 32);
 }
-.icon-rotate .path2:before {
+.icon-tdesign:before {
 	content: "\e622";
 	margin-left: -1em;
 	color: rgb(255, 255, 255);
 }
 
-.icon-save:before {
+.icon-edit:before {
 	content: "\e623";
 }
 
-.icon-sendout2:before {
+.icon-info:before {
 	content: "\e624";
 }
 
-.icon-like2:before {
+.icon-key:before {
 	content: "\e625";
 }
 
-.icon-tdesign .path1:before {
+.icon-rotate:before {
 	content: "\e626";
-	color: rgb(35, 31, 32);
 }
-.icon-tdesign .path2:before {
+
+.icon-tshirt:before {
 	content: "\e627";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
-}
-
-.icon-buy .path1:before {
-	content: "\e628";
-	color: rgb(35, 31, 32);
-}
-.icon-buy .path2:before {
-	content: "\e629";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
-}
-
-.icon-unfollow:before {
-	content: "\e62a";
-}
-
-.icon-f1:before {
-	content: "\e62b";
-}
-
-.icon-m1:before {
-	content: "\e62c";
 }
 
 .icon-f:before {
-	content: "\e62d";
+	content: "\e628";
 }
 
 .icon-m:before {
+	content: "\e629";
+}
+
+.icon-upkuohao:before {
+	content: "\e62a";
+}
+
+.icon-upkuohao2:before {
+	content: "\e62b";
+}
+
+.icon-m2:before {
+	content: "\e62c";
+}
+
+.icon-f2:before {
+	content: "\e62d";
+}
+
+.icon-tbao:before {
 	content: "\e62e";
 }
 
-.icon-sendout:before {
+.icon-tchen:before {
 	content: "\e62f";
 }
 
-.icon-checkmark:before {
+.icon-tcun:before {
 	content: "\e630";
 }
 
-.icon-checkmark2:before {
+.icon-tde:before {
 	content: "\e631";
 }
 
-.icon-undo:before {
+.icon-tdu:before {
 	content: "\e632";
 }
 
-.icon-undo2:before {
+.icon-tgong:before {
 	content: "\e633";
 }
+
+.icon-tgong2:before {
+	content: "\e634";
+}
+
+.icon-tji2:before {
+	content: "\e635";
+}
+
+.icon-tjia:before {
+	content: "\e636";
+}
+
+.icon-tqing:before {
+	content: "\e637";
+}
+
+.icon-tshe:before {
+	content: "\e638";
+}
+
+.icon-tyi:before {
+	content: "\e639";
+}
+
+.icon-txin:before {
+	content: "\e63a";
+}
+
+.icon-play3:before {
+	content: "\ea1c";
+}
+
+
 

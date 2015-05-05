@@ -633,14 +633,24 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             if ($scope.designInfo.gender === 'male') {
                 if ($scope.designInfo.color === 'white') {
                     $scope.designInfo.bkImg = 'img/male_white.png';
+                    var aStylePart = $scope.htmlItemStyle.availableArea.styleStr.split(';');
+                    aStylePart.splice(aStylePart.length - 2, 2);
+                    $scope.htmlItemStyle.availableArea.styleStr = aStylePart.join(';');
+                    $scope.htmlItemStyle.availableArea.styleStr += ';'
                 } else {
                     $scope.designInfo.bkImg = 'img/male_black.png';
+                    $scope.htmlItemStyle.availableArea.styleStr += 'background-color:rgba(255,255,255,0.3);';
                 }
             } else {
                 if ($scope.designInfo.color === 'white') {
                     $scope.designInfo.bkImg = 'img/female_white.png';
+                    var aStylePart = $scope.htmlItemStyle.availableArea.styleStr.split(';');
+                    aStylePart.splice(aStylePart.length - 2, 2);
+                    $scope.htmlItemStyle.availableArea.styleStr = aStylePart.join(';');
+                    $scope.htmlItemStyle.availableArea.styleStr += ';'
                 } else {
                     $scope.designInfo.bkImg = 'img/female_black.png';
+                    $scope.htmlItemStyle.availableArea.styleStr += 'background-color:rgba(255,255,255,0.3);';
                 }
             }
         };
@@ -891,9 +901,9 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             var iHeight = oBkImg.clientHeight;
             $scope.htmlItemStyle.availableArea.visible = true;
             $scope.htmlItemStyle.availableArea.width = iWidth * 0.6;
-            $scope.htmlItemStyle.availableArea.height = $scope.htmlItemStyle.availableArea.width * 1.25;
+            $scope.htmlItemStyle.availableArea.height = $scope.htmlItemStyle.availableArea.width * 1.5;
             $scope.htmlItemStyle.availableArea.left = iWidth * 0.21;
-            $scope.htmlItemStyle.availableArea.top = iHeight * 0.3;
+            $scope.htmlItemStyle.availableArea.top = iHeight * 0.22;
 
             if ($scope.aSelectedArtifact.length > 0) {
                 $scope.htmlItemStyle.availableArea.styleStr = "visibility:visible;" + 
@@ -901,6 +911,9 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 "height:" + $scope.htmlItemStyle.availableArea.height + "px;" + 
                 "left:" + $scope.htmlItemStyle.availableArea.left + "px;" + 
                 "top:" + $scope.htmlItemStyle.availableArea.top + "px;";
+                if ($scope.designInfo.color !== 'white') {
+                    $scope.htmlItemStyle.availableArea.styleStr += 'background-color: rgba(255,255,255,0.3);';
+                }
             } else {
                 $scope.htmlItemStyle.availableArea.styleStr = "visibility:hidden;" + 
                 "width:" + $scope.htmlItemStyle.availableArea.width + "px;" + 
