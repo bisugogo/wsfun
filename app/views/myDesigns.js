@@ -272,6 +272,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                             action: 'getDesigns'
                         };
                         var oResult = Design.DesignManager.query(oParam, function (oData) {
+                            alert('response back!');
                             $scope.handleDesignListCallback(oData);
                         });
                     }

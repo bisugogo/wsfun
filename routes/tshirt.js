@@ -93,9 +93,10 @@ module.exports = function(app) {
             access: 'public'
         });
         oQuery.sort({'modified': -1});
-        oQuery.populate('creatorId');
+        //oQuery.populate('creatorId');
         oQuery.exec(function(err, aDesign) {
             if (!err) {
+                LOG.logger.logFunc('getDesigns', 'Find ' + aDesign.length + ' designs.');
                 return res.send({
                     status : 'OK',
                     designList : aDesign
