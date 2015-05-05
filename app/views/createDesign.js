@@ -203,10 +203,10 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                                 designId: $scope.designInfo.designId,
                                 contact: $scope.orderInfo.sContact,
                                 contactMobile: $scope.orderInfo.sMobile,
-                                province: $scope.orderInfo.sProvince,
-                                city: $scope.orderInfo.sCity,
-                                district: $scope.orderInfo.sDistrict,
-                                postCode: $scope.orderInfo.sPostCode,
+                                //province: $scope.orderInfo.sProvince,
+                                //city: $scope.orderInfo.sCity,
+                                //district: $scope.orderInfo.sDistrict,
+                                postCode: $scope.orderInfo.sPostCode ? $scope.orderInfo.sPostCode : '',
                                 detailAddress: $scope.orderInfo.sDetailAddress,
                                 maleInfo: {
                                     quantity: 0,
@@ -1152,7 +1152,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 }
             }
 
-            if ((!oOrderInfo.sProvince || oOrderInfo.sProvince === '') && 
+            /*if ((!oOrderInfo.sProvince || oOrderInfo.sProvince === '') && 
                 (!oOrderInfo.sCity || oOrderInfo.sCity === '')) {
                 $scope.aMessage.push({
                     type: 'danger',
@@ -1197,7 +1197,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     content: '您还没有输入区'
                 });
                 return false;
-            };
+            };*/
             
             if (!oOrderInfo.sDetailAddress || oOrderInfo.sDetailAddress === '') {
                 $scope.aMessage.push({

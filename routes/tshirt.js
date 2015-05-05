@@ -179,20 +179,28 @@ module.exports = function(app) {
                     } else {
                         
                     }
-                    var oCreateTime = oGuessItem.modified;
-                    var iDelta = oCreateTime.getTime() - iRequestSentTime;
-                    LOG.logger.logFunc('guessDesignCreated', 'delta time: ' + iDelta);
-                    if (iDelta < 25*1000) {
-                        res.send({
-                            status: 'OK',
-                            data: oGuessItem
-                        });
+                    if (oGuessItem) {
+                        var oCreateTime = oGuessItem.modified;
+                        var iDelta = oCreateTime.getTime() - iRequestSentTime;
+                        LOG.logger.logFunc('guessDesignCreated', 'delta time: ' + iDelta);
+                        if (iDelta < 25*1000) {
+                            res.send({
+                                status: 'OK',
+                                data: oGuessItem
+                            });
+                        } else {
+                            res.send({
+                                status: 'OK',
+                                data: 'NOT_FOUND'
+                            });
+                        }
                     } else {
                         res.send({
                             status: 'OK',
                             data: 'NOT_FOUND'
                         });
                     }
+                    
                 }
             }
         });
@@ -467,9 +475,9 @@ module.exports = function(app) {
 
         var sContact = data.contact;
         var sContactMobile = data.contactMobile;
-        var sProvince = data.province;
-        var sCity = data.city;
-        var sDistrict = data.district;
+        //var sProvince = data.province;
+        //var sCity = data.city;
+        //var sDistrict = data.district;
         var sPostCode = data.postCode;
         var sDetailAddress = data.detailAddress;
 
@@ -479,9 +487,9 @@ module.exports = function(app) {
             //mailInfo: sMailInfo,
             contact: sContact,
             contactMobile: sContactMobile,
-            province: sProvince,
-            city: sCity,
-            district: sDistrict,
+            //province: sProvince,
+            //city: sCity,
+            //district: sDistrict,
             postCode: sPostCode,
             detailAddress: sDetailAddress,
             femalePrice : ORDER_CONSTANT.ORIGIN_PRICE,

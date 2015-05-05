@@ -82,11 +82,11 @@ var OrderSchema = new Schema({
   },
   province: {
     type: String,
-    require: true
+    default: ''
   },
   city: {
     type: String,
-    require: true
+    default: ''
   },
   district: {
     type: String,
