@@ -209,6 +209,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         var sCode = $location.$$search.code;
         var sListParam = $location.$$search.state;
+        $scope.urlStateValue = sListParam;
         //$scope.aMyDesigns = [];
 
         //alert(sCode);
@@ -254,10 +255,31 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                         if (sListParam === 'mine') {
                             oMineParam = {
                                 action: 'getMyDesigns',
-                                userId: oResUserInfo.userId
+                                userId: oResUserInfo.userId,
+                                offset: 0,
+                                size: oAppData.LAZY_LOAD_SIZE
                             };
                             var oResult = Design.DesignManager.query(oMineParam, function (oData) {
                                 $scope.handleDesignListCallback(oData);
+
+                                $scope.lazyLoadInterval = setInterval(function() {
+                                    var iCurrentSize = $scope.aMyDesigns.length;
+                                    if (iCurrentSize === $scope.iTotalDesignCount) {
+                                        clearInterval($scope.lazyLoadInterval);
+                                        return;
+                                    } else {
+                                        var iNextOffset = iCurrentSize;
+                                        var oParam = {
+                                            action: 'getMyDesigns',
+                                            userId: oResUserInfo.userId,
+                                            offset: iNextOffset,
+                                            size: oAppData.LAZY_LOAD_SIZE
+                                        };
+                                        var oResult = Design.DesignManager.query(oParam, function (oData) {
+                                            $scope.handleDesignListCallback(oData);
+                                        });
+                                    }
+                                }, 3000);
                             });
                         }
                     });
@@ -293,20 +315,6 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                                     var oResult = Design.DesignManager.query(oParam, function (oData) {
                                         $scope.handleDesignListCallback(oData);
                                     });
-                                    // if (iCurrentSize - 2 === $scope.iDesignCarouselIndex) {
-                                    //     var iNextOffset = iCurrentSize;
-                                    //     var oParam = {
-                                    //         action: 'getDesigns',
-                                    //         offset: iNextOffset,
-                                    //         size: oAppData.LAZY_LOAD_SIZE
-                                    //     };
-                                    //     var oResult = Design.DesignManager.query(oParam, function (oData) {
-                                    //         alert('response back!');
-                                    //         $scope.handleDesignListCallback(oData);
-                                    //     });
-                                    // } else {
-                                    //     return;
-                                    // }
                                 }
                             }, 3000);
                         });

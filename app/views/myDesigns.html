@@ -4,10 +4,11 @@
 
         <div class="myDesignListHeader">
             <div ng-click="onIDesignedClicked()">
-                <span style="{{whatILiked === true ? '' : 'font-weight:bold;'}}">朕设计的</span>
+                <span style="{{whatILiked === true ? '' : 'font-weight:bold;'}}">
+                {{urlStateValue === 'mine' ? '朕设计的' : '设计精选'}}</span>
                 <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? 'display:none;' : ''}}"></span>
             </div>
-            <div ng-click="onILikedClicked()">
+            <div ng-click="onILikedClicked()" style="display:none;">
                 <span style="{{whatILiked === true ? 'font-weight:bold;' : ''}}">朕喜欢的</span>
                 <span class="glyphicon glyphicon-triangle-top" style="{{whatILiked === true ? '' : 'display:none;'}}"></span>
             </div>
@@ -38,6 +39,7 @@
                     <ul rn-carousel rn-carousel-buffered class="image myDesignListCarousel" 
                     rn-carousel-transition="fadeAndSlide" rn-carousel-index="iDesignCarouselIndex">
                         <span class="noDesignFound" style="{{aMyDesigns.length < 1 ? '' : 'display:none;'}}">竟然目前还没有设计，不如我来设计吧</span>
+                        <span class="noDesignFound" ng-if="!aMyDesigns">载入中...</span>
                         <li ng-repeat="oDesign in aMyDesigns">
                             <div class="designItem" ng-click="onDesignItemClicked(oDesign)">
                                 <img src="{{oDesign.bkImg}}" class="designBackgroundImg">

@@ -60,6 +60,8 @@ module.exports = function(app) {
 
     getMyDesigns = function(sUserId, res) {
         LOG.logger.logFunc('getMyDesigns');
+        var iOffset = req.query.offset;
+        var iSize = req.query.size;
         /*
          * return Design.find({creatorId: sUserId}, function(err, aDesign) { if(!err) { return res.send({ status: 'OK',
          * designList: aDesign }); } else { res.statusCode = 500; console.log('Internal error(%d):
@@ -70,9 +72,12 @@ module.exports = function(app) {
             creatorId: sUserId
         });
         oQuery.sort({'modified': -1});
+        oQuery.skip(iOffset);
+        oQuery.limit(iSize);
         oQuery.populate('creatorId');
         oQuery.exec(function(err, aDesign) {
             if (!err) {
+                LOG.logger.logFunc('getMyDesigns', 'Find ' + aDesign.length + ' private designs.');
                 Design.find({
                     creatorId: sUserId
                 }).count(function(err, count) {
@@ -103,7 +108,7 @@ module.exports = function(app) {
         oQuery.sort({'modified': -1});
         oQuery.skip(iOffset);
         oQuery.limit(iSize);
-        //oQuery.populate('creatorId');
+        oQuery.populate('creatorId');
         oQuery.exec(function(err, aDesign) {
             if (!err) {
                 LOG.logger.logFunc('getDesigns', 'Find ' + aDesign.length + ' designs.');
