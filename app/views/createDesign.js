@@ -535,7 +535,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 if (oDesign.status === 'OK') {
                     $scope.hideBusy();
                     clearTimeout($scope.lastCreateDesignTimer);
-                    $scope.designInfo.bSaved = true;
+                    $scope.designInfo.bSaved = false;
                     $scope.designInfo.designId = oDesign.data.designId;
                     $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
                 } else {
@@ -570,17 +570,17 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     data: oTargetDesign
                 };
                 Design.DesignManager.update(oParam, function(oData) {
-                    if (oData.error) {
+                    if (oData.error || oData.data === 'NOT_FOUND') {
                         $scope.hideBusy();
                         $scope.designInfo.bSaved = false;
                         $scope.aMessage.push({
                             type: 'danger',
-                            content: oData.error
+                            content: oData.error || oData.data
                         });
                     } else {
                         $scope.hideBusy();
                         $scope.designInfo.bSaved = true;
-                        $scope.designInfo.designId = oData.data.designId;
+                        $scope.designInfo.designId = oData.data._id;
                         $scope.designInfo.previewImage64 = oData.data.previewImage64;
                     }
                 });
