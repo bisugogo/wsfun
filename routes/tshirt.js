@@ -206,6 +206,7 @@ module.exports = function(app) {
                         var iDelta = oCreateTime.getTime() - iRequestSentTime;
                         LOG.logger.logFunc('guessDesignCreated', 'delta time: ' + iDelta);
                         if (iDelta < 25*1000) {
+                            oGuessItem.designId = oGuessItem._id;
                             res.send({
                                 status: 'OK',
                                 data: oGuessItem
