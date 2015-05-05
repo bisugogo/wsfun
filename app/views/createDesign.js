@@ -535,7 +535,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 if (oDesign.status === 'OK') {
                     $scope.hideBusy();
                     clearTimeout($scope.lastCreateDesignTimer);
-                    $scope.designInfo.bSaved = false;
+                    $scope.designInfo.bSaved = true;
                     $scope.designInfo.designId = oDesign.data.designId;
                     $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
                 } else {

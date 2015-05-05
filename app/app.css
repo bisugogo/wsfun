@@ -161,6 +161,7 @@ body.weavesFunBody {
 
 .createDesignView .pleaseDesign > div > span {
   font-size: 25px;
+  line-height: 35px;
 }
 
 .createDesignView .verticalLogo {
@@ -1205,7 +1206,7 @@ body.weavesFunBody {
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 100px;
+  height: 140px;
   background-color: rgba(207, 176, 96, 0.5);
 }
 
@@ -1222,8 +1223,9 @@ body.weavesFunBody {
 }
 
 .designDetailView .designDetailViewContent .designInfo .designDesc {
-  height: 30px;
+  height: 74px;
   margin-top: 10px;
+  text-align: center;
 }
 
 .designDetailView .designDetailViewContent .designInfo .royalButtonWrapper {
@@ -1242,8 +1244,37 @@ body.weavesFunBody {
   color: white;
 }
 
-.designDetailView .designDetailViewContent .designInfo .designDesc > span:nth-child(2){
-  float: right;
+.designDetailView .designItemInfoContent {
+  position: relative;
+}
+
+.designDetailView .designItemInfoContent > div {
+  position: absolute;
+}
+
+.designDetailView .designItemInfoContent .actionsOnItem {
+  top: 0px;
+  left: 0px;
+  width: 70%;
+}
+
+.designDetailView .designItemInfoContent .shareAndQR {
+  top: 0px;
+  right: 0px;
+  width: 30%;
+}
+
+.designDetailView .designItemInfoContent .shareAndQR .shareTip {
+  margin-top: 5px;
+}
+
+.designDetailView .designItemInfoContent .shareAndQR .qrImage {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.designDetailView .designItemInfoContent .shareAndQR .qrImage > img {
+  width: 85%;
 }
 
 .myDesignsView .myDesignListContent {
@@ -1622,6 +1653,11 @@ body.weavesFunBody {
 
 .payWechatFinalView .orderContent .orderInfoPreview > div {
   margin-top: 10px;
+  text-align: center;
+}
+
+.payWechatFinalView .orderContent .orderInfoPreview .qrImage > img {
+  width: 80px;
 }
 
 .payWechatFinalView .orderContent .orderInfoPreview .basicInfo > span,

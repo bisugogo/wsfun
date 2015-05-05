@@ -2,21 +2,31 @@
     <img ng-src="{{oCurrentDesign.bkImg}}" class="designBackgroundImage">
     <img src="{{oCurrentDesign.previewImage64}}" style="{{oCurrentDesign.positionInfoStyleValue}}" class="designPreviewImage">
     <div class="designInfo">
-        <div style="{{oCurrentDesign.access === 'public' ? '' : 'display:none;'}}">
-            <div class="designDesc">
-                <span>{{oCurrentDesign.desc}}</span>
-                <span>请众爱卿膜拜</span>
-            </div>
-            <div class="designButtons">
-                <div class="royalButtonWrapper">
-                    <div class="btn btn-warning royalButton">
-                        <span ng-click="onOrderBtnClicked()">下旨赶制</span>
+        <div style="{{oCurrentDesign.access === 'public' ? '' : 'display:none;'}}" class="designItemInfoContent">
+            <div class="actionsOnItem">
+                <div class="designDesc">
+                    <span>{{oCurrentDesign.desc}}</span>
+                </div>
+                <div class="designButtons">
+                    <div class="royalButtonWrapper">
+                        <div class="btn btn-warning royalButton">
+                            <span ng-click="onOrderBtnClicked()">下旨赶制</span>
+                        </div>
+                    </div>
+                    <div class="royalButtonWrapper">
+                        <div class="btn btn-warning royalButton">
+                            <span ng-click="onCreateDesignBtnClicked()">我来设计</span>
+                        </div>
                     </div>
                 </div>
-                <div class="royalButtonWrapper">
-                    <div class="btn btn-warning royalButton">
-                        <span ng-click="onSaveDesignBtnClicked()">我来设计</span>
-                    </div>
+            </div>
+            <div class="shareAndQR">
+                <div class="shareTip">
+                    <span>请众爱卿膜拜</span>
+                    <span class="glyphicon glyphicon-triangle-top"></span>
+                </div>
+                <div class="qrImage">
+                    <img src="img/qrcode_ws.jpg">
                 </div>
             </div>
         </div>

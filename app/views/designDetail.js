@@ -24,4 +24,8 @@ designDetail.controller('DesignDetailCtrl', ['$scope', '$stateParams', '$state',
     $scope.onOrderBtnClicked = function() {
         $state.go('createOrder', {designId: $scope.designInfo.designId});
     };
+
+    $scope.onCreateDesignBtnClicked = function() {
+        
+    };
 }]);

@@ -444,4 +444,17 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
             $state.go('createDesign.createDetail.orderDesign');
             //$state.go('payWechatOrder');
         };
+
+        $scope.onCreateDesignBtnClicked = function() {
+            var oUserInfo = UIData.getData('userInfo');
+            var oAppData = UIData.getAppData();
+            if (!oUserInfo) {
+                $window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + 
+                    oAppData.APP_ID + '&redirect_uri=' + 
+                    encodeURIComponent('http://design.weavesfun.com/#/createDesignAuth') + 
+                    '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+                return;
+            }
+            $state.go('createDesign');
+        };
 }]);
