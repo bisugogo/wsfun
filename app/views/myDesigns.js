@@ -291,7 +291,6 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                                         size: oAppData.LAZY_LOAD_SIZE
                                     };
                                     var oResult = Design.DesignManager.query(oParam, function (oData) {
-                                        alert('response back!');
                                         $scope.handleDesignListCallback(oData);
                                     });
                                     // if (iCurrentSize - 2 === $scope.iDesignCarouselIndex) {
