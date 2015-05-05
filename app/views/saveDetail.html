@@ -42,6 +42,7 @@
     </div>
     <div class="naviBtnRow">
         <span class="icon-undo" ng-click="onBack2DesignDetailClicked()"></span>
-        <span class="glyphicon glyphicon-send"></span>
+        <span class="glyphicon glyphicon-send" style="{{designInfo.bSaved ? '' : 'visibility:hidden;'}}" 
+        ng-click="onPrepareShareButtonClicked()"></span>
     </div>
 </div>

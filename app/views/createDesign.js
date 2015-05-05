@@ -1107,6 +1107,11 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             $state.go('^');
         };
 
+        $scope.onPrepareShareButtonClicked = function() {
+            var sDesignId = $scope.designInfo.designId ? $scope.designInfo.designId : $scope.designInfo._id;
+            $state.go('myDesigns.designDetail', {designId: sDesignId, showwxpaytitle: 1});
+        };
+
         $scope.onEditAddressDetailClicked = function() {
             $state.go('createDesign.createDetail.addressDetail');
         };
