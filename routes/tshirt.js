@@ -73,9 +73,14 @@ module.exports = function(app) {
         oQuery.populate('creatorId');
         oQuery.exec(function(err, aDesign) {
             if (!err) {
-                return res.send({
-                    status : 'OK',
-                    designList : aDesign
+                Design.find({
+                    creatorId: sUserId
+                }).count(function(err, count) {
+                    return res.send({
+                        status : 'OK',
+                        designList : aDesign,
+                        totalSize: count
+                    });
                 });
             } else {
                 res.statusCode = 500;
@@ -89,17 +94,27 @@ module.exports = function(app) {
 
     getDesigns = function(req, res) {
         LOG.logger.logFunc('getDesigns');
+        var iOffset = req.query.offset;
+        var iSize = req.query.size;
+
         var oQuery = Design.find({
             access: 'public'
         });
         oQuery.sort({'modified': -1});
+        oQuery.skip(iOffset);
+        oQuery.limit(iSize);
         //oQuery.populate('creatorId');
         oQuery.exec(function(err, aDesign) {
             if (!err) {
                 LOG.logger.logFunc('getDesigns', 'Find ' + aDesign.length + ' designs.');
-                return res.send({
-                    status : 'OK',
-                    designList : aDesign
+                Design.find({
+                    access: 'public'
+                }).count(function(err, count) {
+                    return res.send({
+                        status : 'OK',
+                        designList : aDesign,
+                        totalSize: count
+                    });
                 });
             } else {
                 res.statusCode = 500;

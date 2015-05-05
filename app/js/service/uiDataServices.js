@@ -11,7 +11,8 @@ oUIDataServices.factory('UIData', [
         var oAPPData = {
             APP_ID : 'wxf26855bd0cda23bd',
             BIZ_ID : '1232336702',
-            TESTING: true
+            TESTING: true,
+            LAZY_LOAD_SIZE: 5
         };
 
         var oQuerySent = {

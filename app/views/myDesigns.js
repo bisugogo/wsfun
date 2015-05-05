@@ -209,6 +209,7 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         var sCode = $location.$$search.code;
         var sListParam = $location.$$search.state;
+        //$scope.aMyDesigns = [];
 
         //alert(sCode);
 
@@ -269,11 +270,46 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                         //Prevent sending request the second time
                         UIData.setQuerySentData('designList', true);
                         var oParam = {
-                            action: 'getDesigns'
+                            action: 'getDesigns',
+                            offset: 0,
+                            size: oAppData.LAZY_LOAD_SIZE
                         };
                         var oResult = Design.DesignManager.query(oParam, function (oData) {
-                            alert('response back!');
+                            $scope.iDesignCarouselIndex = 0;
                             $scope.handleDesignListCallback(oData);
+
+                            $scope.lazyLoadInterval = setInterval(function() {
+                                var iCurrentSize = $scope.aMyDesigns.length;
+                                if (iCurrentSize === $scope.iTotalDesignCount) {
+                                    clearInterval($scope.lazyLoadInterval);
+                                    return;
+                                } else {
+                                    var iNextOffset = iCurrentSize;
+                                    var oParam = {
+                                        action: 'getDesigns',
+                                        offset: iNextOffset,
+                                        size: oAppData.LAZY_LOAD_SIZE
+                                    };
+                                    var oResult = Design.DesignManager.query(oParam, function (oData) {
+                                        alert('response back!');
+                                        $scope.handleDesignListCallback(oData);
+                                    });
+                                    // if (iCurrentSize - 2 === $scope.iDesignCarouselIndex) {
+                                    //     var iNextOffset = iCurrentSize;
+                                    //     var oParam = {
+                                    //         action: 'getDesigns',
+                                    //         offset: iNextOffset,
+                                    //         size: oAppData.LAZY_LOAD_SIZE
+                                    //     };
+                                    //     var oResult = Design.DesignManager.query(oParam, function (oData) {
+                                    //         alert('response back!');
+                                    //         $scope.handleDesignListCallback(oData);
+                                    //     });
+                                    // } else {
+                                    //     return;
+                                    // }
+                                }
+                            }, 3000);
                         });
                     }
                 }
@@ -281,10 +317,16 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
         }
 
         $scope.handleDesignListCallback = function(oData) {
-            $scope.aMyDesigns = oData.designList;
+            //$scope.aMyDesigns = oData.designList;
+            $scope.iTotalDesignCount = oData.totalSize;
 
-            for (var i = 0; i < $scope.aMyDesigns.length; i++) {
-                var oCurItem = $scope.aMyDesigns[i];
+            for (var i = 0; i < oData.designList.length; i++) {
+                var oCurItem = oData.designList[i];
+                if (!$scope.aMyDesigns) {
+                    $scope.aMyDesigns = [];
+                }
+                $scope.aMyDesigns.push(oCurItem);
+
                 if (oCurItem.gender === 'male') {
                     if (oCurItem.color === 'white') {
                         oCurItem.bkImg = 'img/male_white.png';
