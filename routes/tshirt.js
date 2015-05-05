@@ -58,10 +58,11 @@ module.exports = function(app) {
         });
     };
 
-    getMyDesigns = function(sUserId, res) {
+    getMyDesigns = function(req, res) {
         LOG.logger.logFunc('getMyDesigns');
         var iOffset = req.query.offset;
         var iSize = req.query.size;
+        var sUserId = req.query.userId;
         /*
          * return Design.find({creatorId: sUserId}, function(err, aDesign) { if(!err) { return res.send({ status: 'OK',
          * designList: aDesign }); } else { res.statusCode = 500; console.log('Internal error(%d):
@@ -1058,8 +1059,7 @@ module.exports = function(app) {
                 });
                 return;
             }
-            var sUserId = req.query.userId;
-            getMyDesigns(sUserId, res);
+            getMyDesigns(req, res);
         } else if (sAction === 'getDesigns') {
             getDesigns(req, res);
         } else if (sAction === 'getDesignById') {

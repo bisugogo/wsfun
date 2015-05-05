@@ -498,7 +498,8 @@ body.weavesFunBody {
 .createDetailView .payCouponListView .naviBtnRow > span:first-child,
 .createDetailView .paySourceListView .naviBtnRow > span:first-child {
   float: left;
-  left: -25px;
+  left: -42px;
+  bottom: 6px;
   position: relative;
 }
 
@@ -508,7 +509,8 @@ body.weavesFunBody {
 .createDetailView .payCouponListView .naviBtnRow > span:nth-child(2),
 .createDetailView .paySourceListView .naviBtnRow > span:nth-child(2) {
   float: right;
-  left: 25px;
+  left: 42px;
+  top: -5px;
 }
 
 .orderDesignView,
