@@ -42,7 +42,7 @@ var sTempCode = null;
 
 myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider, $httpProvider) {
     $stateProvider.state('myDesigns', {
-        url: '/myDesigns',
+        url: '/myDesigns?state',
         templateUrl: 'views/myDesigns.html',
         controller: 'MyDesignsListCtrl'
     })
@@ -96,7 +96,23 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
         views: {
             'designDetail' : {
                 templateUrl: 'views/designDetail.html',
-                controller: function($scope, $location, $stateParams, $state, Design, Auth, UIData) {
+                resolve: {
+                    PreviousState: [
+                        "$state", "$location",
+                        function ($state, $location) {
+                            var currentStateData = {
+                                name: $state.current.name,
+                                params: $state.params,
+                                url: $state.href($state.current.name, $state.params),
+                                urlParams: {
+                                    state: $location.$$search.state
+                                }
+                            };
+                            return currentStateData;
+                        }
+                    ]
+                },
+                controller: function($scope, $location, $stateParams, $state, Design, Auth, UIData, PreviousState) {
                     if ($state.current.name === 'myDesigns.designDetail') {
                         var sDesignId = $stateParams.designId;
                         var oResult = Design.DesignManager.query({action: 'getDesignById', designId: sDesignId}, function (oData) {
@@ -181,6 +197,15 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
 
 
                     $scope.designId = $stateParams.designId;
+
+                    $scope.onBackFromDesignDetailClicked = function() {
+                        if (PreviousState.urlParams.state === 'mine') {
+                            $state.go('myDesigns', {state : 'mine'});
+                        } else {
+                            $state.go('myDesigns', {state : 'all'});
+                        }
+                        
+                    };
                     
                 }
             }

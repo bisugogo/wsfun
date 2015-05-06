@@ -248,6 +248,7 @@ body.weavesFunBody {
   font-size: 35px;
   position: fixed;
   top: 6px;
+  color: black;
 }
 
 .createDetailView .toolRow {
@@ -487,7 +488,8 @@ body.weavesFunBody {
 .orderDesignView .naviBtnRow,
 .createDetailView .addressDesignView .naviBtnRow,
 .createDetailView .payCouponListView .naviBtnRow,
-.createDetailView .paySourceListView .naviBtnRow {
+.createDetailView .paySourceListView .naviBtnRow,
+.designDetailViewContent .naviBtnRow {
   position: absolute;
   bottom: 3px;
   width: 100%;
@@ -497,7 +499,8 @@ body.weavesFunBody {
 .orderDesignView .naviBtnRow > span,
 .createDetailView .addressDesignView .naviBtnRow > span,
 .createDetailView .payCouponListView .naviBtnRow > span,
-.createDetailView .paySourceListView .naviBtnRow > span {
+.createDetailView .paySourceListView .naviBtnRow > span,
+.designDetailViewContent .naviBtnRow > span {
   font-size: 25px;
   font-weight: bold;
   color: rgb(215, 180, 104);

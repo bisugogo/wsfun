@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot?-xav3mp');
-	src:url('../fonts/icomoon.eot?#iefix-xav3mp') format('embedded-opentype'),
-		url('../fonts/icomoon.woff?-xav3mp') format('woff'),
-		url('../fonts/icomoon.ttf?-xav3mp') format('truetype'),
-		url('../fonts/icomoon.svg?-xav3mp#icomoon') format('svg');
+	src:url('../fonts/icomoon.eot?5me8ul');
+	src:url('../fonts/icomoon.eot?#iefix5me8ul') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?5me8ul') format('woff'),
+		url('../fonts/icomoon.ttf?5me8ul') format('truetype'),
+		url('../fonts/icomoon.svg?5me8ul#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -93,32 +93,10 @@
 
 .icon-changecolor:before {
 	content: "\e611";
-	color: rgb(35, 31, 32);
-}
-.icon-changecolor:before {
-	content: "\e612";
-	margin-left: -1em;
-	color: rgb(35, 31, 32);
-}
-.icon-changecolor:before {
-	content: "\e613";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
-}
-.icon-changecolor:before {
-	content: "\e614";
-	margin-left: -1em;
-	color: rgb(35, 31, 32);
 }
 
 .icon-buy:before {
 	content: "\e615";
-	color: rgb(35, 31, 32);
-}
-.icon-buy:before {
-	content: "\e616";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
 .icon-like:before {
@@ -163,12 +141,6 @@
 
 .icon-tdesign:before {
 	content: "\e621";
-	color: rgb(35, 31, 32);
-}
-.icon-tdesign:before {
-	content: "\e622";
-	margin-left: -1em;
-	color: rgb(255, 255, 255);
 }
 
 .icon-edit:before {
@@ -270,6 +242,4 @@
 .icon-play3:before {
 	content: "\ea1c";
 }
-
-
 
