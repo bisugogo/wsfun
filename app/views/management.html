@@ -57,6 +57,9 @@
             <div>
                 <span>邮寄地址</span>
             </div>
+            <div>
+                <span>快递信息</span>
+            </div>
         </div>
         <div ng-repeat="oOrder in aOrders" class="orderItem">
             <div class="orderImageDiv">
@@ -106,6 +109,9 @@
             </div>
             <div class="orderMailAddress">
                 <span>{{oOrder.mailAddressString}}</span>
+            </div>
+            <div class="orderMailAddress">
+                <textarea class="form-control" rows="2" ng-model="oOrder.expressInfo"></textarea>
             </div>
             <div class="download">
                 <span class="glyphicon glyphicon-download-alt" ng-click="downloadDesignFile(oOrder)">下载打印图像</span>

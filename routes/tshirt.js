@@ -686,10 +686,18 @@ module.exports = function(app) {
         if (oData) {
             var sOrderId = oData.orderId;
             var sTargetStatus = oData.targetStatus;
-            Order.findByIdAndUpdate(sOrderId, {
-                status: sTargetStatus,
-                lastModified: new Date()
-            }, {'new': true}, function(err, oDBRet) {
+            var sTargetExpressInfo = oData.expressInfo;
+
+            var updateInfo = {};
+            if (sTargetStatus) {
+                updateInfo.status = sTargetStatus;
+            }
+            if (sTargetExpressInfo) {
+                updateInfo.expressInfo = sTargetExpressInfo;
+            }
+            updateInfo.lastModified = new Date();
+
+            Order.findByIdAndUpdate(sOrderId, updateInfo, {'new': true}, function(err, oDBRet) {
                 if (err) {
                     LOG.logger.logFunc('updateOrderStatus', err.message);
                     res.send({

@@ -24,6 +24,10 @@ var OrderSchema = new Schema({
     type: String,
     default: ''
   },
+  expressInfo: {
+    type: String,
+    default: ''
+  },
   malePrice:    {
     type    : Number,
     require : true

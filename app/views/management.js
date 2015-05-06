@@ -30,6 +30,8 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                 oItem.mailAddressString  += oItem.postCode + ' ';
                 oItem.mailAddressString  += oItem.detailAddress;
 
+                oItem.originExpressInfo = oItem.expressInfo;
+
                 var iMaleCount = parseInt(oItem.maleQuantity);
                 var iFemaleCount = parseInt(oItem.femaleQuantity);
                 oItem.sizeCount = '';
@@ -92,19 +94,48 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
         };
 
         $scope.onUpdateOrderStatusClicked = function(oOrder) {
-            if (!!oOrder.targetStatus && oOrder.targetStatus !== oOrder.status) {
+            if ((!!oOrder.targetStatus && oOrder.targetStatus !== oOrder.status) || 
+                (oOrder.expressInfo !== oOrder.originExpressInfo)) {
                 var oParam = {
                     action: 'updateOrderStatus',
                     data: {
-                        orderId: oOrder._id,
-                        targetStatus: oOrder.targetStatus
+                        orderId: oOrder._id
                     }
                 };
+
+                var bUpdateStatus = false;
+                var bUpdateExpressInfo = false;
+
+                if (!!oOrder.targetStatus && oOrder.targetStatus !== oOrder.status) {
+                    oParam.data.targetStatus = oOrder.targetStatus;
+                    bUpdateStatus = true;
+                }
+                if (oOrder.expressInfo !== oOrder.originExpressInfo) {
+                    oParam.data.expressInfo = oOrder.expressInfo;
+                    bUpdateExpressInfo = true;
+                }
+
                 Design.DesignManager.update(oParam, function(oData) {
                     if (oData.error) {
                         alert(oData.error);
                     } else {
                         oOrder.status = oData.data.status;
+
+                        if (bUpdateStatus) {
+                            $scope.aMessage.push({
+                                type: 'danger',
+                                content: 'Order status updated to ' + oOrder.status
+                            });
+                        }
+
+                        if (bUpdateExpressInfo) {
+                            $scope.aMessage.push({
+                                type: 'danger',
+                                content: 'Order 快递信息更新为：' + oOrder.expressInfo
+                            });
+                        }
+
+                        oOrder.lastModified = oData.data.lastModified;
                     }
                 });
             }
