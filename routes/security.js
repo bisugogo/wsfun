@@ -336,7 +336,46 @@ module.exports = function(app) {
                     console.log('BODY: ' + chunk);
                     var oRet = parsePreOrderResponse(chunk);
                     LOG.logger.logFunc('createPreOrder', 'pre-order response: ' + JSON.stringify(oRet));
-                    res.send({data: oRet});
+
+                    if (oRet.return_code === 'SUCCESS' && oRet.return_msg === 'OK') {
+                        var oPreparedPayData = {};
+
+                        var sAppId2 = APP_ID;
+                        var sTimestamp2 = new Date().getTime();
+                        var sNonceStr2 = oRet.nonce_str;
+                        var sPackage2 = 'prepay_id=' + oRet.prepay_id;
+                        var sSignType2 = 'MD5';
+
+                        var sAppIdKeyValue2 = 'appId=' + sAppId2;
+                        var sTimestampKeyValue2 = 'timeStamp=' + sTimestamp2;
+                        var sNonceStrKeyValue2 = 'nonceStr=' + sNonceStr2;
+                        var sPackageKeyValue2 = 'package=' + sPackage2;
+                        var sSignTypeKeyValue2 = 'signType=' + sSignType2;
+
+                        var md5sum2 = crypto.createHash('md5');
+                        var aStr2 = [sAppIdKeyValue2, sTimestampKeyValue2, sNonceStrKeyValue2, sPackageKeyValue2, sSignTypeKeyValue2];
+                        aStr2.sort();
+                        var sTempStr2 = aStr2.join('&');
+                        sTempStr2 += '&key=';
+                        sTempStr2 += API_KEY;
+
+                        md5sum2.update(sTempStr2);
+                        var sTargetSig2 = md5sum2.digest('hex').toUpperCase();
+
+                        oPreparedPayData.actualPaySign = sTargetSig2;
+                        oPreparedPayData.signTime = sTimestamp2;
+
+                        res.send({
+                            status: 'OK',
+                            data: oRet,
+                            payData: oPreparedPayData
+                        });
+                    } else {
+                        res.send({
+                            error: '微信支付遇到问题。Create pre-order failed.'
+                        });
+                    }
+                    
                 });
                 //res.send({data: 'OK'})
 

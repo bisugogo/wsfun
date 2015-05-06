@@ -106,29 +106,35 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Des
             if (oData.data.result_code === 'SUCCESS' && 
                 oData.data.return_code === 'SUCCESS' && 
                 oData.data.return_msg === 'OK') {
-                $scope.sendPayRequest(oData.data);
+                var oWechatPreOrderReturn = oData.data;
+                var oActualPayData = oData.payData;
+                $scope.sendPayRequest(oWechatPreOrderReturn, oActualPayData);
             }
         });
     };
 
-    $scope.sendPayRequest = function(oData) {
+    $scope.sendPayRequest = function(oData, oActualPayData) {
         var sAppId = oAppInfo.APP_ID;
-        var sTimestamp = new Date().getTime();
+        //var sTimestamp = new Date().getTime();
         var sNonceStr = oData.nonce_str;
         var sPackage = 'prepay_id=' + oData.prepay_id;
         var sSignType = 'MD5';
 
-        var sAppIdKeyValue = 'appId=' + sAppId;
-        var sTimestampKeyValue = 'timeStamp=' + sTimestamp;
-        var sNonceStrKeyValue = 'nonceStr=' + sNonceStr;
-        var sPackageKeyValue = 'package=' + sPackage;
-        var sSignTypeKeyValue = 'signType=' + sSignType;
+        // var sAppIdKeyValue = 'appId=' + sAppId;
+        // var sTimestampKeyValue = 'timeStamp=' + sTimestamp;
+        // var sNonceStrKeyValue = 'nonceStr=' + sNonceStr;
+        // var sPackageKeyValue = 'package=' + sPackage;
+        // var sSignTypeKeyValue = 'signType=' + sSignType;
 
-        var aStr = [sAppIdKeyValue, sTimestampKeyValue, sNonceStrKeyValue, sPackageKeyValue, sSignTypeKeyValue];
-        aStr.sort();
-        var sTempStr = aStr.join('&');
-        sTempStr += '&key=ENt2aaBmTQdaBki2Qwcjm4Fp2A6dREkB';
-        var sSign = md5.createHash(sTempStr).toUpperCase();
+        // var aStr = [sAppIdKeyValue, sTimestampKeyValue, sNonceStrKeyValue, sPackageKeyValue, sSignTypeKeyValue];
+        // aStr.sort();
+        // var sTempStr = aStr.join('&');
+        // sTempStr += '&key=ENt2aaBmTQdaBki2Qwcjm4Fp2A6dREkB';
+        // var sSign = md5.createHash(sTempStr).toUpperCase();
+
+
+        var sSign = oActualPayData.actualPaySign;
+        var sTimestamp = oActualPayData.signTime;
 
         wx.chooseWXPay({
             timestamp: sTimestamp,
