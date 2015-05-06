@@ -129,6 +129,8 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                     //     totalPay: 1001,
                     //     usedCoupons: []
                     // };
+                    var oTime = new Date();
+                    $scope.oTimeStr = '公元' + oTime.getFullYear() + '年' + (oTime.getMonth() + 1) + '月' + oTime.getDate() + '日';
 
                     if (PreviousState.name === 'myDesigns.designDetail') {
                         //Come from design detail to make order

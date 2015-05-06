@@ -61,6 +61,8 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Des
         } else {
             $scope.orderInfo.clothesSizeShow = 'L';
         }
+    } else {
+        $scope.orderInfo.clothesSizeShow = $scope.orderInfo.clothesSize;
     }
 
 
