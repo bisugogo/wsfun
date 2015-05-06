@@ -250,8 +250,8 @@ module.exports = function(app) {
 
         var sOutTradeNo = oData.preOrderOutTradeNo;
         var sSpBillCreateIp = sRemoteIP;
-        //var sTotalFee = oData.preOrderTotalFee * 100;
-        var sTotalFee = 1;
+        var sTotalFee = oData.preOrderTotalFee * 100;
+        //var sTotalFee = 1;
         var sTradeType = 'JSAPI';
 
         var sAppIdKeyValue = 'appid=' + sAppId;
