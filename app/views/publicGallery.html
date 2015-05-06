@@ -4,10 +4,12 @@
             <div class="titleDiv">
                 <span class="titleSpan">精选素材</span>
             </div>
+            <div>
+                <span class="noArtifactFound" style="{{!aPublicArtifact || aPublicArtifact.length < 1 ? '' : 'display:none;'}}">载入中...</span>
+            </div>
             <div class="myArtifactsCarouselDiv" ng-if="aPublicArtifact.length > 0">
                 <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide"  
                 rn-carousel-index="aPublicArtifactCarouselIndex">
-                    <span class="noArtifactFound" style="{{!aPublicArtifact || aPublicArtifact.length < 1 ? '' : 'display:none;'}}">载入中...</span>
                     <li ng-repeat="oImageGroup in aPublicArtifact">
                         <div class="myArtifactsGroupTop">
                             <img src="{{oImageGroup[0].largeImage64}}" style="margin:auto;" 
