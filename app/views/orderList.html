@@ -6,6 +6,10 @@
     
     <div class="myOrdersListContent">
         <ul rn-carousel class="image myOrdersListCarousel" rn-carousel-transition="fadeAndSlide">
+            <span class="noOrderFound" style="{{aOrderGroups.length < 1 ? '' : 'display:none;'}}">
+                您目前没有订单
+            </span>
+            <span class="noOrderFound" ng-if="!aOrderGroups">载入中...</span>
             <li ng-repeat="oOrderGroup in aOrderGroups">
                 <div class="orderGroup">
                     <div ng-repeat="oOrder in oOrderGroup" class="orderItem">

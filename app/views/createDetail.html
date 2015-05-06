@@ -15,6 +15,7 @@
         <div ui-view="paySourceList"></div>
         <div ui-view="payCouponList"></div>
 
+
         <div class="selectedArtifactArea" ng-if="aSelectedArtifact.length > 0">
             <div class="availableArea" style="{{htmlItemStyle.availableArea.styleStr}}"></div>
             <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
@@ -85,56 +86,4 @@
         <div class="alerts">
             <alert ng-repeat="oMsg in aMessage" type="{{oMsg.type}}" close="closeAlert($index)">{{oMsg.content}}</alert>
         </div>
-        <!--div class='row newDesignInfoArea'>
-            <div class="col-xs-12">
-                <div class='row'>
-                    <div class="col-xs-6">
-                        <input type="text" class="form-control" placeholder="Design Name" ng-model="designInfo.sDefaultDesc">
-                    </div>
-                    <div class="col-xs-6">
-                        <label class="checkbox">
-                            <input type="checkbox" ng-model="designInfo.bPrivateDesign">
-                            This is a private design
-                        </label>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col-xs-3'>
-                        <div class="btn-group" dropdown>
-                            <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                                {{designInfo.sBackgroundColor}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="oColor in constant.BK_COLOR_ARRYA">
-                                    <a ng-click="changeBackgroundColor(oColor)">{{oColor}}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class='col-xs-3'>
-                        <div class="btn-group" dropdown>
-                            <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                                {{designInfo.sSize}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="oSize in constant.SIZE_ARRAY">
-                                    <a ng-click="changeSize(oSize)">{{oSize}}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class='col-xs-6'>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <span>CreatorId: </span>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="text" class="form-control" ng-model="designInfo.sCreatorId">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div-->
-    <!--/div-->
 </div>

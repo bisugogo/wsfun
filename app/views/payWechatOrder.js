@@ -50,6 +50,20 @@ payWechatOrder.controller('PayWechatOrderCtrl', ['$scope', '$state', 'md5', 'Des
     }
     $scope.orderInfo.couponPay = iCouponPay;
     $scope.orderInfo.originTotalPay += iCouponPay;
+
+    if ($scope.orderInfo.clothesGender === 'female') {
+        if ($scope.orderInfo.clothesSize === 'S') {
+            $scope.orderInfo.clothesSizeShow = 'XS';
+        } else if ($scope.orderInfo.clothesSize === 'M') {
+            $scope.orderInfo.clothesSizeShow = 'S';
+        } else if ($scope.orderInfo.clothesSize === 'L') {
+            $scope.orderInfo.clothesSizeShow = 'M';
+        } else {
+            $scope.orderInfo.clothesSizeShow = 'L';
+        }
+    }
+
+
     $scope.designInfo = UIData.getData('designInfo');
 
     var oCenterDom = $('.payWechatFinalView')[0];

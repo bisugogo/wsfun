@@ -1,5 +1,11 @@
 <div class='orderDesignView'>
     <div ui-view="extraOrderInfo"></div>
+    <div class="sizeInfo" style="{{bShowSizeInfo ? '' : 'display:none;'}}">
+        <div class="sizeInfoDiv">
+            <img src="img/sizeInstruction.jpg">
+            <span class="icon-undo" ng-click="onSizeInfoButtonClicked()"></span>
+        </div>
+    </div>
     <div class="addressValueRow">
         <div class="addressTitle" ng-click="onEditAddressDetailClicked()">邮寄信息：</div>
         <div class="addressValue" ng-click="onEditAddressDetailClicked()">
@@ -30,10 +36,18 @@
                     <span>尺码</span>
                 </div>
                 <div class="sizeOptions">
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XXS'">极小</label>
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XS'">小</label>
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'M'">中</label>
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'L'">大</label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'S'">
+                        {{designInfo.sGender === 'male' ? 'S' : 'XS'}}
+                    </label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'M'">
+                        {{designInfo.sGender === 'male' ? 'M' : 'S'}}
+                    </label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'L'">
+                        {{designInfo.sGender === 'male' ? 'L' : 'M'}}
+                    </label>
+                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XL'">
+                        {{designInfo.sGender === 'male' ? 'XL' : 'L'}}
+                    </label>
                 </div>
                 <div class="quantityTitle">
                     <span>数量</span>
@@ -46,7 +60,7 @@
                     ng-click="onDecreaseQuantity()">减</label>
                 </div>
                 <div class="moreOrders">
-                    <span class="icon-info"></span>
+                    <span class="icon-info" ng-click="onSizeInfoButtonClicked()"></span>
                 </div>
             </div>
             <div class="summary">

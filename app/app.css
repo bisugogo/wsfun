@@ -426,6 +426,7 @@ body.weavesFunBody {
   font-size: 25px;
   font-weight: bold;
   color: white;
+  margin-left: -4px;
 }
 
 .createDetailView .saveDetailView .saveSuccessTitle .titleLine1,
@@ -948,6 +949,29 @@ body.weavesFunBody {
   width: 30px;
 }
 
+.orderDesignView .sizeInfo {
+  position: fixed;
+  z-index: 10000;
+  top: 0px;
+  left: 0px;
+}
+
+.orderDesignView .sizeInfo .sizeInfoDiv {
+  position: relative;
+}
+
+.orderDesignView .sizeInfo .sizeInfoDiv img {
+  width: 100%;
+}
+
+.orderDesignView .sizeInfo .sizeInfoDiv span {
+  position: absolute;
+  bottom: 5px;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+}
+
 .createDetailView .payCouponListView .payCouponListContainer {
   height: 100%;
   overflow: auto;
@@ -1420,7 +1444,8 @@ body.weavesFunBody {
   border: 2px solid rgb(215, 180, 104);
 }
 
-.myDesignListCenter .noDesignFound {
+.myDesignListCenter .noDesignFound,
+.myOrdersView .noOrderFound {
   color: rgb(215, 180, 104);
   font-size: 15px;
 }

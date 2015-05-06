@@ -160,7 +160,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
 
                         var orderInfo = {
                             clothesQuanaity: 1,
-                            clothesSize: 'M',
+                            clothesSize: 'L',
                             clothesGender: $scope.designInfo.sGender,
                             defaultQuantityAction: '加',
                             totalPay: 0,
@@ -179,6 +179,10 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                             $scope.orderInfo.clothesQuanaity--;
                             $scope.calcPay();
                         }
+                    };
+
+                    $scope.onSizeInfoButtonClicked = function() {
+                        $scope.bShowSizeInfo = $scope.bShowSizeInfo ? false : true;
                     };
 
                     $scope.onCreateOrderBtnClicked = function() {
@@ -227,6 +231,15 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                             oParam.data.maleInfo.quantity = $scope.orderInfo.clothesQuanaity;
                         } else if ($scope.orderInfo.clothesGender === 'female') {
                             oParam.data.femaleInfo.quantity = $scope.orderInfo.clothesQuanaity;
+                            if ($scope.orderInfo.clothesSize === 'S') {
+                                oParam.data.femaleInfo.clothesSize = 'XS';
+                            } else if ($scope.orderInfo.clothesSize === 'M') {
+                                oParam.data.femaleInfo.clothesSize = 'S';
+                            } else if ($scope.orderInfo.clothesSize === 'L') {
+                                oParam.data.femaleInfo.clothesSize = 'M';
+                            } else {
+                                oParam.data.femaleInfo.clothesSize = 'L';
+                            }
                         } else {
                             oParam.data.kidInfo.quantity = $scope.orderInfo.clothesQuanaity;
                         }
@@ -435,8 +448,6 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         // });
 
         $scope.constant = {
-            SIZE_ARRAY: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-            BK_COLOR_ARRYA: ['黑', '白'],
             ORIGIN_PRICE: 99
         };
         $scope.designInfo = {
@@ -450,7 +461,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.orderInfo = {
             clothesQuanaity: 1,
-            clothesSize: 'M',
+            clothesSize: 'L',
             clothesGender: $scope.designInfo.sGender,
             defaultQuantityAction: '加',
             totalPay: 0,
