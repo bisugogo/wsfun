@@ -16,6 +16,7 @@
                 <span class="titleSpan">已上传图像</span>
             </div>
             <div class="myArtifactsCarouselDiv" ng-if="aMyArtifact.length > 0">
+                <span class="noArtifactFound" ng-if="!aMyArtifact">载入中...</span>
                 <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide"  
                 rn-carousel-index="aMyArtifactCarouselIndex">
                     <li ng-repeat="oImageGroup in aMyArtifact">

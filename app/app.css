@@ -1453,6 +1453,11 @@ body.weavesFunBody {
   font-size: 15px;
 }
 
+.personalGalleryRow .noArtifactFound {
+  color: white;
+  font-size: 15px;
+}
+
 .myDesignListCarousel {
   height: 100%;
 }

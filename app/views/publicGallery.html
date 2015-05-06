@@ -2,9 +2,10 @@
     <div class="col-xs-12">
         <div class="uploadedImageArea">
             <div class="titleDiv">
-                <span class="titleSpan">精选设计</span>
+                <span class="titleSpan">精选素材</span>
             </div>
             <div class="myArtifactsCarouselDiv" ng-if="aPublicArtifact.length > 0">
+                <span class="noArtifactFound" ng-if="!aPublicArtifact">载入中...</span>
                 <ul rn-carousel class="image myArtifactsCarousel" rn-carousel-transition="fadeAndSlide"  
                 rn-carousel-index="aPublicArtifactCarouselIndex">
                     <li ng-repeat="oImageGroup in aPublicArtifact">
