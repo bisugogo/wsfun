@@ -958,15 +958,18 @@ body.weavesFunBody {
 
 .orderDesignView .sizeInfo .sizeInfoDiv {
   position: relative;
+  text-align: center;
 }
 
 .orderDesignView .sizeInfo .sizeInfoDiv img {
   width: 100%;
+  max-height: 100%;
 }
 
 .orderDesignView .sizeInfo .sizeInfoDiv span {
   position: absolute;
-  bottom: 5px;
+  top: 10px;
+  left: 8px;
   color: white;
   font-size: 25px;
   font-weight: bold;
