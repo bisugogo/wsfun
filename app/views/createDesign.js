@@ -37,9 +37,13 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 templateUrl: 'views/createDetail.html',
                 controller: function($scope, $state, Design) {
                     $scope.onOpenMyGallery = function() {
-                        $scope.getMyArtifactThumbnails();
-                        $scope.$parent.sActiveFeature = 'cameraSelected';
-                        $state.go('createDesign.createDetail.myGallery');
+                        if ($scope.$parent.sActiveFeature === 'cameraSelected') {
+                            $scope.restoreActiveFeature();
+                        } else {
+                            $scope.getMyArtifactThumbnails();
+                            $scope.$parent.sActiveFeature = 'cameraSelected';
+                            $state.go('createDesign.createDetail.myGallery');
+                        }
                     };
 
                     $scope.onOpenPublicGallery = function() {
