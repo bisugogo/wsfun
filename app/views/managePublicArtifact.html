@@ -1,0 +1,26 @@
+<div class="managePublicArtifactView">
+    <div ng-repeat="oArtifact in aPublicArtifacts" class="artifactItem">
+        <div class="artifactImageDiv">
+            <img src="{{oArtifact.midImage64}}" class="previewImage">
+        </div>
+        <div class="artifactUpdateDiv">
+            <span>{{oArtifact.type}}</span>
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                    {{oArtifact.targetStatus ? oArtifact.targetStatus : '更改'}}<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'hot')">热点hot</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'celebrity')">人物明星</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'landscape')">风光景点</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'cartoon')">动画动漫</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'movie')">电影电视</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'pet')">动物宠物</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'society')">社会宗教</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'male')">男属素材</a></li>
+                    <li><a ng-click="onArtifactTypeChange(oArtifact, 'female')">女属素材</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

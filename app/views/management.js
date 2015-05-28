@@ -3,7 +3,49 @@
 var oManagement = angular.module('ntApp.management', ['ui.router', 'designServices']);
 
 oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, $httpProvider) {
+    $stateProvider.state('management.managePublicArtifact', {
+        url: '/publicArtifact',
+        // templateUrl: 'views/createDetail.html',
+        // controller: 'CreateDetailCtrl'
+        views: {
+            'managePublicArtifact' : {
+                templateUrl: 'views/managePublicArtifact.html',
+                controller: function($scope, $state, Design) {
+                    $scope.aPublicArtifacts = [];
+                    var oParam = {
+                        action: 'getPublicArtifactThumbnails'
+                    };
+                    Design.FileManager.query(oParam, function(oContent) {
+                        $scope.aPublicArtifacts = oContent.data;
+                    });
 
+                    $scope.onArtifactTypeChange = function(oArtifact, sType) {
+                        var oParam = {
+                            action: 'updateArtifactType',
+                            data: {
+                                artifactId: oArtifact._id,
+                                type: sType
+                            }
+                        };
+                        Design.DesignManager.update(oParam, function(oData) {
+                            if (oData.error || oData.data === 'NOT_FOUND') {
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: oData.error || oData.data
+                                });
+                            } else {
+                                oArtifact.type = oData.data.type;
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: 'Artifact type changed to ' + oData.data.type + ' successfully.'
+                                });
+                            }
+                        });
+                    };
+                }
+            }
+        }
+    })
 }]);
 
 oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state', '$modal', '$upload', 'Design', 
@@ -234,6 +276,10 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
             // }, function () {
             // $log.info('Modal dismissed at: ' + new Date());
             // });
+        };
+
+        $scope.onManagePublicArtifactClicked = function() {
+            $state.go('management.managePublicArtifact');
         };
 
         $scope.closeAlert = function(index) {

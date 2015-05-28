@@ -40,6 +40,10 @@ var DesignSchema = new Schema({
     type: String,
     default: ''
   },
+  previewImageFile: {
+    type: String,
+    default: ''
+  },
   designFileId: {
     type: String,
     default: ''

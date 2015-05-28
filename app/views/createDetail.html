@@ -67,10 +67,12 @@
                 <span class="icon-undo" ng-click="onCreateDesignBackClicked()"></span>
             </div>
             <div class="highlightButton">
-                <span class="icon-ideas2" ng-click="onOpenPublicGallery()"></span>
+                <label class="icon-ideas2" ng-model="sActiveFeature" btn-radio="'highlightSelected'" 
+                ng-click="onOpenPublicGallery()"></label>
             </div>
             <div class="cameraButton">
-                <span class="glyphicon glyphicon-camera" ng-click="onOpenMyGallery()"></span>
+                <label class="glyphicon glyphicon-camera" ng-model="sActiveFeature" btn-radio="'cameraSelected'" 
+                ng-click="onOpenMyGallery()"></label>
             </div>
             <!--div class="textButton">
                 <span class="glyphicon glyphicon-text-size" ng-click="getFileContent()"></span>

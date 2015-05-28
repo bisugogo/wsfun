@@ -235,9 +235,16 @@ module.exports = function(app) {
     };
 
     getPublicArtifactThumbnails = function(req, res) {
+        var sType = req.query.artifactType;
         var db = mongoose.connection.db;
-        var oQuery = Artifact.find({'access': 'public'});
-        oQuery.select('_id fileId midImage64 largeImage64');
+        var oFilter = {
+            'access': 'public'
+        };
+        if (!!sType) {
+            oFilter['type'] = sType;
+        }
+        var oQuery = Artifact.find(oFilter);
+        oQuery.select('_id type fileId midImage64 largeImage64');
         oQuery.exec(function (err, aArtifact) {
             if (err) {
                 res.send({error: err.message});

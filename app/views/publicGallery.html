@@ -12,21 +12,21 @@
                 rn-carousel-index="aPublicArtifactCarouselIndex">
                     <li ng-repeat="oImageGroup in aPublicArtifact">
                         <div class="myArtifactsGroupTop">
-                            <img src="{{oImageGroup[0].largeImage64}}" style="margin:auto;" 
+                            <img src="{{oImageGroup[0].largeImage64}}" style="{{!!oImageGroup[0] ? '' : 'visibility:hidden;'}}" 
                             ng-click="onArtifactSelected(oImageGroup[0])">
-                            <img src="{{oImageGroup[1].largeImage64}}" style="margin:auto;" 
+                            <img src="{{oImageGroup[1].largeImage64}}" style="{{!!oImageGroup[1] ? '' : 'visibility:hidden;'}}" 
                             ng-click="onArtifactSelected(oImageGroup[1])">
                         </div>
                         <div class="myArtifactsGroupBottom">
-                            <img src="{{oImageGroup[2].largeImage64}}" style="margin:auto;" 
+                            <img src="{{oImageGroup[2].largeImage64}}" style="{{!!oImageGroup[2] ? '' : 'visibility:hidden;'}}" 
                             ng-click="onArtifactSelected(oImageGroup[2])">
-                            <img src="{{oImageGroup[3].largeImage64}}" style="margin:auto;" 
+                            <img src="{{oImageGroup[3].largeImage64}}" style="{{!!oImageGroup[3] ? '' : 'visibility:hidden;'}}" 
                             ng-click="onArtifactSelected(oImageGroup[3])">
                         </div>
                         <div class="myArtifactsGroupBottom">
-                            <img src="{{oImageGroup[4].largeImage64}}" style="margin:auto;" 
+                            <img src="{{oImageGroup[4].largeImage64}}" style="{{!!oImageGroup[4] ? '' : 'visibility:hidden;'}}" 
                             ng-click="onArtifactSelected(oImageGroup[4])">
-                            <img src="{{oImageGroup[5].largeImage64}}" style="margin:auto;" 
+                            <img src="{{oImageGroup[5].largeImage64}}" style="{{!!oImageGroup[5] ? '' : 'visibility:hidden;'}}" 
                             ng-click="onArtifactSelected(oImageGroup[5])">
                         </div>
                         <!--img src="{{oImage.largeImage64}}" style="margin:auto;" 
@@ -35,6 +35,52 @@
                 </ul>
                 <div rn-carousel-indicators ng-if="aPublicArtifact.length > 1" slides="aPublicArtifact" 
                 rn-carousel-index="aPublicArtifactCarouselIndex" class="carouselIndicator"></div>
+                <div class="publicArtifactTypes">
+                    <ul rn-carousel class="image publicArtifactTypesCarousel" rn-carousel-controls>
+                        <li>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'hot'" 
+                                ng-click="onPublicArtifactTypeClicked('hot')">热点hot</label>
+                            </div>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'celebrity'" 
+                                ng-click="onPublicArtifactTypeClicked('celebrity')">人物明星</label>
+                            </div>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'landscape'" 
+                                ng-click="onPublicArtifactTypeClicked('landscape')">风光景点</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'cartoon'" 
+                                ng-click="onPublicArtifactTypeClicked('cartoon')">动画动漫</label>
+                            </div>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'movie'" 
+                                ng-click="onPublicArtifactTypeClicked('movie')">电影电视</label>
+                            </div>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'pet'" 
+                                ng-click="onPublicArtifactTypeClicked('pet')">动物宠物</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'society'" 
+                                ng-click="onPublicArtifactTypeClicked('society')">社会宗教</label>
+                            </div>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'male'" 
+                                ng-click="onPublicArtifactTypeClicked('male')">男属素材</label>
+                            </div>
+                            <div class="artifactTypeDiv">
+                                <label ng-model="sPublicArtifactType" btn-radio="'female'" 
+                                ng-click="onPublicArtifactTypeClicked('female')">女属素材</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

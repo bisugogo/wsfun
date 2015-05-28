@@ -38,12 +38,19 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                 controller: function($scope, $state, Design) {
                     $scope.onOpenMyGallery = function() {
                         $scope.getMyArtifactThumbnails();
+                        $scope.$parent.sActiveFeature = 'cameraSelected';
                         $state.go('createDesign.createDetail.myGallery');
                     };
 
                     $scope.onOpenPublicGallery = function() {
-                        $scope.getPublicArtifactThumbnails();
-                        $state.go('createDesign.createDetail.publicGallery');
+                        if ($scope.$parent.sActiveFeature === 'highlightSelected') {
+                            $scope.restoreActiveFeature();
+                        } else {
+                            $scope.getPublicArtifactThumbnails('hot');
+                            $scope.$parent.sActiveFeature = 'highlightSelected';
+                            $scope.$parent.sPublicArtifactType = 'hot';
+                            $state.go('createDesign.createDetail.publicGallery');
+                        }
                     };
                 }
             }
@@ -432,6 +439,12 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.aSelectedArtifact = [];
         $scope.aMessage = [];
         $scope.busyViewStyle = "display:none;"
+        $scope.sActiveFeature = 'none';
+        $scope.sPublicArtifactType = 'none';
+
+        $scope.mBufferedPublicArtifact = {
+
+        };
 
         $scope.showBusy = function() {
             $scope.busyViewStyle = "";
@@ -497,6 +510,9 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.onCreateDesignClicked = function () {
             //GO TO SAVE PAGE
             $scope.updateDesignToolRow(false);
+            if ($scope.sActiveFeature !== 'none') {
+                $scope.sActiveFeature = 'none';
+            }
             $state.go('createDesign.createDetail.saveDetail');
         };
 
@@ -679,6 +695,9 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onCreateDesignBackClicked = function() {
+            if ($scope.sActiveFeature !== 'none') {
+                $scope.sActiveFeature = 'none';
+            }
             $state.go('^');
         };
 
@@ -791,15 +810,22 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             });
         };
 
-        $scope.getPublicArtifactThumbnails = function() {
-            var oParam = {
-                action: 'getPublicArtifactThumbnails'
-            };
-            var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
-                //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
-                $scope.aPublicArtifact = $scope.groupArtifactThumbnails(oContent.data, 6);
+        $scope.getPublicArtifactThumbnails = function(sTargetType) {
+            if (!$scope.mBufferedPublicArtifact[sTargetType] || $scope.mBufferedPublicArtifact[sTargetType].length < 1) {
+                var oParam = {
+                    action: 'getPublicArtifactThumbnails',
+                    artifactType: sTargetType
+                };
+                var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
+                    //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
+                    $scope.aPublicArtifact = $scope.groupArtifactThumbnails(oContent.data, 6);
+                    $scope.aPublicArtifactCarouselIndex = 0;
+                    $scope.mBufferedPublicArtifact[sTargetType] = $scope.aPublicArtifact;
+                });
+            } else {
+                $scope.aPublicArtifact = $scope.mBufferedPublicArtifact[sTargetType];
                 $scope.aPublicArtifactCarouselIndex = 0;
-            });
+            }
         };
 
         $scope.groupArtifactThumbnails = function(aThumbnail, iGroupSize) {
@@ -901,11 +927,26 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
                 $scope.aSelectedArtifact.push(oArtifact);
                 $scope.updateAvailableAreaStyle();
+                if ($scope.sActiveFeature !== 'none') {
+                    $scope.sActiveFeature = 'none';
+                }
                 $state.go('^');
             }
 
             // $scope.aSelectedArtifact.push(oArtifact);
             // $state.go('^');
+        };
+
+        $scope.onPublicArtifactTypeClicked = function(sType) {
+            if ($scope.sPublicArtifactType !== sType) {
+                $scope.getPublicArtifactThumbnails(sType);
+                $scope.sPublicArtifactType = sType;
+            }
+        };
+
+        $scope.restoreActiveFeature = function() {
+            $state.go('^');
+            $scope.sActiveFeature = 'none';
         };
 
         $scope.updateAvailableAreaStyle = function() {

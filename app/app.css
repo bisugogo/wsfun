@@ -269,20 +269,25 @@ body.weavesFunBody {
   color: rgb(215, 180, 104);
 }
 
+.createDetailView .toolRow > div > label {
+  font-size: 22px;
+  color: rgb(215, 180, 104);
+}
+
 .createDetailView .toolRow .backButton > span {
   font-size: 25px;
   font-weight: bold;
 }
 
-.createDetailView .toolRow > div:nth-child(2) > span,
-.createDetailView .toolRow > div:nth-child(3) > span {
+.createDetailView .toolRow > div:nth-child(2) > label,
+.createDetailView .toolRow > div:nth-child(3) > label {
   border: 1px solid rgb(215, 180, 104);
   border-radius: 20px;
   padding: 4px;
 }
 
-.createDetailView .toolRow > div:nth-child(2) > span:active,
-.createDetailView .toolRow > div:nth-child(3) > span:active {
+.createDetailView .toolRow > div:nth-child(2) > label.active,
+.createDetailView .toolRow > div:nth-child(3) > label.active {
   color: white;
   background-color: rgb(215, 180, 104);
 }
@@ -305,10 +310,10 @@ body.weavesFunBody {
 }
 
 .createDetailView .personalGalleryRow .uploadedImageArea {
-  height: calc(100% - 110px);
-  height: -webkit-calc(100% - 110px);
-  height: -moz-calc(100% - 110px);
-  height: -o-calc(100% - 110px);
+  height: calc(100% - 120px);
+  height: -webkit-calc(100% - 120px);
+  height: -moz-calc(100% - 120px);
+  height: -o-calc(100% - 120px);
 }
 
 .createDesignView .personalGalleryRow.publicGalleryRow .uploadedImageArea {
@@ -1120,7 +1125,11 @@ body.weavesFunBody {
 }
 
 .uploadedImageArea .myArtifactsCarouselDiv {
-  height: 100%;
+  position: relative;
+  height: calc(100% - 25px);
+  height: -webkit-calc(100% - 25px);
+  height: -moz-calc(100% - 25px);
+  height: -o-calc(100% - 25px);
 }
 
 .uploadedImageArea .myArtifactsCarousel {
@@ -1149,11 +1158,51 @@ body.weavesFunBody {
 .uploadedImageArea .carouselIndicator {
   text-align: center;
   position: relative;
-  bottom: 15px;
+  bottom: 20px;
 }
 
 .uploadedImageArea .carouselIndicator > .rn-carousel-indicator > span {
   margin-right: 5px;
+}
+
+.publicGalleryRow .publicArtifactTypes {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+.publicGalleryRow .publicArtifactTypes ul {
+  height: 30px;
+}
+
+.publicGalleryRow .publicArtifactTypes ul .rn-carousel-control.rn-carousel-control-next {
+  color: white;
+  right: 0px;
+  top: 0px;
+  font-size: 15px;
+}
+
+.publicGalleryRow .publicArtifactTypes ul .rn-carousel-control.rn-carousel-control-prev {
+  color: white;
+  left: 0px;
+  top: 0px;
+  font-size: 15px;
+}
+
+.publicGalleryRow .publicArtifactTypes ul > li .artifactTypeDiv {
+  display: inline-block;
+  width: 32%;
+  text-align: center;
+}
+
+.publicGalleryRow .publicArtifactTypes ul > li .artifactTypeDiv label.active {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.publicGalleryRow .publicArtifactTypes ul > li .artifactTypeDiv label {
+  font-weight: normal;
+  color: white;
 }
 
 .myDesignsView {
@@ -1864,6 +1913,10 @@ body.weavesFunBody {
 .managementView .orderContainer .orderItem .submit span {
   color: blue;
   cursor: pointer;
+}
+
+.managePublicArtifactView .artifactItem {
+  display: inline-block;
 }
 
 .myOrdersView {

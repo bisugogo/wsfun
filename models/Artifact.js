@@ -15,11 +15,19 @@ var ArtifactSchema = new Schema({
     type: String,
     default: 'public'
   },
+  type: {
+    type: String,
+    default: 'hot'
+  },
   fileId: {
     type: String,
     require: true
   },
   fileName: {
+    type: String,
+    default: ''
+  },
+  previewFileName: {
     type: String,
     default: ''
   },

@@ -9,6 +9,7 @@ var Design = require('../models/tshirt.js');
 var Order = require('../models/order.js');
 var User = require('../models/User.js');
 var Coupon = require('../models/Coupon.js');
+var Artifact = require('../models/Artifact.js');
 var CouponSource = require('../models/CouponSource.js');
 
 var mongoose = require('mongoose');
@@ -374,33 +375,60 @@ module.exports = function(app) {
             var iMidTargetWidth = FILE_CONSTANT.MID_IMAGE_WIDTH;
             var iMidTargetHeight = Math.round(ratio * iMidTargetWidth);
 
+            var sFinalImageFileName = oData.creatorId + '_' + oData.requestedTime + '_final.png';
             var writestream = gfs.createWriteStream({
-                filename: sFilePath,
+                //filename: sFilePath,
+                filename: sFinalImageFileName,
                 mode:'w',
                 content_type:'binary/octet-stream',
                 metadata:{
                     type: 'designImage'
                 },
             });
+            var sPreviewImageFileName = oData.creatorId + '_' + oData.requestedTime + '_preview.png';
+
+            var previewFileWritestream = gfs.createWriteStream({
+                filename: sPreviewImageFileName,
+                mode:'w',
+                content_type:'binary/octet-stream',
+                metadata:{
+                    type: 'designPreviewImage'
+                },
+            });
+
             fs.createReadStream(sFilePath).pipe(writestream);
 
             writestream.on('close', function (oGridFsFile) {
                 gm(sFilePath).options({imageMagick: true})
-                .resize(iMidTargetWidth, iMidTargetHeight).toBuffer(function(err, buffer) {
+                // .resize(iMidTargetWidth, iMidTargetHeight).toBuffer(function(err, buffer) {
+                //     if (err) {
+                //         oRes.send({
+                //             error: err,
+                //             msg: 'create final design image thumbnail failed.'
+                //         });
+                //     }
+
+                //     deleteFolderRecursive('img/' + oData.requestedTime);
+
+                //     var sMidBase64 = buffer.toString('base64');
+                //     console.log("sMidBase64 length: " + sMidBase64.length);
+
+                //     var sImgBase64 = 'data:image/png;base64,' + sMidBase64
+                //     saveDesign(oRes, oData, sImgBase64, oGridFsFile._id);
+                    
+                // });
+                .resize(iMidTargetWidth, iMidTargetHeight).stream(function(err, stdout, stderr) {
                     if (err) {
                         oRes.send({
                             error: err,
-                            msg: 'create final design image thumbnail failed.'
+                            msg: 'create final design preview image stream to GFS failed.'
                         });
                     }
 
-                    deleteFolderRecursive('img/' + oData.requestedTime);
+                    //deleteFolderRecursive('img/' + oData.requestedTime);
+                    
 
-                    var sMidBase64 = buffer.toString('base64');
-                    console.log("sMidBase64 length: " + sMidBase64.length);
-
-                    var sImgBase64 = 'data:image/png;base64,' + sMidBase64
-                    saveDesign(oRes, oData, sImgBase64, oGridFsFile._id);
+                    stdout.pipe(previewFileWritestream);
                     
                 });
             });
@@ -411,9 +439,21 @@ module.exports = function(app) {
                     error: 'createDesign -> saveDesignFile GridFs failed.'
                 });
             });
+
+            previewFileWritestream.on('close', function (oPreviewGridFsFile) {
+                deleteFolderRecursive('img/' + oData.requestedTime);
+                saveDesign(oRes, oData, oPreviewGridFsFile.filename, oPreviewGridFsFile._id);
+            });
+
+            previewFileWritestream.on('error', function(err) {
+                LOG.logger.logFunc('createDesign', 'saveDesignFile preview GridFs failed.');
+                oRes.send({
+                    error: 'createDesign -> saveDesignFile preview GridFs failed.'
+                });
+            });
         }
 
-        function saveDesign(oRes, oData, sDesignBase64, sDesignFileId) {
+        function saveDesign(oRes, oData, sPreviewFileName, sDesignFileId) {
             var oDesignJson = {
                 creatorId : oData.creatorId,
                 color : oData.color,
@@ -421,7 +461,7 @@ module.exports = function(app) {
                 desc : oData.desc,
                 gender: oData.gender,
                 access : oData.access,
-                previewImage64 : sDesignBase64,
+                previewImageFile : sPreviewFileName,
                 designFileId : sDesignFileId
             };
             var design = new Design(oDesignJson);
@@ -1057,6 +1097,26 @@ module.exports = function(app) {
         });
     };
 
+    updateArtifactType = function(data, res) {
+        var sArtifactId = data.artifactId;
+        var updateInfo = {
+            'type': data['type']
+        };
+        Artifact.findByIdAndUpdate(sArtifactId, updateInfo, {'new': true}, function(err, oDBRet) {
+            if (err) {
+                LOG.logger.logFunc('updateArtifactType', err.message);
+                res.send({
+                    error: 'updateArtifactType failed ' + err.message
+                });
+            } else {
+                res.send({
+                    status: 'OK',
+                    data: oDBRet
+                });
+            }
+        });
+    };
+
     getService = function(req, res) {
         var sAction = req.query.action;
         if (sAction === 'getAllMyDesigns') {
@@ -1131,6 +1191,8 @@ module.exports = function(app) {
                 updateOrderStatus(req.body.data, res);
             } else if (sAction === 'guessDesignCreated') {
                 guessDesignCreated(req.body.data, res);
+            } else if (sAction === 'updateArtifactType') {
+                updateArtifactType(req.body.data, res);
             }
         } else {
             console.log("design post service, action: empty.");
