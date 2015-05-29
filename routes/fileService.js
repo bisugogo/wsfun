@@ -457,6 +457,57 @@ module.exports = function(app) {
         //     });  
         // });
     };
+
+    deleteArtifact = function(req, res) {
+        LOG.logger.logFunc('deleteArtifact');
+        var oReqData = req.body.data;
+        var sArtifactId = oReqData.artifactId;
+        Artifact.findById(sArtifactId, function(err, artifact) {
+            if (!artifact) {
+                LOG.logger.logFunc('deleteArtifact', 'artifact id:' + sArtifactId + ' not found.');
+                res.statusCode = 404;
+                return res.send({
+                    error : 'Target artifact not found'
+                });
+            }
+
+            var sArtifactFileId = oReqData.artifactFileId;
+
+            var db = mongoose.connection.db;
+            var mongoDriver = mongoose.mongo;
+            var gfs = new Gridfs(db, mongoDriver);
+            gfs.remove({
+                _id: artifact.fileId
+            }, function (err) {
+                if (err) {
+                    LOG.logger.logFunc('deleteArtifact', 'delete artifact source image file with id:' + sArtifactFileId + 
+                        ' failed. Error message: ' + err.message);
+                    res.send({
+                        error : 'Delete artifact image file failed.'
+                    });
+                }
+                
+                artifact.remove(function(err) {
+                    if (!err) {
+                        console.log('Removed tshirt');
+                        return res.send({
+                            status : 'OK',
+                            data: {
+                                removedArtifactId: sArtifactId
+                            }
+                        });
+                    } else {
+                        res.statusCode = 500;
+                        LOG.logger.logFunc('deleteArtifact', 'delete artifact with id:' + sArtifactId + 
+                        ' failed. Error message: ' + err.message);
+                        return res.send({
+                            error : err.message
+                        });
+                    }
+                })
+            });
+        });
+    };
     
     getService = function(req, res) {
         var sAction = req.query.action;
@@ -484,6 +535,8 @@ module.exports = function(app) {
         if (sAction === 'createCustomDesign') {
             LOG.logger.logFunc('createCustomDesign');
             createCustomDesign(req, res);
+        } else if (sAction === 'deleteArtifact') {
+            deleteArtifact(req, res);
         } else {
             res.send({error: 'Funtion not implemented.'});
         }

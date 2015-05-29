@@ -26,7 +26,8 @@ designServices.factory('Design', ['$resource',
             
             FileManager: $resource('file', {}, {
                 query: {method:'GET', /*headers: {'Accept-Encoding': 'gzip'}*/},
-                create: {method:'POST'}
+                create: {method:'POST'},
+                delete: {method: 'POST'}
             })
         };
 }]);

@@ -42,6 +42,38 @@ oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, 
                             }
                         });
                     };
+
+                    $scope.onDeleteArtifact = function(oArtifact) {
+                        var oParam = {
+                            action: 'deleteArtifact',
+                            data: {
+                                artifactId: oArtifact._id
+                            }
+                        };
+                        Design.FileManager.delete(oParam, function(oData) {
+                            if (oData.error) {
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: oData.error || oData.data
+                                });
+                            } else {
+                                var iDeleteIdx = -1;
+                                for (var i = 0; i < $scope.aPublicArtifacts.length; i++) {
+                                    if ($scope.aPublicArtifacts[i]._id === oArtifact._id) {
+                                        iDeleteIdx = i;
+                                        break;
+                                    }
+                                }
+                                if (iDeleteIdx > -1) {
+                                    $scope.aPublicArtifacts.splice(iDeleteIdx, 1);
+                                }
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: 'Artifact ' + oArtifact._id + ' deleted successfully.'
+                                });
+                            }
+                        });
+                    };
                 }
             }
         }

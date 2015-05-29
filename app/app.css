@@ -1919,6 +1919,10 @@ body.weavesFunBody {
   display: inline-block;
 }
 
+.managePublicArtifactView .artifactItem .artifactRemoveButton {
+  font-size: 20px;
+}
+
 .myOrdersView {
   position: fixed;
   top: 0px;
