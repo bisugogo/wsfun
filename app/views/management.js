@@ -78,6 +78,60 @@ oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, 
             }
         }
     })
+    .state('management.managePublicDesign', {
+        url: '/publicDesign',
+        views: {
+            'managePublicDesign' : {
+                templateUrl: 'views/managePublicDesign.html',
+                controller: function($scope, $state, Design) {
+                    $scope.filterTypeText = 'review';
+                    $scope.aUnderReviewDesigns = [];
+                    var oParam = {
+                        action: 'getReviewDesigns',
+                        access: 'review'
+                    };
+                    Design.DesignManager.query(oParam, function(oContent) {
+                        $scope.aUnderReviewDesigns = oContent.designList;
+                    });
+
+                    $scope.onDesignAccessChange = function(oDesign, sTargetAccess) {
+                        var oUpdateParam = {
+                            action: 'updateDesignAccess',
+                            data: {
+                                designId: oDesign._id,
+                                access: sTargetAccess
+                            }
+                        };
+                        Design.DesignManager.update(oUpdateParam, function(oData) {
+                            if (oData.error) {
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: oData.error || oData.data
+                                });
+                            } else {
+                                oDesign.access = oData.data.access;
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: 'Design ' + oDesign._id + ' access updated to ' + oDesign.access + ' successfully.'
+                                });
+                            }
+                        });
+                    };
+
+                    $scope.onDesignFilterChange = function(sTargetFilter) {
+                        $scope.filterTypeText = sTargetFilter;
+                        var oParam = {
+                            action: 'getReviewDesigns',
+                            access: sTargetFilter
+                        };
+                        Design.DesignManager.query(oParam, function(oContent) {
+                            $scope.aUnderReviewDesigns = oContent.designList;
+                        });
+                    };
+                }
+            }
+        }
+    });
 }]);
 
 oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state', '$modal', '$upload', 'Design', 
@@ -312,6 +366,10 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
 
         $scope.onManagePublicArtifactClicked = function() {
             $state.go('management.managePublicArtifact');
+        };
+
+        $scope.onManagePublicDesignClicked = function() {
+            $state.go('management.managePublicDesign');
         };
 
         $scope.closeAlert = function(index) {

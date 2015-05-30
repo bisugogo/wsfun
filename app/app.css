@@ -397,10 +397,18 @@ body.weavesFunBody {
   border-color: rgb(215, 180, 104);
 }
 
+.createDetailView .previewBackground {
+  position: relative;
+}
+
+.createDetailView .previewBackground img {
+  width: 100%;
+}
+
 .createDetailView .previewDesignBtn {
   text-align: center;
   position: fixed;
-  bottom: 35px;
+  bottom: 40px;
   height: 35px;
   width: 100%;
   background-color: rgba(207, 176, 96, 0.5);
@@ -1917,10 +1925,26 @@ body.weavesFunBody {
 
 .managePublicArtifactView .artifactItem {
   display: inline-block;
+  border: 1px solid grey;
+  padding: 5px;
 }
 
 .managePublicArtifactView .artifactItem .artifactRemoveButton {
   font-size: 20px;
+}
+
+.managePublicDesignView .filterTypeDiv {
+  border-bottom: 2px solid grey;
+}
+
+.managePublicDesignView .designItem {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid grey;
+}
+
+.managePublicDesignView .designItem img{
+  border: 2px dotted blue;
 }
 
 .myOrdersView {

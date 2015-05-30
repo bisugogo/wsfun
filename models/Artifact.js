@@ -27,7 +27,15 @@ var ArtifactSchema = new Schema({
     type: String,
     default: ''
   },
+  previewFileId: {
+    type: String,
+    default: ''
+  },
   previewFileName: {
+    type: String,
+    default: ''
+  },
+  previewInfo: {
     type: String,
     default: ''
   },

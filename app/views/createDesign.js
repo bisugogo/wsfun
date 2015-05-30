@@ -157,14 +157,18 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                         if (oDesignInfo.gender === 'male') {
                             if (oDesignInfo.color === 'white') {
                                 oDesignInfo.bkImg = 'img/male_white.png';
+                                oDesignInfo.previewBkImg = 'img/male_white_preview.png';
                             } else {
                                 oDesignInfo.bkImg = 'img/male_black.png';
+                                oDesignInfo.previewBkImg = 'img/male_black_preview.png';
                             }
                         } else {
                             if (oDesignInfo.color === 'white') {
                                 oDesignInfo.bkImg = 'img/female_white.png';
+                                oDesignInfo.previewBkImg = 'img/female_white_preview.png';
                             } else {
                                 oDesignInfo.bkImg = 'img/female_black.png';
+                                oDesignInfo.previewBkImg = 'img/female_black_preview.png';
                             }
                         }
 
@@ -497,7 +501,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             designToolArea: {
                 visible: true,
                 styleStr: ""
-            }
+            },
+            previewBackgroundStyle: "display:none;"
         };
 
         $scope.setDesignInfo = function(oDesign) {
@@ -535,7 +540,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 gender: $scope.designInfo.sGender,
                 price: $scope.constant.ORIGIN_PRICE,
                 desc: $scope.designInfo.sDescription,
-                access: $scope.designInfo.bPublicDesign ? 'public' : 'private',
+                access: $scope.designInfo.bPublicDesign ? 'review' : 'private',
                 artifacts: []
             };
 
@@ -570,7 +575,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     clearTimeout($scope.lastCreateDesignTimer);
                     $scope.designInfo.bSaved = true;
                     $scope.designInfo.designId = oDesign.data.designId;
-                    $scope.designInfo.previewImage64 = oDesign.data.previewImage64;
+                    $scope.designInfo.previewImageFile = oDesign.data.previewImageFile;
                 } else {
                     // var output = '';
                     // for (property in oDesign) {
@@ -666,23 +671,27 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             if ($scope.designInfo.gender === 'male') {
                 if ($scope.designInfo.color === 'white') {
                     $scope.designInfo.bkImg = 'img/male_white.png';
+                    $scope.designInfo.previewBkImg = 'img/male_white_preview.png';
                     var aStylePart = $scope.htmlItemStyle.availableArea.styleStr.split(';');
                     aStylePart.splice(aStylePart.length - 2, 2);
                     $scope.htmlItemStyle.availableArea.styleStr = aStylePart.join(';');
                     $scope.htmlItemStyle.availableArea.styleStr += ';'
                 } else {
                     $scope.designInfo.bkImg = 'img/male_black.png';
+                    $scope.designInfo.previewBkImg = 'img/male_black_preview.png';
                     $scope.htmlItemStyle.availableArea.styleStr += 'background-color:rgba(255,255,255,0.3);';
                 }
             } else {
                 if ($scope.designInfo.color === 'white') {
                     $scope.designInfo.bkImg = 'img/female_white.png';
+                    $scope.designInfo.previewBkImg = 'img/female_white_preview.png';
                     var aStylePart = $scope.htmlItemStyle.availableArea.styleStr.split(';');
                     aStylePart.splice(aStylePart.length - 2, 2);
                     $scope.htmlItemStyle.availableArea.styleStr = aStylePart.join(';');
                     $scope.htmlItemStyle.availableArea.styleStr += ';'
                 } else {
                     $scope.designInfo.bkImg = 'img/female_black.png';
+                    $scope.designInfo.previewBkImg = 'img/female_black_preview.png';
                     $scope.htmlItemStyle.availableArea.styleStr += 'background-color:rgba(255,255,255,0.3);';
                 }
             }
@@ -729,7 +738,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                         file: file,
                         data : {
                             'action': 'uploadFile',
-                            'fileName': $scope.userInfo.userId + '_' +  new Date().getTime(),
+                            'fileName': file.name,
                             'creatorId': $scope.userInfo.userId
                         }
                     }).progress(function (evt) {
@@ -907,38 +916,58 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.pencilLeft + "px;";
 
-            var img = new Image();
-            img.src = oArtifact.largeImage64;
-            //console.log(img.width);       // This might print out 0!
-            img.onload = function() {
-                //console.log(img.width);   // This will print out the width.
-                //oArtifact.imgWidth = img.width*0.7;
-                oArtifact.originImgWidth = img.width;
-                oArtifact.originImgHeight = img.height;
-                oArtifact.imgHeight = oArtifact.imgWidth/oArtifact.originImgWidth*oArtifact.originImgHeight
+            // var img = new Image();
+            // img.src = oArtifact.largeImage64;
+            // img.onload = function() {
+            //     //console.log(img.width);   // This will print out the width.
+            //     //oArtifact.imgWidth = img.width*0.7;
+            //     oArtifact.originImgWidth = img.width;
+            //     oArtifact.originImgHeight = img.height;
+            //     oArtifact.imgHeight = oArtifact.imgWidth/oArtifact.originImgWidth*oArtifact.originImgHeight
 
 
-                var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight/2 + 2;//original 70% width limit
-                var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
-                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
-                "left:" + iResizeLeft + "px;";
+            //     var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight/2 + 2;//original 70% width limit
+            //     var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+            //     oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+            //     "left:" + iResizeLeft + "px;";
 
-                var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;//Need to consider pencil&resize width
-                oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
-                "left:" + iRemoveLeft + "px;";
+            //     var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;//Need to consider pencil&resize width
+            //     oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+            //     "left:" + iRemoveLeft + "px;";
                 
-                oArtifact.lastDragDistance = 0;
+            //     oArtifact.lastDragDistance = 0;
 
-                $scope.aSelectedArtifact.push(oArtifact);
-                $scope.updateAvailableAreaStyle();
-                if ($scope.sActiveFeature !== 'none') {
-                    $scope.sActiveFeature = 'none';
-                }
-                $state.go('^');
+            //     $scope.aSelectedArtifact.push(oArtifact);
+            //     $scope.updateAvailableAreaStyle();
+            //     if ($scope.sActiveFeature !== 'none') {
+            //         $scope.sActiveFeature = 'none';
+            //     }
+            //     $state.go('^');
+            // }
+
+            var oPreviewInfo = JSON.parse(oArtifact.previewInfo);
+            oArtifact.originImgWidth = oPreviewInfo.width;
+            oArtifact.originImgHeight = oPreviewInfo.height;
+            oArtifact.imgHeight = oArtifact.imgWidth/oArtifact.originImgWidth*oArtifact.originImgHeight
+
+
+            var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight/2 + 2;//original 70% width limit
+            var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+            oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+            "left:" + iResizeLeft + "px;";
+
+            var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;//Need to consider pencil&resize width
+            oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+            "left:" + iRemoveLeft + "px;";
+            
+            oArtifact.lastDragDistance = 0;
+
+            $scope.aSelectedArtifact.push(oArtifact);
+            $scope.updateAvailableAreaStyle();
+            if ($scope.sActiveFeature !== 'none') {
+                $scope.sActiveFeature = 'none';
             }
-
-            // $scope.aSelectedArtifact.push(oArtifact);
-            // $state.go('^');
+            $state.go('^');
         };
 
         $scope.onPublicArtifactTypeClicked = function(sType) {
@@ -1140,14 +1169,19 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onPreviewDesignBtnClicked = function() {
-            var oParam = {
-                action: 'createCustomDesign',
-                fileId: $scope.test.fileId
-            };
-            var oFileContent = Design.FileManager.create(oParam, function(oContent) {
-                $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
-                $scope.largeImgSrc = 'data:image/png;base64,' + oContent.data.largeImage64;
-            });
+            // var oParam = {
+            //     action: 'createCustomDesign',
+            //     fileId: $scope.test.fileId
+            // };
+            // var oFileContent = Design.FileManager.create(oParam, function(oContent) {
+            //     $scope.midImgSrc = 'data:image/png;base64,' + oContent.data.midImage64;
+            //     $scope.largeImgSrc = 'data:image/png;base64,' + oContent.data.largeImage64;
+            // });
+            if ($scope.htmlItemStyle.previewBackgroundStyle !== "") {
+                $scope.htmlItemStyle.previewBackgroundStyle = "";
+            } else {
+                $scope.htmlItemStyle.previewBackgroundStyle = "display:none;";
+            }
         };
 
         $scope.onBack2DesignDetailClicked = function() {

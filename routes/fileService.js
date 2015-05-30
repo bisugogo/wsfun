@@ -39,27 +39,79 @@ module.exports = function(app) {
         var gfs = new Gridfs(db, mongoDriver);
 
         var oFile = req.files.file;
+        var sRandomSurffix = Math.floor((Math.random() * 1000));
+        var sRequestTime = new Date().getTime();
+        var oData = JSON.parse(req.body.data);
+        var sTargetFileName = oData.fileName + '_' + sRequestTime + '_' + sRandomSurffix + '_artifact.png';
 
         var writestream = gfs.createWriteStream({
-            filename: req.body.data.fileName + '_' + req.files.file.name,
+            //filename: req.body.data.fileName + '_' + req.files.file.name,
+            filename: sTargetFileName,
             mode:'w',
             content_type:req.files.file.mimetype,
-            metadata:req.body,
+            metadata:{
+                type: 'artifactImage',
+                access: oData.access,
+                creatorId: oData.creatorId ? oData.creatorId : ''
+            },
         });
         fs.createReadStream(req.files.file.path).pipe(writestream);
 
-        writestream.on('close', function (file) {
+
+        var sPreviewArtifactFileName = oData.fileName + '_' + sRequestTime + '_' + sRandomSurffix + '_artifact_preview.png';
+        var previewFileWritestream = gfs.createWriteStream({
+            filename: sPreviewArtifactFileName,
+            mode:'w',
+            content_type:'binary/octet-stream',
+            metadata:{
+                type: 'artifactPreviewImage',
+                access: oData.access,
+                creatorId: oData.creatorId ? oData.creatorId : ''
+            },
+        });
+
+        writestream.on('close', function (oGFSFile) {
             // res.send({
             //     fileId: file._id.toString()
             // });
 
-            createImageThumbnails(oFile, file, res);
+            //createImageThumbnails(oFile, file, res);
 
             // fs.unlink(req.files.file.path, function (err) {
             //     if (err) console.error("Error: " + err);
             //     console.log('successfully deleted : '+ req.files.file.path );
             //     //res.send({status:'ended????'});
             // });
+            var sReadStreamForResize = fs.createReadStream(req.files.file.path);
+            gm(sReadStreamForResize).options({imageMagick: true})
+            .size({bufferStream: true}, function(err, oSize) {
+                var iTargetWidth, iTargetHeight;
+                if (oSize.width > oSize.height) {
+                    iTargetWidth = FILE_CONSTANT.MID_IMAGE_WIDTH;
+                    iTargetHeight = oSize.height * iTargetWidth / oSize.width;
+                    this.resize(iTargetWidth, iTargetHeight);
+                } else {
+                    iTargetHeight = FILE_CONSTANT.MID_IMAGE_WIDTH;
+                    iTargetWidth = oSize.width * iTargetHeight / oSize.height;
+                    this.resize(iTargetWidth, iTargetHeight);
+                }
+                this.stream(function (err, stdout, stderr) {
+                    stdout.pipe(previewFileWritestream);
+                });
+
+                LOG.logger.logFunc('uploadFile', 'uploaded artifact file with size of : ' + oSize.width + 'x' + oSize.height);
+
+                previewFileWritestream.on('close', function(oGPreviewFile) {
+                    unlinkUploadFile(oFile);
+
+                    var oPreviewInfo = {
+                        width: iTargetWidth,
+                        height: iTargetHeight
+                    };
+
+                    saveArtifact(oGFSFile, oGPreviewFile, JSON.stringify(oPreviewInfo), res);
+                });
+            });
         });
 
         console.log(oFile.name);
@@ -110,27 +162,32 @@ module.exports = function(app) {
         });
     };
 
-    saveArtifact = function(oArti, oGFSFile, res) {
-        var sSmallBase64 = !!oArti.small ? oArti.small : '';
-        var sMidBase64 = !!oArti.mid ? oArti.mid : '';
-        var sLargeBase64 = !!oArti.large ? oArti.large : '';
+    saveArtifact = function(oGFSFile, oGFSPreviewFile, sPreviewInfo, res) {
+        // var sSmallBase64 = !!oArti.small ? oArti.small : '';
+        // var sMidBase64 = !!oArti.mid ? oArti.mid : '';
+        // var sLargeBase64 = !!oArti.large ? oArti.large : '';
 
-        var oMetadata = JSON.parse(oGFSFile.metadata.data);
-        var oCreatorObjectId = oMetadata.creatorId;
-        var sFileName = oMetadata.fileName;
+        var oMetadata = oGFSFile.metadata;
+        var oCreatorObjectId = oMetadata.creatorId ? oMetadata.creatorId : '';
         var sAccess = 'private';
         if (oMetadata.access && oMetadata.access === 'public') {
             sAccess = 'public';
         }
-        var oNewArti = new Artifact({
+        var oNewArtiJson = {
             fileId: oGFSFile._id.toString(),
-            fileName: sFileName,
-            creatorId: oCreatorObjectId,
+            fileName: oGFSFile.filename,
+            previewFileId: oGFSPreviewFile._id.toString(),
+            previewFileName: oGFSPreviewFile.filename,
+            previewInfo: sPreviewInfo,
             access: sAccess,
-            smallImage64: 'data:image/png;base64,' + sSmallBase64,
-            midImage64: 'data:image/png;base64,' + sMidBase64,
-            largeImage64: 'data:image/png;base64,' + sLargeBase64,
-        });
+            // smallImage64: 'data:image/png;base64,' + sSmallBase64,
+            // midImage64: 'data:image/png;base64,' + sMidBase64,
+            // largeImage64: 'data:image/png;base64,' + sLargeBase64,
+        };
+        if (oCreatorObjectId !== '') {
+            oNewArtiJson.creatorId = oCreatorObjectId;
+        }
+        var oNewArti = new Artifact(oNewArtiJson);
 
         oNewArti.save(function(err) {
             if (err) {
@@ -140,11 +197,7 @@ module.exports = function(app) {
 
                 res.send({
                     status: 'OK',
-                    data: {
-                        fileId: oGFSFile._id.toString(),
-                        midImage64: 'data:image/png;base64,' + sMidBase64,
-                        largeImage64: 'data:image/png;base64,' + sLargeBase64
-                    }
+                    data: oNewArti
                 });
             }
         });
@@ -218,7 +271,7 @@ module.exports = function(app) {
         
         var sUserId = req.query.userId;
         var oQuery = Artifact.find({'creatorId': sUserId});
-        oQuery.select('_id fileId midImage64 largeImage64');
+        oQuery.select('_id type fileId fileName previewFileId previewFileName previewInfo');
         oQuery.exec(function (err, aArtifact) {
             if (err) {
                 res.send({error: err.message});
@@ -244,7 +297,7 @@ module.exports = function(app) {
             oFilter['type'] = sType;
         }
         var oQuery = Artifact.find(oFilter);
-        oQuery.select('_id type fileId midImage64 largeImage64');
+        oQuery.select('_id type fileId fileName previewFileId previewFileName previewInfo');
         oQuery.exec(function (err, aArtifact) {
             if (err) {
                 res.send({error: err.message});
@@ -508,6 +561,22 @@ module.exports = function(app) {
             });
         });
     };
+
+    getImage = function(req, res) {
+        var sFileName = req.params.fileName;
+        LOG.logger.logFunc('getImage', sFileName);
+
+        var db = mongoose.connection.db;
+        var mongoDriver = mongoose.mongo;
+        var gfs = new Gridfs(db, mongoDriver);
+
+        var readstream = gfs.createReadStream({
+            filename: sFileName
+        });
+
+        res.setHeader("content-type", "image/png");
+        readstream.pipe(res);
+    };
     
     getService = function(req, res) {
         var sAction = req.query.action;
@@ -546,4 +615,5 @@ module.exports = function(app) {
     app.post('/uploadFile', multipartMiddleware, uploadFile);
     app.get('/file', getService);
     app.post('/file', postService);
+    app.get('/image/:fileName', getImage);
 };

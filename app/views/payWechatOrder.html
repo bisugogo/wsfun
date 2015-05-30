@@ -1,6 +1,7 @@
 <div class="payWechatFinalView">
     <img ng-src="{{designInfo.bkImg}}" class="designBackgroundImage">
-    <img src="{{designInfo.previewImage64}}" style="{{designInfo.positionInfoStyleValue}}" class="designPreviewImage">
+    <img src="{{'/image/' + designInfo.previewImageFile}}" style="{{designInfo.positionInfoStyleValue}}" 
+    class="designPreviewImage">
     <div class="orderContent">
         <div class="orderContentPositionDiv">
             <div class="orderSuccessTitle">

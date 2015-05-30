@@ -1,0 +1,31 @@
+<div class="managePublicDesignView">
+    <div class="filterTypeDiv">
+        <span>当前所显示设计的Access Type 为：</span>
+        <div class="btn-group" dropdown>
+            <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                {{filterTypeText}}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="onDesignFilterChange('public')">Public</a></li>
+                <li><a ng-click="onDesignFilterChange('review')">Review</a></li>
+            </ul>
+        </div>
+    </div>
+    <div ng-repeat="oDesign in aUnderReviewDesigns" class="designItem">
+        <div class="designImageDiv">
+            <img src="{{'/image/' + oDesign.previewImageFile}}" class="previewImage">
+        </div>
+        <div class="designUpdateDiv">
+            <span>{{"Access Type: " + oDesign.access}}</span>
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                    {{oDesign.targetStatus ? oDesign.targetStatus : '更改'}}<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="onDesignAccessChange(oDesign, 'public')">public</a></li>
+                    <li><a ng-click="onDesignAccessChange(oDesign, 'review')">review</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

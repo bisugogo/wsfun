@@ -1,6 +1,7 @@
 <div class="designDetailViewContent">
     <img ng-src="{{oCurrentDesign.bkImg}}" class="designBackgroundImage">
-    <img src="{{oCurrentDesign.previewImage64}}" style="{{oCurrentDesign.positionInfoStyleValue}}" class="designPreviewImage">
+    <img src="{{'/image/' + oCurrentDesign.previewImageFile}}" style="{{oCurrentDesign.positionInfoStyleValue}}" 
+    class="designPreviewImage">
     <div class="designInfo">
         <div style="{{oCurrentDesign.access === 'public' ? '' : 'display:none;'}}" class="designItemInfoContent">
             <div class="actionsOnItem">

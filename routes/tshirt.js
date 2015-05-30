@@ -108,8 +108,12 @@ module.exports = function(app) {
             access: 'public'
         });
         oQuery.sort({'modified': -1});
-        oQuery.skip(iOffset);
-        oQuery.limit(iSize);
+
+        if (!!iOffset && !!iSize) {
+            oQuery.skip(iOffset);
+            oQuery.limit(iSize);
+        }
+
         oQuery.populate('creatorId');
         oQuery.exec(function(err, aDesign) {
             if (!err) {
@@ -122,6 +126,33 @@ module.exports = function(app) {
                         designList : aDesign,
                         totalSize: count
                     });
+                });
+            } else {
+                res.statusCode = 500;
+                console.log('Internal error(%d): %s', res.statusCode, err.message);
+                return res.send({
+                    error : 'Server error'
+                });
+            }
+        });
+    };
+
+    getReviewDesigns = function(req, res) {
+        LOG.logger.logFunc('getReviewDesigns');
+        var sTargetAccess = req.query.access;
+
+        var oQuery = Design.find({
+            access: sTargetAccess
+        });
+        oQuery.sort({'modified': -1});
+
+        oQuery.populate('creatorId');
+        oQuery.exec(function(err, aDesign) {
+            if (!err) {
+                LOG.logger.logFunc('getReviewDesigns', 'Find ' + aDesign.length + ' designs.');
+                return res.send({
+                    status : 'OK',
+                    designList : aDesign
                 });
             } else {
                 res.statusCode = 500;
@@ -375,24 +406,28 @@ module.exports = function(app) {
             var iMidTargetWidth = FILE_CONSTANT.MID_IMAGE_WIDTH;
             var iMidTargetHeight = Math.round(ratio * iMidTargetWidth);
 
-            var sFinalImageFileName = oData.creatorId + '_' + oData.requestedTime + '_final.png';
+            var sRandomSurffix = Math.floor((Math.random() * 1000));
+
+            var sFinalImageFileName = oData.requestedTime + sRandomSurffix + '_final.png';
             var writestream = gfs.createWriteStream({
                 //filename: sFilePath,
                 filename: sFinalImageFileName,
                 mode:'w',
                 content_type:'binary/octet-stream',
                 metadata:{
-                    type: 'designImage'
+                    type: 'designImage',
+                    creatorId: oData.creatorId
                 },
             });
-            var sPreviewImageFileName = oData.creatorId + '_' + oData.requestedTime + '_preview.png';
+            var sPreviewImageFileName = oData.requestedTime + sRandomSurffix + '_preview.png';
 
             var previewFileWritestream = gfs.createWriteStream({
                 filename: sPreviewImageFileName,
                 mode:'w',
                 content_type:'binary/octet-stream',
                 metadata:{
-                    type: 'designPreviewImage'
+                    type: 'designPreviewImage',
+                    creatorId: oData.creatorId
                 },
             });
 
@@ -1117,6 +1152,26 @@ module.exports = function(app) {
         });
     };
 
+    updateDesignAccess = function(data, res) {
+        var sDesignId = data.designId;
+        var updateInfo = {
+            'access': data['access']
+        };
+        Design.findByIdAndUpdate(sDesignId, updateInfo, {'new': true}, function(err, oDBRet) {
+            if (err) {
+                LOG.logger.logFunc('updateDesignAccess', err.message);
+                res.send({
+                    error: 'updateDesignAccess failed ' + err.message
+                });
+            } else {
+                res.send({
+                    status: 'OK',
+                    data: oDBRet
+                });
+            }
+        });
+    };
+
     getService = function(req, res) {
         var sAction = req.query.action;
         if (sAction === 'getAllMyDesigns') {
@@ -1131,6 +1186,8 @@ module.exports = function(app) {
             getMyDesigns(req, res);
         } else if (sAction === 'getDesigns') {
             getDesigns(req, res);
+        } else if (sAction === 'getReviewDesigns') {
+            getReviewDesigns(req, res);
         } else if (sAction === 'getDesignById') {
             var sDesignId = req.query.designId;
             getDesignById(sDesignId, res);
@@ -1193,6 +1250,8 @@ module.exports = function(app) {
                 guessDesignCreated(req.body.data, res);
             } else if (sAction === 'updateArtifactType') {
                 updateArtifactType(req.body.data, res);
+            } else if (sAction === 'updateDesignAccess') {
+                updateDesignAccess(req.body.data, res);
             }
         } else {
             console.log("design post service, action: empty.");

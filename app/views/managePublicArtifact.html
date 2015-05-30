@@ -1,7 +1,7 @@
 <div class="managePublicArtifactView">
     <div ng-repeat="oArtifact in aPublicArtifacts" class="artifactItem">
         <div class="artifactImageDiv">
-            <img src="{{oArtifact.midImage64}}" class="previewImage">
+            <img src="{{'/image/' + oArtifact.previewFileName}}" class="previewImage">
         </div>
         <div class="artifactUpdateDiv">
             <span>{{oArtifact.type}}</span>

@@ -1,128 +1,133 @@
 <div class="managementView">
-    <div ui-view="managePublicArtifact">
-        <div class="toolRow">
-            <div class="sortTypeDiv">
-                <div class="btn-group" dropdown>
-                    <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                        {{sortTypeText}}<span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a ng-click="onSortTypeChange('all')">全部</a></li>
-                        <li><a ng-click="onSortTypeChange('paid')">已付款</a></li>
-                        <li><a ng-click="onSortTypeChange('shipped')">已发货</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="uploadArtifactDiv">
-                <div class="fileUploadBtn btn btn-warning royalButton">
-                    <span>上传公共素材</span>
-                    <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles" class="uploadInput"></input>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary" ng-click="onManagePublicArtifactClicked()">
-                管理公共素材
-            </button>
-        </div>
-        <div class="orderContainer">
-            <div class="headerRow">
-                <div>
-                    <span>预览</span>
-                </div>
-                <div>
-                    <span>用户ID</span>
-                </div>
-                <div>
-                    <span>联系人</span>
-                </div>
-                <div>
-                    <span>电话</span>
-                </div>
-                <div>
-                    <span>订单状态</span>
-                </div>
-                <div>
-                    <span>订单信息</span>
-                </div>
-                <div>
-                    <span>订单金额</span>
-                </div>
-                <div>
-                    <span>设计描述</span>
-                </div>
-                <div>
-                    <span>订单创建时间</span>
-                </div>
-                <div>
-                    <span>付款时间</span>
-                </div>
-                <div>
-                    <span>最近修改时间</span>
-                </div>
-                <div>
-                    <span>邮寄地址</span>
-                </div>
-                <div>
-                    <span>快递信息</span>
-                </div>
-            </div>
-            <div ng-repeat="oOrder in aOrders" class="orderItem">
-                <div class="orderImageDiv">
-                    <div class="imageContainer">
-                        <img src="img/female_white.png" class="bkImage">
-                        <img src="{{oOrder.designId.previewImage64}}" style="{{oOrder.previewImagePosition}}" class="previewImage">
-                    </div>
-                </div>
-                <div class="orderCreator">
-                    <span>{{oOrder.creatorId}}</span>
-                </div>
-                <div class="orderContact">
-                    <span>{{oOrder.contact}}</span>
-                </div>
-                <div class="orderContactPhone">
-                    <span>{{oOrder.contactMobile}}</span>
-                </div>
-                <div class="orderStatus">
-                    <span>{{oOrder.status}}</span>
-                    <div class="btn-group" dropdown style="{{oOrder.status === '待付款' ? 'display:none;' : ''}}">
+    <div ui-view="managePublicDesign">
+        <div ui-view="managePublicArtifact">
+            <div class="toolRow">
+                <div class="sortTypeDiv">
+                    <div class="btn-group" dropdown>
                         <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                            {{oOrder.targetStatus ? oOrder.targetStatus : '更改'}}<span class="caret"></span>
+                            {{sortTypeText}}<span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="onOrderStatusChange(oOrder, '已发货')">已发货</a></li>
-                            <li><a ng-click="onOrderStatusChange(oOrder, '交易完成')">交易完成</a></li>
+                            <li><a ng-click="onSortTypeChange('all')">全部</a></li>
+                            <li><a ng-click="onSortTypeChange('paid')">已付款</a></li>
+                            <li><a ng-click="onSortTypeChange('shipped')">已发货</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="orderSizeCount">
-                    <span>{{oOrder.sizeCount}}</span>
+                <div class="uploadArtifactDiv">
+                    <div class="fileUploadBtn btn btn-warning royalButton">
+                        <span>上传公共素材</span>
+                        <input type="file" ng-file-select ng-model="files" ng-file-change="fileSelected($files)" ng-multiple="false" ng-capture="camera" accept="image/*" ng-model-rejected="rejFiles" class="uploadInput"></input>
+                    </div>
                 </div>
-                <div class="orderTotalPrice">
-                    <span>{{oOrder.totalPrice}}</span>
+                <button type="button" class="btn btn-primary" ng-click="onManagePublicArtifactClicked()">
+                    管理公共素材
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="onManagePublicDesignClicked()">
+                    审核公共设计
+                </button>
+            </div>
+            <div class="orderContainer">
+                <div class="headerRow">
+                    <div>
+                        <span>预览</span>
+                    </div>
+                    <div>
+                        <span>用户ID</span>
+                    </div>
+                    <div>
+                        <span>联系人</span>
+                    </div>
+                    <div>
+                        <span>电话</span>
+                    </div>
+                    <div>
+                        <span>订单状态</span>
+                    </div>
+                    <div>
+                        <span>订单信息</span>
+                    </div>
+                    <div>
+                        <span>订单金额</span>
+                    </div>
+                    <div>
+                        <span>设计描述</span>
+                    </div>
+                    <div>
+                        <span>订单创建时间</span>
+                    </div>
+                    <div>
+                        <span>付款时间</span>
+                    </div>
+                    <div>
+                        <span>最近修改时间</span>
+                    </div>
+                    <div>
+                        <span>邮寄地址</span>
+                    </div>
+                    <div>
+                        <span>快递信息</span>
+                    </div>
                 </div>
-                <div class="orderDesc">
-                    <span>{{oOrder.designId.desc}}</span>
-                </div>
-                <div class="orderCreatedTime">
-                    <span>{{oOrder.createdTime}}</span>
-                </div>
-                <div class="orderPayTime">
-                    <span>{{oOrder.payTime}}</span>
-                </div>
-                <div class="orderLastModifiedTime">
-                    <span>{{oOrder.lastModified}}</span>
-                </div>
-                <div class="orderMailAddress">
-                    <span>{{oOrder.mailAddressString}}</span>
-                </div>
-                <div class="orderMailAddress">
-                    <textarea class="form-control" rows="2" ng-model="oOrder.expressInfo"></textarea>
-                </div>
-                <div class="download">
-                    <span class="glyphicon glyphicon-download-alt" ng-click="downloadDesignFile(oOrder)">下载打印图像</span>
-                </div>
-                <div class="submit">
-                    <button type="button" class="btn btn-primary glyphicon glyphicon-floppy-disk" 
-                    ng-click="onUpdateOrderStatusClicked(oOrder)">提交</button>
+                <div ng-repeat="oOrder in aOrders" class="orderItem">
+                    <div class="orderImageDiv">
+                        <div class="imageContainer">
+                            <img src="img/female_white.png" class="bkImage">
+                            <img src="{{'/image/' + oOrder.designId.previewImageFile}}" style="{{oOrder.previewImagePosition}}" class="previewImage">
+                        </div>
+                    </div>
+                    <div class="orderCreator">
+                        <span>{{oOrder.creatorId}}</span>
+                    </div>
+                    <div class="orderContact">
+                        <span>{{oOrder.contact}}</span>
+                    </div>
+                    <div class="orderContactPhone">
+                        <span>{{oOrder.contactMobile}}</span>
+                    </div>
+                    <div class="orderStatus">
+                        <span>{{oOrder.status}}</span>
+                        <div class="btn-group" dropdown style="{{oOrder.status === '待付款' ? 'display:none;' : ''}}">
+                            <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                                {{oOrder.targetStatus ? oOrder.targetStatus : '更改'}}<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="onOrderStatusChange(oOrder, '已发货')">已发货</a></li>
+                                <li><a ng-click="onOrderStatusChange(oOrder, '交易完成')">交易完成</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="orderSizeCount">
+                        <span>{{oOrder.sizeCount}}</span>
+                    </div>
+                    <div class="orderTotalPrice">
+                        <span>{{oOrder.totalPrice}}</span>
+                    </div>
+                    <div class="orderDesc">
+                        <span>{{oOrder.designId.desc}}</span>
+                    </div>
+                    <div class="orderCreatedTime">
+                        <span>{{oOrder.createdTime}}</span>
+                    </div>
+                    <div class="orderPayTime">
+                        <span>{{oOrder.payTime}}</span>
+                    </div>
+                    <div class="orderLastModifiedTime">
+                        <span>{{oOrder.lastModified}}</span>
+                    </div>
+                    <div class="orderMailAddress">
+                        <span>{{oOrder.mailAddressString}}</span>
+                    </div>
+                    <div class="orderMailAddress">
+                        <textarea class="form-control" rows="2" ng-model="oOrder.expressInfo"></textarea>
+                    </div>
+                    <div class="download">
+                        <span class="glyphicon glyphicon-download-alt" ng-click="downloadDesignFile(oOrder)">下载打印图像</span>
+                    </div>
+                    <div class="submit">
+                        <button type="button" class="btn btn-primary glyphicon glyphicon-floppy-disk" 
+                        ng-click="onUpdateOrderStatusClicked(oOrder)">提交</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@
             <div class="availableArea" style="{{htmlItemStyle.availableArea.styleStr}}"></div>
             <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
                 
-                <img src="{{oArtifact.largeImage64}}" 
+                <img src="{{'/image/' + oArtifact.previewFileName}}" 
                 
                 hm-dragstart="onSelectedArtiItemDragstart($event, oArtifact)" 
                 hm-dragend="onSelectedArtiItemDragend($event, oArtifact)" 
@@ -43,6 +43,11 @@
                 ></span>
             </div>
         </div>
+
+        <div class="previewBackground">
+            <img class='previewBackgroundImg' style="{{htmlItemStyle.previewBackgroundStyle}}" 
+            ng-src="{{designInfo.previewBkImg}}"></img>
+        </div>
         <!--img src="data:image/png;base64,{{oArtifact.largeImage64}}" design-artifact-->
         
         <!--div class="row">
@@ -59,9 +64,9 @@
                 <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
             </span>
         </div>
-        <!--div class="previewDesignBtn" style="{{htmlItemStyle.designToolArea.styleStr}}" ng-click="onPreviewDesignBtnClicked()">
-            <span>好</span>
-        </div-->
+        <div class="previewDesignBtn" style="{{htmlItemStyle.designToolArea.styleStr}}" ng-click="onPreviewDesignBtnClicked()">
+            <span>{{htmlItemStyle.previewBackgroundStyle === '' ? '调整设计' : '预览设计'}}</span>
+        </div>
         <div class='toolRow' style="{{htmlItemStyle.designToolArea.styleStr}}">
             <div class="backButton">
                 <span class="icon-undo" ng-click="onCreateDesignBackClicked()"></span>
