@@ -120,7 +120,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
 
                                 for (var k = 0; k < $scope.aSelectedArtifact.length; k++) {
                                     if ($scope.aSelectedArtifact[k]._id === oTargetArtifact._id) {
-                                        $scope.aSelectedArtifact.splice(j, 1);
+                                        $scope.aSelectedArtifact.splice(k, 1);
                                         break;
                                     }
                                 }
