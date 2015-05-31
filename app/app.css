@@ -390,7 +390,6 @@ body.weavesFunBody {
 }
 
 .createDetailView .selectedArtifactArea .selectedArtifactItem img {
-  width: 70%;
   position: relative;
   border-width: 2px;
   border-style: dotted;
@@ -409,13 +408,13 @@ body.weavesFunBody {
   text-align: center;
   position: fixed;
   bottom: 40px;
-  height: 35px;
+  height: 25px;
   width: 100%;
   background-color: rgba(207, 176, 96, 0.5);
 }
 
 .createDetailView .previewDesignBtn > span {
-  font-size: 25px;
+  font-size: 18px;
 }
 
 .createDetailView .saveDetailView {

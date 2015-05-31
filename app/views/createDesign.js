@@ -685,14 +685,23 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 if ($scope.designInfo.color === 'white') {
                     $scope.designInfo.bkImg = 'img/female_white.png';
                     $scope.designInfo.previewBkImg = 'img/female_white_preview.png';
-                    var aStylePart = $scope.htmlItemStyle.availableArea.styleStr.split(';');
-                    aStylePart.splice(aStylePart.length - 2, 2);
-                    $scope.htmlItemStyle.availableArea.styleStr = aStylePart.join(';');
-                    $scope.htmlItemStyle.availableArea.styleStr += ';'
+                    if ($scope.htmlItemStyle.previewBackgroundStyle === '') {
+                        var sNewStyle = $scope.addKeyToStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color', 'inherit');
+                        $scope.htmlItemStyle.availableArea.styleStr = sNewStyle;
+                    } else {
+                        var sNewStyle = $scope.removeKeyFromStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color');
+                        $scope.htmlItemStyle.availableArea.styleStr = sNewStyle;
+                    }
                 } else {
                     $scope.designInfo.bkImg = 'img/female_black.png';
                     $scope.designInfo.previewBkImg = 'img/female_black_preview.png';
-                    $scope.htmlItemStyle.availableArea.styleStr += 'background-color:rgba(255,255,255,0.3);';
+                    if ($scope.htmlItemStyle.previewBackgroundStyle === '') {
+                        var sNewStyle = $scope.addKeyToStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color', 'inherit');
+                        $scope.htmlItemStyle.availableArea.styleStr = sNewStyle;
+                    } else {
+                        var sNewStyle = $scope.addKeyToStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color', 'rgba(255,255,255,0.3)');
+                        $scope.htmlItemStyle.availableArea.styleStr = sNewStyle;
+                    }
                 }
             }
         };
@@ -913,6 +922,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 "left:" + oArtifact.styleValue.left + "px;" + 
                 "width:" + oArtifact.imgWidth + "px;";
 
+            //oArtifact.styleStr = $scope.addKeyToStyle(oArtifact.styleStr, 'border', '2px dotted rgb(215, 180, 104)');
+
             oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.pencilLeft + "px;";
 
@@ -987,10 +998,10 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             var iWidth = oBkImg.clientWidth;
             var iHeight = oBkImg.clientHeight;
             $scope.htmlItemStyle.availableArea.visible = true;
-            $scope.htmlItemStyle.availableArea.width = iWidth * 0.6;
+            $scope.htmlItemStyle.availableArea.width = iWidth * 0.63;
             $scope.htmlItemStyle.availableArea.height = $scope.htmlItemStyle.availableArea.width * 1.5;
-            $scope.htmlItemStyle.availableArea.left = iWidth * 0.21;
-            $scope.htmlItemStyle.availableArea.top = iHeight * 0.22;
+            $scope.htmlItemStyle.availableArea.left = iWidth * 0.20;
+            $scope.htmlItemStyle.availableArea.top = iHeight * 0.20;
 
             if ($scope.aSelectedArtifact.length > 0) {
                 $scope.htmlItemStyle.availableArea.styleStr = "visibility:visible;" + 
@@ -1179,8 +1190,34 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             // });
             if ($scope.htmlItemStyle.previewBackgroundStyle !== "") {
                 $scope.htmlItemStyle.previewBackgroundStyle = "";
+                for (var i = 0; i < $scope.aSelectedArtifact.length; i++) {
+                    var oCurArti = $scope.aSelectedArtifact[i];
+                    var sNewStyle = $scope.addKeyToStyle(oCurArti.styleStr, 'border', 'none');
+                    oCurArti.styleStr = sNewStyle;
+                }
+
+                if ($scope.designInfo.color === 'white') {
+                    var sNewAvailableStyle = $scope.addKeyToStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color', 'inherit');
+                    $scope.htmlItemStyle.availableArea.styleStr = sNewAvailableStyle;
+                } else {
+                    var sNewAvailableStyle = $scope.addKeyToStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color', 'inherit');
+                    $scope.htmlItemStyle.availableArea.styleStr = sNewAvailableStyle;
+                }
             } else {
                 $scope.htmlItemStyle.previewBackgroundStyle = "display:none;";
+                for (var i = 0; i < $scope.aSelectedArtifact.length; i++) {
+                    var oCurArti = $scope.aSelectedArtifact[i];
+                    var sNewStyle = $scope.removeKeyFromStyle(oCurArti.styleStr, 'border');
+                    oCurArti.styleStr = sNewStyle;
+                }
+
+                if ($scope.designInfo.color === 'white') {
+                    var sNewAvailableStyle = $scope.removeKeyFromStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color');
+                    $scope.htmlItemStyle.availableArea.styleStr = sNewAvailableStyle;
+                } else {
+                    var sNewAvailableStyle = $scope.addKeyToStyle($scope.htmlItemStyle.availableArea.styleStr, 'background-color', 'rgba(255,255,255,0.3)');
+                    $scope.htmlItemStyle.availableArea.styleStr = sNewAvailableStyle;
+                }
             }
         };
 
@@ -1336,6 +1373,52 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 var sInfo = JSON.stringify(oInfo);
                 return sInfo;
             }
+        };
+
+        $scope.removeKeyFromStyle = function(sOriginStyle, sKey) {
+            if (sOriginStyle === '') {
+                return '';
+            }
+
+            var aPairs = sOriginStyle.split(';');
+
+            if (aPairs.length === 1) {
+                var sKeyValue = aPairs[0];
+                var aValues = sKeyValue.split(':');
+                if (aValues.length === 1) {
+                    return '';
+                } else {
+                    if (aValues[0] === sKey) {
+                        return '';
+                    } else {
+                        return sOriginStyle;
+                    }
+                }
+            } else {
+                if (aPairs[aPairs.length - 1] === '') {
+                    aPairs.splice(aPairs.length - 1, 1);
+                }
+            }
+
+            var oNewPairs = [];
+            for (var i = 0; i < aPairs.length; i++) {
+                var oCurPair = aPairs[i];
+                var aParts = oCurPair.split(':');
+                if (aParts[0] !== sKey) {
+                    oNewPairs.push(oCurPair);
+                }
+            }
+
+            if (oNewPairs.length > 0) {
+                return oNewPairs.join(';') + ';';
+            } else {
+                return '';
+            }
+        }
+
+        $scope.addKeyToStyle = function(sOriginStyle, sKey, sValue) {
+            var sTempStyle = $scope.removeKeyFromStyle(sOriginStyle, sKey);
+            return sTempStyle + sKey + ':' + sValue + ';';
         };
 }]);
 

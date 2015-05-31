@@ -30,15 +30,15 @@
                 hm-tap="onTap($event)"
                 style="{{oArtifact.styleStr}}">
                 <span class="selectedArtifactItemPencil glyphicon glyphicon-pencil" 
-                style="{{oArtifact.pencilStyleStr}}"
+                style="{{htmlItemStyle.previewBackgroundStyle ? oArtifact.pencilStyleStr : 'display:none;'}}"
                 ng-click="onEditArtifactItemClicked()"></span>
                 <span class="selectedArtifactItemResize glyphicon glyphicon-resize-full" 
-                style="{{oArtifact.resizeStyleStr}}" 
+                style="{{htmlItemStyle.previewBackgroundStyle ? oArtifact.resizeStyleStr : 'display:none;'}}" 
                 hm-drag="onSelectedArtiItemResizeDrag($event, oArtifact)" 
                 hm-dragend="onSelectedArtiItemResizeDragend($event, oArtifact)" 
                 ></span>
                 <span class="selectedArtifactItemResize glyphicon glyphicon-remove" 
-                style="{{oArtifact.removeStyleStr}}" 
+                style="{{htmlItemStyle.previewBackgroundStyle ? oArtifact.removeStyleStr : 'display:none;'}}" 
                 ng-click="onRemoveArtifactItemClicked(oArtifact)" 
                 ></span>
             </div>
