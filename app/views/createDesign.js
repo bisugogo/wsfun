@@ -83,7 +83,50 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
             'personalGallery': {
                 templateUrl: 'views/personalGallery.html',
                 controller: function($scope, $state, Design) {
-                    var i = 0;
+                    $scope.onManagePrivateArtifacts = function() {
+                        $scope.$parent.isManagingArtifacts = $scope.$parent.isManagingArtifacts ? false : true;
+                    };
+
+                    $scope.onDeleteArtifact = function(oTargetArtifact) {
+                        var oParam = {
+                            action: 'deleteArtifact',
+                            data: {
+                                artifactId: oTargetArtifact._id
+                            }
+                        };
+                        Design.FileManager.delete(oParam, function(oData) {
+                            if (oData.error) {
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: oData.error || oData.data
+                                });
+                            } else {
+                                var iDeleteGroupIdx = -1;
+                                var iDeleteIdx = -1;
+                                for (var i = 0; i < $scope.aMyArtifact.length; i++) {
+                                    var oCurGroup = $scope.aMyArtifact[i];
+                                    var bFound = false;
+                                    for (var j = 0; j < oCurGroup.length; j++) {
+                                        if (oCurGroup[j]._id === oTargetArtifact._id) {
+                                            oCurGroup.splice(j, 1);
+                                            bFound = true;
+                                            break;
+                                        }
+                                    }
+                                    if (bFound) {
+                                        break;
+                                    }
+                                }
+
+                                for (var k = 0; k < $scope.aSelectedArtifact.length; k++) {
+                                    if ($scope.aSelectedArtifact[k]._id === oTargetArtifact._id) {
+                                        $scope.aSelectedArtifact.splice(j, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    };
                 }
             }
         }
@@ -451,6 +494,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.busyViewStyle = "display:none;"
         $scope.sActiveFeature = 'none';
         $scope.sPublicArtifactType = 'none';
+        $scope.isManagingArtifacts = false;
 
         $scope.mBufferedPublicArtifact = {
 
@@ -1140,15 +1184,20 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         };
 
         $scope.onTouched = function($event) {
-            console.log('touched!');
+            //console.log('touched!');
             //alert("touched");
             //event.gesture.preventDefault();
         };
 
         $scope.onTap = function($event) {
-            console.log('touched!');
+            //console.log('touched!');
             //alert("touched");
             //event.gesture.preventDefault();
+        };
+
+        $scope.onDoubleTap = function($event) {
+            console.log('double tapped!');
+            alert('double tapped!');
         };
 
         $scope.onSelectedArtiItemPinchOut = function($event, oArtifact) {

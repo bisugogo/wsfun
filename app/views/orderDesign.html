@@ -22,7 +22,75 @@
             <div class="axisBottom"></div>
         </div>
         <div class="quantityContent">
+            <div class="shengzhi">
+                <span>圣 旨</span>
+            </div>
+            <div class="zhaoyue">
+                <span>奉天承运 皇帝诏曰</span>
+            </div>
+            <div class="weifu">
+                <span>朕微服出巡 独家随行衣物清单</span>
+            </div>
+            <div class="genderAndSizeContainer">
+                <div class="genderAndSize">
+                    <div class="genderArea">
+                        <div class="genderOptions">
+                            <label class="btn btn-warning" ng-model="designInfo.sGender" btn-radio="'male'">男</label>
+                            <label class="btn btn-warning" ng-model="designInfo.sGender" btn-radio="'female'">女</label>
+                        </div>
+                        <span>款</span>
+                    </div>
+                    <div class="sizeArea">
+                        <div class="sizeOptions">
+                            <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'S'">
+                                {{designInfo.sGender === 'male' ? 'S' : 'XS'}}
+                            </label>
+                            <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'M'">
+                                {{designInfo.sGender === 'male' ? 'M' : 'S'}}
+                            </label>
+                            <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'L'">
+                                {{designInfo.sGender === 'male' ? 'L' : 'M'}}
+                            </label>
+                            <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XL'">
+                                {{designInfo.sGender === 'male' ? 'XL' : 'L'}}
+                            </label>
+                        </div>
+                        <span>号</span>
+                    </div>
+                    <div class="sizeInfoArea">
+                        <span class="icon-info" ng-click="onSizeInfoButtonClicked()"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="colorAndQuantityContainer">
+                <div class="colorAndQuantity">
+                    <div class="colorArea">
+                        <div class="colorOptions">
+                            <label class="btn btn-warning" ng-model="designInfo.color" btn-radio="'black'">黑</label>
+                            <label class="btn btn-warning" ng-model="designInfo.color" btn-radio="'white'">白</label>
+                        </div>
+                        <span>色</span>                    
+                    </div>
+                    <span>短袖体恤</span>
+                    <div class="quantityActions">
+                        <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'加'" 
+                        ng-click="onIncreaseQuantity()">加</label>
+                        <input type="text" ng-model="orderInfo.clothesQuanaity"></input>
+                        <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'减'" 
+                        ng-click="onDecreaseQuantity()">减</label>
+                    </div>
+                    <span>件</span>
+                </div>
+            </div>
+            <div class="milin">
+                <span>密令内务府加紧赶制送达寝殿</span>
+                <span>钦此</span>
+            </div>
             <div class="timeFootage">
+                <span>{{oTimeStr}}</span>
+            </div>
+
+            <!--div class="timeFootage">
                 <span>{{oTimeStr}}</span>
             </div>
             <div class="qinci">
@@ -64,14 +132,14 @@
                 </div>
             </div>
             <div class="summary">
-                <span>女士白色短袖T恤</span>
+                <span>{{designInfo.sGender === 'male' ? '男士白色短袖T恤' : '女士白色短袖T恤'}}</span>
             </div>
             <div class="zhaoyue">
                 <span>奉天承运 皇帝诏曰</span>
             </div>
             <div class="shengzhi">
                 <span>圣 旨</span>
-            </div>
+            </div-->
         </div>
         <div class="rightAxis">
             <div class="axisTop"></div>
