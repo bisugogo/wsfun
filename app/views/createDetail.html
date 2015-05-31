@@ -20,7 +20,7 @@
             <div class="availableArea" style="{{htmlItemStyle.availableArea.styleStr}}"></div>
             <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
                 
-                <img src="{{'/image/' + oArtifact.previewFileName}}" 
+                <img src="{{hostName + '/image/' + oArtifact.previewFileName}}" 
                 
                 hm-dragstart="onSelectedArtiItemDragstart($event, oArtifact)" 
                 hm-dragend="onSelectedArtiItemDragend($event, oArtifact)" 

@@ -1946,6 +1946,11 @@ body.weavesFunBody {
   border: 2px dotted blue;
 }
 
+.managePublicDesignUIView,
+.managePublicArtifactUIView {
+  height: 100%;
+}
+
 .myOrdersView {
   position: fixed;
   top: 0px;

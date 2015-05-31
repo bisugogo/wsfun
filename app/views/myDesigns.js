@@ -255,11 +255,13 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                 var oUserReqParam = {};
 
                 if (oAppData.TESTING) {
+                    $scope.hostName = 'http://localhost:10001';
                     oUserReqParam = {
                         action: 'getTestUserOpenId',
                         userId: $scope.test.larry._id
                     };
                 } else {
+                    $scope.hostName = 'http://www.weavesfun.com';
                     oUserReqParam = {
                         action: 'getWechatUserOpenId',
                         code: sCode

@@ -1,6 +1,6 @@
 <div class="managementView">
-    <div ui-view="managePublicDesign">
-        <div ui-view="managePublicArtifact">
+    <div ui-view="managePublicDesign" class="managePublicDesignUIView">
+        <div ui-view="managePublicArtifact" class="managePublicArtifactUIView">
             <div class="toolRow">
                 <div class="sortTypeDiv">
                     <div class="btn-group" dropdown>
@@ -73,7 +73,7 @@
                     <div class="orderImageDiv">
                         <div class="imageContainer">
                             <img src="img/female_white.png" class="bkImage">
-                            <img src="{{'/image/' + oOrder.designId.previewImageFile}}" style="{{oOrder.previewImagePosition}}" class="previewImage">
+                            <img src="{{hostName + '/image/' + oOrder.designId.previewImageFile}}" style="{{oOrder.previewImagePosition}}" class="previewImage">
                         </div>
                     </div>
                     <div class="orderCreator">

@@ -134,8 +134,15 @@ oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, 
     });
 }]);
 
-oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state', '$modal', '$upload', 'Design', 
-    function($scope, $stateParams, $state, $modal, $upload, Design) {
+oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state', '$modal', '$upload', 'Design', 'UIData', 
+    function($scope, $stateParams, $state, $modal, $upload, Design, UIData) {
+        var oAppData = UIData.getAppData();
+        if (oAppData.TESTING) {
+            $scope.hostName = 'http://localhost:10001';
+        } else {
+            $scope.hostName = 'http://www.weavesfun.com';
+        }
+
         $scope.sortTypeText = '已付款';
         $scope.aMessage = [];
 
