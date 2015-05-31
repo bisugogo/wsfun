@@ -271,45 +271,48 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
                 var bUserQuerySent = UIData.getQuerySentData('userInfo');
                 if (!bUserQuerySent) {
                     //Prevent sending request the second time
-                    UIData.setQuerySentData('userInfo', true);
-                    Auth.AuthManager.query(oUserReqParam, function (oData) {
-                        var oResUserInfo = oData.data;
-                        oResUserInfo.userId = oResUserInfo._id;
-                        UIData.setData('userInfo', oResUserInfo);
-                        $scope.userInfo = oResUserInfo;
+                    if (sListParam === 'mine') {
+                        UIData.setQuerySentData('userInfo', true);
+                        Auth.AuthManager.query(oUserReqParam, function (oData) {
+                            var oResUserInfo = oData.data;
+                            oResUserInfo.userId = oResUserInfo._id;
+                            UIData.setData('userInfo', oResUserInfo);
+                            $scope.userInfo = oResUserInfo;
 
-                        var oMineParam = {};
-                        if (sListParam === 'mine') {
-                            oMineParam = {
-                                action: 'getMyDesigns',
-                                userId: oResUserInfo.userId,
-                                offset: 0,
-                                size: oAppData.LAZY_LOAD_SIZE
-                            };
-                            var oResult = Design.DesignManager.query(oMineParam, function (oData) {
-                                $scope.handleDesignListCallback(oData);
+                            var oMineParam = {};
+                            if (sListParam === 'mine') {
+                                oMineParam = {
+                                    action: 'getMyDesigns',
+                                    userId: oResUserInfo.userId,
+                                    offset: 0,
+                                    size: oAppData.LAZY_LOAD_SIZE
+                                };
+                                var oResult = Design.DesignManager.query(oMineParam, function (oData) {
+                                    $scope.handleDesignListCallback(oData);
 
-                                $scope.lazyLoadInterval = setInterval(function() {
-                                    var iCurrentSize = $scope.aMyDesigns.length;
-                                    if (iCurrentSize === $scope.iTotalDesignCount) {
-                                        clearInterval($scope.lazyLoadInterval);
-                                        return;
-                                    } else {
-                                        var iNextOffset = iCurrentSize;
-                                        var oParam = {
-                                            action: 'getMyDesigns',
-                                            userId: oResUserInfo.userId,
-                                            offset: iNextOffset,
-                                            size: oAppData.LAZY_LOAD_SIZE
-                                        };
-                                        var oResult = Design.DesignManager.query(oParam, function (oData) {
-                                            $scope.handleDesignListCallback(oData);
-                                        });
-                                    }
-                                }, 3000);
-                            });
-                        }
-                    });
+                                    $scope.lazyLoadInterval = setInterval(function() {
+                                        var iCurrentSize = $scope.aMyDesigns.length;
+                                        if (iCurrentSize === $scope.iTotalDesignCount) {
+                                            clearInterval($scope.lazyLoadInterval);
+                                            return;
+                                        } else {
+                                            var iNextOffset = iCurrentSize;
+                                            var oParam = {
+                                                action: 'getMyDesigns',
+                                                userId: oResUserInfo.userId,
+                                                offset: iNextOffset,
+                                                size: oAppData.LAZY_LOAD_SIZE
+                                            };
+                                            var oResult = Design.DesignManager.query(oParam, function (oData) {
+                                                $scope.handleDesignListCallback(oData);
+                                            });
+                                        }
+                                    }, 3000);
+                                });
+                            }
+                        });
+                    }
+                    
                 }
                 
 
