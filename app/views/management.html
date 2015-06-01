@@ -72,7 +72,7 @@
                 <div ng-repeat="oOrder in aOrders" class="orderItem">
                     <div class="orderImageDiv">
                         <div class="imageContainer">
-                            <img src="img/female_white.png" class="bkImage">
+                            <img src="{{oOrder.bkImg}}" class="bkImage">
                             <img src="{{hostName + '/image/' + oOrder.designId.previewImageFile}}" style="{{oOrder.previewImagePosition}}" class="previewImage">
                         </div>
                     </div>

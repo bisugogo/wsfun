@@ -578,6 +578,7 @@ module.exports = function(app) {
         //var sDistrict = data.district;
         var sPostCode = data.postCode;
         var sDetailAddress = data.detailAddress;
+        var sInfo = data.info;
 
         var oNewOrder = {
             designId: data.designId,
@@ -600,6 +601,7 @@ module.exports = function(app) {
             femaleQuantity : 0,
             kidSize : '',
             kidQuantity : 0,
+            info: sInfo,
             coupons: data.coupons
         };
 

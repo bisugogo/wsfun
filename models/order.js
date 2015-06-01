@@ -126,6 +126,10 @@ var OrderSchema = new Schema({
     type: Number,
     default: 0
   },
+  info: {
+    type: String,
+    default: ''
+  },
   coupons: [{
     type: Schema.Types.ObjectId,
     ref: 'Coupon'

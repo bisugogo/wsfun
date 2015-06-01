@@ -1,5 +1,5 @@
 <div class="row personalGalleryRow">
-    <div class="col-xs-12">
+    <div class="">
         <div class="uploadRowArea">
             <div class="royalButtonWrapper">
                 <div class="fileUploadBtn btn btn-warning royalButton">
@@ -45,9 +45,11 @@
                         </div>
                         <div class="myArtifactsGroupBottom">
                             <div class="artifactImgDiv">
-                                <img src="{{hostName + '/image/' + oImageGroup[2].previewFileName}}" 
-                                style="{{!!oImageGroup[2] ? '' : 'visibility:hidden;'}}" 
-                                ng-click="onArtifactSelected(oImageGroup[2])">
+                                <div>
+                                    <img src="{{hostName + '/image/' + oImageGroup[2].previewFileName}}" 
+                                    style="{{!!oImageGroup[2] ? '' : 'visibility:hidden;'}}" 
+                                    ng-click="onArtifactSelected(oImageGroup[2])">
+                                </div>
                                 <span class="removeArtifactBtn glyphicon glyphicon-remove" 
                                 style="{{(isManagingArtifacts && !!oImageGroup[2]) ? '' : 'display:none;'}}" 
                                 ng-click="onDeleteArtifact(oImageGroup[2])"></span>
@@ -61,6 +63,7 @@
                                 ng-click="onDeleteArtifact(oImageGroup[3])"></span>
                             </div>
                         </div>
+                        <!--div class="myArtifactsGroupCover"></div-->
                         <!--img src="{{oImage.largeImage64}}" style="margin:auto;" 
                         ng-click="onArtifactSelected(oImage)"-->
                     </li>

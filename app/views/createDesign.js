@@ -224,7 +224,8 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                             clothesGender: $scope.designInfo.sGender,
                             defaultQuantityAction: '加',
                             totalPay: 0,
-                            usedCoupons: []
+                            usedCoupons: [],
+                            color: oDesignInfo.color
                         };
                         $scope.setOrderInfo(orderInfo);
                     }
@@ -284,7 +285,10 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                                     quantity: 0,
                                     clothesSize: $scope.orderInfo.clothesSize
                                 },
-                                coupons: $scope.orderInfo.usedCoupons
+                                coupons: $scope.orderInfo.usedCoupons,
+                                info: JSON.stringify({
+                                    color: $scope.orderInfo.color
+                                })
                             }
                         };
                         if ($scope.orderInfo.clothesGender === 'male') {
@@ -517,7 +521,12 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         // });
 
         $scope.constant = {
-            ORIGIN_PRICE: 99
+            ORIGIN_PRICE: 99,
+            DRAG_STATUS: {
+                DRAG_START: 'drag_start',
+                DRAG_END: 'drag_end',
+                DRAGGING: 'dragging'
+            }
         };
         $scope.designInfo = {
             bPublicDesign: true,
@@ -622,6 +631,8 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     $scope.designInfo.bSaved = true;
                     $scope.designInfo.designId = oDesign.data.designId;
                     $scope.designInfo.previewImageFile = oDesign.data.previewImageFile;
+
+                    $scope.onPreviewDesignBtnClicked();//Cannot adjust design anymore
                 } else {
                     // var output = '';
                     // for (property in oDesign) {
@@ -696,12 +707,21 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             Design.DesignManager.delete(oParam);
         };
 
-        $scope.onChangeColorClicked = function() {
+        $scope.onChangeColorClicked = function(sColor2Set) {
+            if (!sColor2Set) {
+                var sCurColor = $scope.designInfo.color;
+                var sTargetColor = sCurColor === 'white' ? 'black' : 'white';
+                var sCurGender = $scope.designInfo.gender;
+                $scope.setDesignGenderColor(sCurGender, sTargetColor);
+            } else {
+                var sCurGender = $scope.designInfo.gender;
+                $scope.setDesignGenderColor(sCurGender, sColor2Set);
+            }
+        };
+
+        $scope.onChangeGenderClicked = function(sGender2Set) {
             var sCurColor = $scope.designInfo.color;
-            var sTargetColor = sCurColor === 'white' ? 'black' : 'white';
-            var sCurGender = $scope.designInfo.gender;
-            $scope.setDesignGenderColor(sCurGender, sTargetColor);
-            ///getFileContent($scope.test.fileId);
+            $scope.setDesignGenderColor(sGender2Set, sCurColor);
         };
 
         $scope.changeSize = function(sSize) {
@@ -1069,22 +1089,17 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.onSelectedArtiItemDragged = function($event, oArtifact) {
             //console.log($event.gesture);
             console.log('dragging!');
-            console.log($event.target.clientWidth);
-            //hm-drag="onSelectedArtiItemDragged($event, oArtifact)"
-            //event.gesture.preventDefault();
-        };
-
-        $scope.onSelectedArtiItemDragstart = function($event, oArtifact) {
-            //console.log($event.gesture);
-            console.log('dragging start!');
-            //event.gesture.preventDefault();
-        };
-
-        $scope.onSelectedArtiItemDragend = function($event, oArtifact) {
-            //console.log($event.gesture);
-            console.log('dragging end!');
-            oArtifact.styleValue.top += $event.deltaY;
-            oArtifact.styleValue.left += $event.deltaX;
+            if ($scope.draggingStatus === $scope.constant.DRAG_STATUS.DRAG_START) {
+                $scope.draggingStatus = $scope.constant.DRAG_STATUS.DRAGGING;
+                oArtifact.styleValue.originTop = oArtifact.styleValue.top;
+                oArtifact.styleValue.originLeft = oArtifact.styleValue.left;
+            } else {
+                oArtifact.styleValue.top = oArtifact.styleValue.originTop + $event.deltaY;
+                oArtifact.styleValue.left = oArtifact.styleValue.originLeft + $event.deltaX;
+            }
+            //console.log($event.target.clientWidth);
+            //oArtifact.styleValue.top += $event.deltaY;
+            //oArtifact.styleValue.left += $event.deltaX;
             oArtifact.styleValue.pencilLeft = -20 + oArtifact.styleValue.left;
 
             var iImgWidth = $event.target.clientWidth + 4;//Need to consider 2px border
@@ -1105,7 +1120,43 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;
             oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
                 "left:" + iRemoveLeft + "px;";
+            //hm-drag="onSelectedArtiItemDragged($event, oArtifact)"
             //event.gesture.preventDefault();
+        };
+
+        $scope.onSelectedArtiItemDragstart = function($event, oArtifact) {
+            //console.log($event.gesture);
+            console.log('dragging start!');
+            $scope.draggingStatus = $scope.constant.DRAG_STATUS.DRAG_START;
+            //event.gesture.preventDefault();
+        };
+
+        $scope.onSelectedArtiItemDragend = function($event, oArtifact) {
+            $scope.draggingStatus = $scope.constant.DRAG_STATUS.DRAG_END;
+            //console.log($event.gesture);
+            // console.log('dragging end!');
+            // oArtifact.styleValue.top += $event.deltaY;
+            // oArtifact.styleValue.left += $event.deltaX;
+            // oArtifact.styleValue.pencilLeft = -20 + oArtifact.styleValue.left;
+
+            // var iImgWidth = $event.target.clientWidth + 4;//Need to consider 2px border
+            // oArtifact.imgWidth = iImgWidth;
+
+            // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.left + "px;" + 
+            //     "width:" + iImgWidth + "px;";
+
+            // oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.pencilLeft + "px;";
+
+            // var iResizeTop = oArtifact.styleValue.top - $event.target.clientHeight/2 + 2;
+            // var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+            // oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+            //     "left:" + iResizeLeft + "px;";
+
+            // var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;
+            // oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+            //     "left:" + iRemoveLeft + "px;";
         };
 
         $scope.onSelectedArtiItemResizeDrag = function($event, oArtifact) {

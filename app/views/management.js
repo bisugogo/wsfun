@@ -167,6 +167,8 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
 
                 oItem.originExpressInfo = oItem.expressInfo;
 
+                var oInfo = JSON.parse(oItem.info);
+                var sColor = oInfo.color;
                 var iMaleCount = parseInt(oItem.maleQuantity);
                 var iFemaleCount = parseInt(oItem.femaleQuantity);
                 oItem.sizeCount = '';
@@ -174,11 +176,25 @@ oManagement.controller('ManagementControl', ['$scope', '$stateParams', '$state',
                     oItem.sizeCount += '男士 ';
                     oItem.sizeCount += oItem.maleSize + '号 ';
                     oItem.sizeCount += iMaleCount + '件';
+                    if (sColor === 'white') {
+                        oItem.sizeCount += '白色 ';
+                        oItem.bkImg = 'img/male_white.png';
+                    } else {
+                        oItem.sizeCount += '黑色 ';
+                        oItem.bkImg = 'img/male_black.png';
+                    }
                 }
                 if (iFemaleCount > 0) {
                     oItem.sizeCount += '女士 ';
                     oItem.sizeCount += oItem.femaleSize + '号 ';
                     oItem.sizeCount += iFemaleCount + '件';
+                    if (sColor === 'white') {
+                        oItem.sizeCount += '白色 ';
+                        oItem.bkImg = 'img/female_white.png';
+                    } else {
+                        oItem.sizeCount += '黑色 ';
+                        oItem.bkImg = 'img/female_black.png';
+                    }
                 }
 
                 var oCenterDom = $('.headerRow > div:first-child')[0];

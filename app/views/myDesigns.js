@@ -134,7 +134,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                     }
                                 }
 
-                                if (oDesign.access === 'public') {
+                                if (oDesign.access !== 'private') {
                                     var oCenterDom = $('.designDetailViewContent')[0];
                                     if (oCenterDom) {
                                         var iWidth = oCenterDom.clientWidth;

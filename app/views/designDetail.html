@@ -3,20 +3,20 @@
     <img src="{{hostName + '/image/' + oCurrentDesign.previewImageFile}}" style="{{oCurrentDesign.positionInfoStyleValue}}" 
     class="designPreviewImage">
     <div class="designInfo">
-        <div style="{{oCurrentDesign.access === 'public' ? '' : 'display:none;'}}" class="designItemInfoContent">
+        <div style="{{oCurrentDesign.access !== 'private' ? '' : 'display:none;'}}" class="designItemInfoContent">
             <div class="actionsOnItem">
                 <div class="designDesc">
                     <span>{{oCurrentDesign.desc}}</span>
                 </div>
                 <div class="designButtons">
                     <div class="royalButtonWrapper">
-                        <div class="btn btn-warning royalButton">
-                            <span ng-click="onOrderBtnClicked()">下旨赶制</span>
+                        <div class="btn btn-warning royalButton" ng-click="onOrderBtnClicked()">
+                            <span>下旨赶制</span>
                         </div>
                     </div>
                     <div class="royalButtonWrapper">
-                        <div class="btn btn-warning royalButton">
-                            <span ng-click="onCreateDesignBtnClicked()">我来设计</span>
+                        <div class="btn btn-warning royalButton" ng-click="onCreateDesignBtnClicked()">
+                            <span>我来设计</span>
                         </div>
                     </div>
                 </div>

@@ -247,7 +247,7 @@ body.weavesFunBody {
 .createDetailView .switchColorButton {
   font-size: 35px;
   position: fixed;
-  top: 6px;
+  top: 10px;
   color: black;
 }
 
@@ -300,7 +300,7 @@ body.weavesFunBody {
   top: 0px;
   left: 0px;
   right: 0px;
-  bottom: 45px;
+  bottom: 75px;
   background-color: rgba(215, 180, 104, 0.5);
   z-index: 1000;
 }
@@ -331,7 +331,7 @@ body.weavesFunBody {
 }
 
 .createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper {
-  margin-top: 10px;
+  margin-top: 2px;
   display: inline-block;
   width: 40px;
   padding: 3px 3px 3px 3px;
@@ -348,7 +348,7 @@ body.weavesFunBody {
 .createDetailView .personalGalleryRow .uploadRowArea .royalButtonWrapper span, 
 .saveDetailView .royalButtonWrapper span {
   word-wrap: break-word;
-  line-height: 20px;
+  line-height: 17px;
   white-space: initial;
 }
 
@@ -411,7 +411,7 @@ body.weavesFunBody {
 .createDetailView .previewDesignBtn {
   text-align: center;
   position: fixed;
-  bottom: 40px;
+  bottom: 45px;
   height: 25px;
   width: 100%;
   background-color: rgba(207, 176, 96, 0.5);
@@ -687,7 +687,7 @@ body.weavesFunBody {
   width: 130%;
   position: relative;
   left: -15%;
-  height: 40%;
+  height: 50%;
 }
 
 .orderDesignView .defaultOrderQuantityRow .leftAxis,
@@ -759,12 +759,30 @@ body.weavesFunBody {
   font-size: 13px;
 }
 
+.orderDesignView .defaultOrderQuantityRow .quantityContent .icon-info {
+  font-size: 20px;
+  background-color: white;
+  padding: 3px;
+  border-radius: 12px;
+  color: rgb(215, 180, 104);
+  top: 4px;
+  position: relative;
+}
+
+.orderDesignView .defaultOrderQuantityRow .quantityContent .extraSmall {
+  font-size: 12px;
+  color: black;
+  position: relative;
+  top: 6px;
+}
+
 .orderDesignView .defaultOrderQuantityRow .quantityContent label {
   border-radius: 0px;
   border: 1px solid white;
   background-color: rgb(215, 180, 104);
-  padding: 2px 5px 2px 5px;
+  padding: 2px 2px 2px 2px;
   font-size: 17px;
+  width: 26px;
 }
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent .shengzhi,
@@ -773,6 +791,11 @@ body.weavesFunBody {
 .orderDesignView .defaultOrderQuantityRow .quantityContent .milin,
 .orderDesignView .defaultOrderQuantityRow .quantityContent .timeFootage {
   text-align: center;
+}
+
+.orderDesignView .defaultOrderQuantityRow .quantityContent .zhaoyue,
+.orderDesignView .defaultOrderQuantityRow .quantityContent .milin {
+  margin-bottom: 0px;
 }
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent .zhaoyue span,
@@ -787,14 +810,32 @@ body.weavesFunBody {
   font-weight: bold;
 }
 
+.orderDesignView .defaultOrderQuantityRow .quantityContent .milin .qinci {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.orderDesignView .defaultOrderQuantityRow .quantityContent .genderAndSizeContainer {
+  margin-top: 5px;
+}
+
 .orderDesignView .defaultOrderQuantityRow .quantityContent .genderAndSizeContainer,
 .orderDesignView .defaultOrderQuantityRow .quantityContent .colorAndQuantityContainer {
   overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.orderDesignView .defaultOrderQuantityRow .quantityContent .extraSmall.kuan {
+  margin-right: 6px;
+}
+
+.orderDesignView .defaultOrderQuantityRow .quantityContent .extraSmall.se {
+  margin-right: 14px;
 }
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent .genderAndSize,
 .orderDesignView .defaultOrderQuantityRow .quantityContent .colorAndQuantity {
-  float: right;
+  text-align: center;
 }
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent .genderAndSize > div,
@@ -812,102 +853,22 @@ body.weavesFunBody {
 .orderDesignView .defaultOrderQuantityRow .quantityContent .colorAndQuantity .quantityActions input {
   width: 35px;
   text-align: center;
-  background-color: rgb(203, 152, 72);
+  background-color: rgba(255,255,255,0.5);
   color: white;
+  width: 26px;
 }
-
-/*.orderDesignView .defaultOrderQuantityRow .quantityContent > div {
-  width: 10px;
-  word-wrap: break-word;
-  display: inline-block;
-  position: absolute;
-  line-height: 15px;
-}*/
-
-/*.orderDesignView .defaultOrderQuantityRow .quantityContent > .timeFootage {
-  top: 5px;
-  left: 3%;
-  line-height: 10px;
-}*/
-
-/*.orderDesignView .defaultOrderQuantityRow .quantityContent > .timeFootage > span {
-  font-size: 12px;
-  color: white;
-}*/
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .qinci {
-  top: 40%;
-  left: 8%;
-  line-height: 20px;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .qinci > span {
-  font-size: 15px;
-  color: white;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .miling {
-  top: 5%;
-  left: 16%;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .miling > span {
-  font-size: 15px;
-  color: white;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .sizeAndQuantity {
-  top: 5%;
-  width: 45%;
-  left: 25%;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .summary {
-  top: 10%;
-  left: 74%;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .summary > span {
-  color: white;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .zhaoyue {
-  top: 5%;
-  left: 82%;
-  line-height: 16px;
-}
-
-.orderDesignView .defaultOrderQuantityRow .quantityContent > .zhaoyue > span {
-  font-size: 16px;
-}
-
-/*.orderDesignView .defaultOrderQuantityRow .quantityContent > .shengzhi {
-  top: 35%;
-  left: 89%;
-  line-height: 25px;
-}*/
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent > .shengzhi > span {
-  font-size: 22px;
+  font-size: 17px;
   color: white;
 }
 
-/*.orderDesignView .defaultOrderQuantityRow .quantityContent .sizeTitle,
-.orderDesignView .defaultOrderQuantityRow .quantityContent .quantityTitle,
-.orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions,
-.orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions {
-  text-align: right;
-  margin-top: 5px;
-}*/
-
+.orderDesignView .defaultOrderQuantityRow .quantityContent .genderOptions > label.active,
+.orderDesignView .defaultOrderQuantityRow .quantityContent .colorOptions > label.active,
 .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions > label.active,
 .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions > label.active {
-  background-color: rgb(229, 169, 59);
+  background-color: rgba(255,255,255,0.5);
 }
-
-/*.orderDesignView .defaultOrderQuantityRow .quantityContent .sizeOptions > label:first-child {
-  width: 25%;
-}*/
 
 .orderDesignView .defaultOrderQuantityRow .quantityContent .sizeActions > label:nth-child(2) {
   border: none;
@@ -984,14 +945,15 @@ body.weavesFunBody {
   color: white;
 }
 
-.orderDesignView .payOptionRow .payTotalArea .payTotalCount {
-  font-size: 25px;
+.orderDesignView .payOptionRow .payTotalArea .payTotalCount,
+.orderDesignView .payOptionRow .payTotalArea .needToPay {
+  font-size: 18px;
   font-weight: bold;
 }
 
 .orderDesignView .payOptionRow .payTotalArea {
-  left: 33%;
-  width: 33%;
+  left: 20%;
+  width: 60%;
   text-align: center;
 }
 
@@ -1000,8 +962,8 @@ body.weavesFunBody {
 }
 
 .orderDesignView .payOptionRow .royalButtonWrapper.payButton {
-  margin-left: 24%;
-  margin-right: 10%;
+  margin-left: 34%;
+  margin-right: 34%;
   width: auto;
   padding: 5px 5px 5px 5px;
 }
@@ -1224,7 +1186,26 @@ body.weavesFunBody {
 
 .uploadedImageArea .myArtifactsGroupBottom {
   margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
+
+.uploadedImageArea .myArtifactsGroupTop {
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/*.myArtifactsGroupTop {
+  height: 150px;
+}
+
+.uploadedImageArea .myArtifactsGroupCover {
+  height: calc(100% - 300px);
+  height: -webkit-calc(100% - 300px);
+  height: -moz-calc(100% - 300px);
+  height: -o-calc(100% - 300px);
+}*/
 
 .uploadedImageArea .myArtifactsCarousel .rn-carousel-controls > span {
   color: white;
@@ -1415,7 +1396,7 @@ body.weavesFunBody {
 .designDetailView .designItemInfoContent .shareAndQR {
   top: 0px;
   right: 0px;
-  width: 30%;
+  width: 33%;
 }
 
 .designDetailView .designItemInfoContent .shareAndQR .shareTip {

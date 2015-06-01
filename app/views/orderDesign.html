@@ -35,10 +35,12 @@
                 <div class="genderAndSize">
                     <div class="genderArea">
                         <div class="genderOptions">
-                            <label class="btn btn-warning" ng-model="designInfo.sGender" btn-radio="'male'">男</label>
-                            <label class="btn btn-warning" ng-model="designInfo.sGender" btn-radio="'female'">女</label>
+                            <label class="btn btn-warning" ng-model="designInfo.sGender" btn-radio="'male'" 
+                            ng-click="onChangeGenderClicked('male')">男</label>
+                            <label class="btn btn-warning" ng-model="designInfo.sGender" btn-radio="'female'" 
+                            ng-click="onChangeGenderClicked('female')">女</label>
                         </div>
-                        <span>款</span>
+                        <span class="extraSmall kuan">款</span>
                     </div>
                     <div class="sizeArea">
                         <div class="sizeOptions">
@@ -55,7 +57,7 @@
                                 {{designInfo.sGender === 'male' ? 'XL' : 'L'}}
                             </label>
                         </div>
-                        <span>号</span>
+                        <span class="extraSmall hao">号</span>
                     </div>
                     <div class="sizeInfoArea">
                         <span class="icon-info" ng-click="onSizeInfoButtonClicked()"></span>
@@ -66,12 +68,14 @@
                 <div class="colorAndQuantity">
                     <div class="colorArea">
                         <div class="colorOptions">
-                            <label class="btn btn-warning" ng-model="designInfo.color" btn-radio="'black'">黑</label>
-                            <label class="btn btn-warning" ng-model="designInfo.color" btn-radio="'white'">白</label>
+                            <label class="btn btn-warning" ng-model="designInfo.color" btn-radio="'black'" 
+                            ng-click="onChangeColorClicked('black')">黑</label>
+                            <label class="btn btn-warning" ng-model="designInfo.color" btn-radio="'white'" 
+                            ng-click="onChangeColorClicked('white')">白</label>
                         </div>
-                        <span>色</span>                    
+                        <span class="extraSmall se">色</span>                    
                     </div>
-                    <span>短袖体恤</span>
+                    <span class="extraSmall">短袖体恤</span>
                     <div class="quantityActions">
                         <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'加'" 
                         ng-click="onIncreaseQuantity()">加</label>
@@ -79,67 +83,16 @@
                         <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'减'" 
                         ng-click="onDecreaseQuantity()">减</label>
                     </div>
-                    <span>件</span>
+                    <span class="extraSmall">件</span>
                 </div>
             </div>
             <div class="milin">
                 <span>密令内务府加紧赶制送达寝殿</span>
-                <span>钦此</span>
+                <span class="qinci">钦此</span>
             </div>
             <div class="timeFootage">
                 <span>{{oTimeStr}}</span>
             </div>
-
-            <!--div class="timeFootage">
-                <span>{{oTimeStr}}</span>
-            </div>
-            <div class="qinci">
-                <span>钦此</span>
-            </div>
-            <div class="miling">
-                <span>令内务府加紧赶制</span>
-            </div>
-            <div class="sizeAndQuantity">
-                <div class="sizeTitle">
-                    <span>尺码</span>
-                </div>
-                <div class="sizeOptions">
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'S'">
-                        {{designInfo.sGender === 'male' ? 'S' : 'XS'}}
-                    </label>
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'M'">
-                        {{designInfo.sGender === 'male' ? 'M' : 'S'}}
-                    </label>
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'L'">
-                        {{designInfo.sGender === 'male' ? 'L' : 'M'}}
-                    </label>
-                    <label class="btn btn-warning" ng-model="orderInfo.clothesSize" btn-radio="'XL'">
-                        {{designInfo.sGender === 'male' ? 'XL' : 'L'}}
-                    </label>
-                </div>
-                <div class="quantityTitle">
-                    <span>数量</span>
-                </div>
-                <div class="sizeActions">
-                    <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'加'" 
-                    ng-click="onIncreaseQuantity()">加</label>
-                    <input type="text" ng-model="orderInfo.clothesQuanaity"></input>
-                    <label class="btn btn-warning" ng-model="orderInfo.defaultQuantityAction" btn-radio="'减'" 
-                    ng-click="onDecreaseQuantity()">减</label>
-                </div>
-                <div class="moreOrders">
-                    <span class="icon-info" ng-click="onSizeInfoButtonClicked()"></span>
-                </div>
-            </div>
-            <div class="summary">
-                <span>{{designInfo.sGender === 'male' ? '男士白色短袖T恤' : '女士白色短袖T恤'}}</span>
-            </div>
-            <div class="zhaoyue">
-                <span>奉天承运 皇帝诏曰</span>
-            </div>
-            <div class="shengzhi">
-                <span>圣 旨</span>
-            </div-->
         </div>
         <div class="rightAxis">
             <div class="axisTop"></div>
@@ -157,11 +110,12 @@
             </div>
         </div>
         <div class="payTotalArea">
+            <span class="needToPay">所需金额：</span>
             <span class="payTotalRMBIcon">￥</span>
             <span class="payTotalCount">{{orderInfo.totalPay}}</span>
             <div class="royalButtonWrapper payButton">
-                <div class="btn btn-warning royalButton">
-                    <span ng-click="onCreateOrderBtnClicked()">创建订单</span>
+                <div class="btn btn-warning royalButton"  ng-click="onCreateOrderBtnClicked()">
+                    <span>创建订单</span>
                 </div>
             </div>
         </div>
