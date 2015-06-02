@@ -18,8 +18,8 @@
 
         <div class="selectedArtifactArea" ng-if="aSelectedArtifact.length > 0">
             <div class="availableArea" style="{{htmlItemStyle.availableArea.styleStr}}"></div>
-            <div ng-repeat="oArtifact in aSelectedArtifact" class="selectedArtifactItem">
-                
+            <div ng-repeat="oArtifact in aSelectedArtifact track by $index" class="selectedArtifactItem">
+                <div class="selectedArtifactItemDiv" style="{{oArtifact.divStyleStr}}">
                 <img src="{{hostName + '/image/' + oArtifact.previewFileName}}" 
                 
                 hm-dragstart="onSelectedArtiItemDragstart($event, oArtifact)" 
@@ -39,10 +39,11 @@
                 hm-drag="onSelectedArtiItemResizeDrag($event, oArtifact)" 
                 hm-dragend="onSelectedArtiItemResizeDragend($event, oArtifact)" 
                 ></span>
-                <span class="selectedArtifactItemResize glyphicon glyphicon-remove" 
+                <span class="selectedArtifactItemRemove glyphicon glyphicon-remove" 
                 style="{{htmlItemStyle.previewBackgroundStyle ? oArtifact.removeStyleStr : 'display:none;'}}" 
                 ng-click="onRemoveArtifactItemClicked(oArtifact)" 
                 ></span>
+                </div>
             </div>
         </div>
 

@@ -312,10 +312,7 @@ oCreateDesign.config(['$stateProvider', 'hammerDefaultOptsProvider', function($s
                             if (oData.error) {
                                 $scope.updateDesignToolRow(true);
                                 $state.go('^');
-                                $scope.aMessage.push({
-                                    type: 'danger',
-                                    content: '创建订单竟然失败了。。。亲，能稍后再尝试吗'
-                                });
+                                $scope.addMsg('danger', '创建订单竟然失败了。。。亲，能稍后再尝试吗');
                             } else {
                                 $scope.orderInfo.orderId = oData.data._id;
                                 $scope.orderInfo.creatorId = oData.data.creatorId;
@@ -582,10 +579,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onSaveDesignBtnClicked = function () {
             if ($scope.aSelectedArtifact.length < 1) {
-                $scope.aMessage.push({
-                    type: 'danger',
-                    content: '您还没有选择素材'
-                });
+                $scope.addMsg('danger', '您还没有选择素材');
                 return;
             }
 
@@ -668,10 +662,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     if (oData.error || oData.data === 'NOT_FOUND') {
                         $scope.hideBusy();
                         $scope.designInfo.bSaved = false;
-                        $scope.aMessage.push({
-                            type: 'danger',
-                            content: oData.error || oData.data
-                        });
+                        $scope.addMsg('danger', oData.error || oData.data);
                     } else {
                         $scope.hideBusy();
                         $scope.designInfo.bSaved = true;
@@ -970,12 +961,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             }
         };
 
-        $scope.onArtifactSelected = function(oArtifact) {
+        $scope.onArtifactSelected = function(oSelectedArtifact) {
             // oArtifact.styleValue = //'top:50px;left:100px;' + 
             //     'transform:rotate(7deg);' + 
             //     '-o-transform:rotate(7deg);' + 
             //     '-webkit-transform: rotate(7deg);' + 
             //     '-moz-transform: rotate(7deg);';
+            var oArtifact = {};
+            $.extend(oArtifact, oSelectedArtifact);
             oArtifact.isEditting = false;
             oArtifact.styleValue = {};
             oArtifact.styleValue.top = 150;
@@ -984,14 +977,20 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
             oArtifact.imgWidth = 160;
 
-            oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.left + "px;" + 
+            //     "width:" + oArtifact.imgWidth + "px;";
+            oArtifact.divStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.left + "px;" + 
                 "width:" + oArtifact.imgWidth + "px;";
 
-            //oArtifact.styleStr = $scope.addKeyToStyle(oArtifact.styleStr, 'border', '2px dotted rgb(215, 180, 104)');
+            // oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.pencilLeft + "px;";
 
-            oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
-                "left:" + oArtifact.styleValue.pencilLeft + "px;";
+
+
+
+
 
             // var img = new Image();
             // img.src = oArtifact.largeImage64;
@@ -1028,14 +1027,14 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             oArtifact.imgHeight = oArtifact.imgWidth/oArtifact.originImgWidth*oArtifact.originImgHeight
 
 
-            var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight/2 + 2;//original 70% width limit
-            var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
-            oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
-            "left:" + iResizeLeft + "px;";
+            // var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight/2 + 2;//original 70% width limit
+            // var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+            // oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+            // "left:" + iResizeLeft + "px;";
 
-            var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;//Need to consider pencil&resize width
-            oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
-            "left:" + iRemoveLeft + "px;";
+            // var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;//Need to consider pencil&resize width
+            // oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+            // "left:" + iRemoveLeft + "px;";
             
             oArtifact.lastDragDistance = 0;
 
@@ -1105,21 +1104,28 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             var iImgWidth = $event.target.clientWidth + 4;//Need to consider 2px border
             oArtifact.imgWidth = iImgWidth;
 
-            oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.left + "px;" + 
+            //     "width:" + iImgWidth + "px;";
+            oArtifact.divStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                 "left:" + oArtifact.styleValue.left + "px;" + 
                 "width:" + iImgWidth + "px;";
 
-            oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
-                "left:" + oArtifact.styleValue.pencilLeft + "px;";
+            // oArtifact.pencilStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+            //     "left:" + oArtifact.styleValue.pencilLeft + "px;";
 
-            var iResizeTop = oArtifact.styleValue.top - $event.target.clientHeight/2 + 2;
-            var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
-            oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
-                "left:" + iResizeLeft + "px;";
+            // var iResizeTop = oArtifact.styleValue.top - $event.target.clientHeight/2 + 2;
+            // var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+            // oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+            //     "left:" + iResizeLeft + "px;";
 
-            var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;
-            oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
-                "left:" + iRemoveLeft + "px;";
+            // var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth - 30*2;
+            // oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+            //     "left:" + iRemoveLeft + "px;";
+
+
+
+
             //hm-drag="onSelectedArtiItemDragged($event, oArtifact)"
             //event.gesture.preventDefault();
         };
@@ -1173,22 +1179,25 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     iPercent = 1 - iDistance/400;
                 }
 
-                oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                //     "left:" + oArtifact.styleValue.left + "px;" + 
+                //     "width:" + oArtifact.imgWidth*iPercent + "px;";
+                oArtifact.divStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                     "left:" + oArtifact.styleValue.left + "px;" + 
                     "width:" + oArtifact.imgWidth*iPercent + "px;";
 
-                var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
-                var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+                // var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                // var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
 
-                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
-                    "left:" + iResizeLeft + "px;";
+                // oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                //     "left:" + iResizeLeft + "px;";
 
-                var iRemoveTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
-                var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth*iPercent - 30*2;
-                oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
-                "left:" + iRemoveLeft + "px;";
+                // var iRemoveTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                // var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth*iPercent - 30*2;
+                // oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+                // "left:" + iRemoveLeft + "px;";
 
-                console.log(oArtifact.styleStr);
+                //console.log(oArtifact.styleStr);
                 oArtifact.lastDraggingWidth = oArtifact.imgWidth*iPercent;
                 oArtifact.lastDraggingHeight = oArtifact.imgHeight*iPercent;
 
@@ -1201,23 +1210,24 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                     iPercent = 1 - iDistance/400;
                 }
 
-                oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                // oArtifact.styleStr = "top:" + oArtifact.styleValue.top + "px;" + 
+                //     "left:" + oArtifact.styleValue.left + "px;" + 
+                //     "width:" + oArtifact.imgWidth*iPercent + "px;";
+                oArtifact.divStyleStr = "top:" + oArtifact.styleValue.top + "px;" + 
                     "left:" + oArtifact.styleValue.left + "px;" + 
                     "width:" + oArtifact.imgWidth*iPercent + "px;";
-                //oArtifact.imgWidth = oArtifact.originImgWidth*0.7*iPercent;
-                //oArtifact.imgHeight = oArtifact.originImgHeight*0.7*iPercent;
 
-                var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
-                var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
-                oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
-                    "left:" + iResizeLeft + "px;";
+                // var iResizeTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                // var iResizeLeft = oArtifact.styleValue.pencilLeft - 30;//Need to consider pencil width
+                // oArtifact.resizeStyleStr = "top:" + iResizeTop + "px;" + 
+                //     "left:" + iResizeLeft + "px;";
 
-                var iRemoveTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
-                var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth*iPercent - 30*2;
-                oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
-                "left:" + iRemoveLeft + "px;";
+                // var iRemoveTop = oArtifact.styleValue.top - oArtifact.imgHeight*iPercent/2 + 2;
+                // var iRemoveLeft = oArtifact.styleValue.pencilLeft - oArtifact.imgWidth*iPercent - 30*2;
+                // oArtifact.removeStyleStr = "top:" + iResizeTop + "px;" + 
+                // "left:" + iRemoveLeft + "px;";
 
-                console.log(oArtifact.styleStr);
+                //console.log(oArtifact.styleStr);
                 oArtifact.lastDraggingWidth = oArtifact.imgWidth*iPercent;
                 oArtifact.lastDraggingHeight = oArtifact.imgHeight*iPercent;
 
@@ -1376,27 +1386,18 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.validateAddressInfo = function() {
             var oOrderInfo = $scope.orderInfo;
             if (!oOrderInfo.sContact || oOrderInfo.sContact === '') {
-                $scope.aMessage.push({
-                    type: 'danger',
-                    content: '您还没有提供联系人姓名'
-                });
+                $scope.addMsg('danger', '您还没有提供联系人姓名');
                 return false;
             }
             
             if (!oOrderInfo.sMobile || oOrderInfo.sMobile === '') {
-                $scope.aMessage.push({
-                    type: 'danger',
-                    content: '您还没有提供联系人手机号码'
-                });
+                $scope.addMsg('danger', '您还没有提供联系人手机号码');
                 return false;
             } else {
                 var oPhoneReg = /^1[3|4|5|8][0-9]\d{8,8}$/;
                 var bPhoneTest = oPhoneReg.test(oOrderInfo.sMobile);
                 if (!bPhoneTest) {
-                    $scope.aMessage.push({
-                        type: 'danger',
-                        content: '请输入正确的联系人手机号码'
-                    });
+                    $scope.addMsg('danger', '请输入正确的联系人手机号码');
                     return false;
                 }
             }
@@ -1449,10 +1450,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             };*/
             
             if (!oOrderInfo.sDetailAddress || oOrderInfo.sDetailAddress === '') {
-                $scope.aMessage.push({
-                    type: 'danger',
-                    content: '您还没有具体邮寄地址'
-                });
+                $scope.addMsg('danger', '您还没有具体邮寄地址');
                 return false;
             };
 
@@ -1521,6 +1519,29 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.addKeyToStyle = function(sOriginStyle, sKey, sValue) {
             var sTempStyle = $scope.removeKeyFromStyle(sOriginStyle, sKey);
             return sTempStyle + sKey + ':' + sValue + ';';
+        };
+
+        $scope.addMsg = function(sType, sMsg) {
+            var oTimer = setTimeout(function() {
+                var sTimer2Remove = -1;
+                for (var i = 0; i < $scope.aMessage.length; i++) {
+                    if ($scope.aMessage[i].timer === oTimer) {
+                        sTimer2Remove = i;
+                        break;
+                    }
+                }
+                if (sTimer2Remove != -1) {
+                    $scope.aMessage.splice(sTimer2Remove, 1);
+                    $scope.$apply();
+                }
+            }, 3000);
+            var oMsgObject = {
+                type: sType,
+                content: sMsg,
+                timer: oTimer
+            };
+
+            $scope.aMessage.push(oMsgObject);
         };
 }]);
 

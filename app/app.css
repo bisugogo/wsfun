@@ -382,7 +382,7 @@ body.weavesFunBody {
   visibility: hidden;
 }
 
-.createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemPencil,
+.createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemRemove,
 .createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemResize {
   font-size: 18px;
   background-color: rgba(215, 180, 104, 0.5);
@@ -390,11 +390,27 @@ body.weavesFunBody {
   display: inline;
   border-radius: 18px;
   color: white;
+  /*position: relative;*/
+  position: absolute;
+}
+
+.createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemResize {
+  top: -12px;
+  right: -12px;
+}
+
+.createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemRemove {
+  top: -12px;
+  left: -12px;
+}
+
+.createDetailView .selectedArtifactArea .selectedArtifactItem .selectedArtifactItemDiv {
   position: relative;
 }
 
 .createDetailView .selectedArtifactArea .selectedArtifactItem img {
-  position: relative;
+  /*position: relative;*/
+  width: 100%;
   border-width: 2px;
   border-style: dotted;
   border-color: rgb(215, 180, 104);
