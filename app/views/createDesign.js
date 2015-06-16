@@ -1304,7 +1304,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 $scope.htmlItemStyle.previewBackgroundStyle = "";
                 for (var i = 0; i < $scope.aSelectedArtifact.length; i++) {
                     var oCurArti = $scope.aSelectedArtifact[i];
-                    var sNewStyle = $scope.addKeyToStyle(oCurArti.styleStr, 'border', 'none');
+                    var sNewStyle = $scope.addKeyToStyle(oCurArti.divStyleStr, 'border', 'none');
                     oCurArti.styleStr = sNewStyle;
                 }
 

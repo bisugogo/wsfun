@@ -29,7 +29,7 @@
                     <span class="glyphicon glyphicon-ok"></span>
                     <span>付款成功，吾皇圣明</span>
                 </div>
-                <div class="qrImage">
+                <div class="qrImage" style="{{orderInfo.payStatus === 'notPayed' ? 'display:none;' : ''}}">
                     <img src="img/qrcode_ws.jpg">
                 </div>
                 <div class="traceOrderTip">
