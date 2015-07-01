@@ -1087,7 +1087,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onSelectedArtiItemDragged = function($event, oArtifact) {
             //console.log($event.gesture);
-            console.log('dragging!');
+            //console.log('dragging!');
             if ($scope.draggingStatus === $scope.constant.DRAG_STATUS.DRAG_START) {
                 $scope.draggingStatus = $scope.constant.DRAG_STATUS.DRAGGING;
                 oArtifact.styleValue.originTop = oArtifact.styleValue.top;
@@ -1132,7 +1132,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
 
         $scope.onSelectedArtiItemDragstart = function($event, oArtifact) {
             //console.log($event.gesture);
-            console.log('dragging start!');
+            //console.log('dragging start!');
             $scope.draggingStatus = $scope.constant.DRAG_STATUS.DRAG_START;
             //event.gesture.preventDefault();
         };
@@ -1168,7 +1168,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
         $scope.onSelectedArtiItemResizeDrag = function($event, oArtifact) {
             var iDistance = $event.distance;
 
-            console.log('resize dragging' + iDistance);
+            //console.log('resize dragging' + iDistance);
 
             var iDeltaDragDistance = iDistance - oArtifact.lastDragDistance;
             if (iDeltaDragDistance > 10) {
