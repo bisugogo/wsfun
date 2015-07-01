@@ -32,7 +32,7 @@
                 <div class="qrImage" style="{{orderInfo.payStatus === 'notPayed' ? 'display:none;' : ''}}">
                     <img src="img/qrcode_ws.jpg">
                 </div>
-                <div class="traceOrderTip">
+                <div class="traceOrderTip" style="{{orderInfo.payStatus === 'notPayed' ? 'display:none;' : ''}}">
                     <span>长按识别二维码，关注“微服私纺（weavesfun）”公众号，选我的订单即可追踪订单状态</span>
                 </div>
             </div>

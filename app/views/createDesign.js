@@ -530,7 +530,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
             sDefaultDesc: new Date().toUTCString(),
             sBackgroundColor: '白',
             sSize: 'XL',
-            sDescription: 'test',
+            sDescription: '我的新设计',
             bSaved: false
         };
 

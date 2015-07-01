@@ -152,6 +152,7 @@ myDesignList.config(['$stateProvider', '$httpProvider', function($stateProvider,
                                 }
 
                                 $scope.setCurrentDesign(oDesign);
+                                $scope.showCurrentDesignInfo(false);
 
                                 var sCode = $location.$$search.code;
                                 if (sCode) {
@@ -414,6 +415,28 @@ myDesignList.controller('MyDesignsListCtrl', ['$window', '$scope', '$location', 
 
         $scope.setCurrentDesign = function(oDesign) {
             $scope.oCurrentDesign = oDesign;
+        };
+
+        $scope.showCurrentDesignInfo = function(bShow) {
+            if (!bShow) {
+                if (!!$scope.oCurrentDesign) {
+                    $scope.oCurrentDesign.bShowInfo = false;
+                }
+            } else {
+                if (!!$scope.oCurrentDesign) {
+                    $scope.oCurrentDesign.bShowInfo = true;
+                }
+            }
+        };
+
+        $scope.onCurrentDesignClicked = function() {
+            if (!!$scope.oCurrentDesign) {
+                if ($scope.oCurrentDesign.bShowInfo) {
+                    $scope.showCurrentDesignInfo(false);
+                } else {
+                    $scope.showCurrentDesignInfo(true);
+                }
+            }
         };
 
         $scope.onILikedClicked = function() {
