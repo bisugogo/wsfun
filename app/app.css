@@ -1381,7 +1381,7 @@ body.weavesFunBody {
 .uploadedImageArea .carouselIndicator {
   text-align: center;
   position: relative;
-  bottom: 0px;
+  bottom: 5px;
 }
 
 .uploadedImageArea .carouselIndicator > .rn-carousel-indicator > span {
@@ -1396,6 +1396,7 @@ body.weavesFunBody {
 
 .publicGalleryRow .publicArtifactTypes ul {
   height: 30px;
+  margin-bottom: 0px;
 }
 
 .publicGalleryRow .publicArtifactTypes ul .rn-carousel-control.rn-carousel-control-next {
@@ -1737,6 +1738,18 @@ body.weavesFunBody {
 
 .myDesignListCarousel {
   height: 100%;
+}
+
+.myDesignListCarousel .rn-carousel-control.rn-carousel-control-prev {
+  color: rgb(107, 107, 107);
+  left: 0px;
+  font-size: 15px;
+}
+
+.myDesignListCarousel .rn-carousel-control.rn-carousel-control-next {
+  color: rgb(107, 107, 107);
+  right: 0px;
+  font-size: 15px;
 }
 
 .myDesignListCarousel .designItem {
@@ -2172,6 +2185,7 @@ body.weavesFunBody {
 .managePublicDesignUIView,
 .managePublicArtifactUIView {
   height: 100%;
+  overflow: auto;
 }
 
 .myOrdersView {
@@ -2200,6 +2214,18 @@ body.weavesFunBody {
   height: -webkit-calc(100% - 30px);
   height: -moz-calc(100% - 30px);
   height: -o-calc(100% - 30px);
+}
+
+.myOrdersView .rn-carousel-control.rn-carousel-control-prev {
+  color: rgb(107, 107, 107);
+  left: 0px;
+  font-size: 15px;
+}
+
+.myOrdersView .rn-carousel-control.rn-carousel-control-next {
+  color: rgb(107, 107, 107);
+  right: 0px;
+  font-size: 15px;
 }
 
 .myOrdersView .myOrdersListContent .myOrdersListCarousel {

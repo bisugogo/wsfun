@@ -74,6 +74,29 @@ oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, 
                             }
                         });
                     };
+
+                    $scope.onOrder2TopClicked = function(oArtifact) {
+                        var oParam = {
+                            action: 'updateArtifactModifiedTime',
+                            data: {
+                                artifactId: oArtifact._id
+                            }
+                        };
+                        Design.DesignManager.update(oParam, function(oData) {
+                            if (oData.error || oData.data === 'NOT_FOUND') {
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: oData.error || oData.data
+                                });
+                            } else {
+                                oArtifact.type = oData.data.type;
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: 'Artifact lastModified time changed successfully.'
+                                });
+                            }
+                        });
+                    };
                 }
             }
         }
@@ -113,6 +136,29 @@ oManagement.config(['$stateProvider', '$httpProvider', function($stateProvider, 
                                 $scope.$parent.aMessage.push({
                                     type: 'danger',
                                     content: 'Design ' + oDesign._id + ' access updated to ' + oDesign.access + ' successfully.'
+                                });
+                            }
+                        });
+                    };
+
+                    $scope.onDesign2TopClicked = function(oDesign) {
+                        var oUpdateParam = {
+                            action: 'updateDesignLastModified',
+                            data: {
+                                designId: oDesign._id
+                            }
+                        };
+                        Design.DesignManager.update(oUpdateParam, function(oData) {
+                            if (oData.error) {
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: oData.error || oData.data
+                                });
+                            } else {
+                                oDesign.access = oData.data.access;
+                                $scope.$parent.aMessage.push({
+                                    type: 'danger',
+                                    content: 'Design last modified time changed successfully.'
                                 });
                             }
                         });

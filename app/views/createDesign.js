@@ -897,7 +897,7 @@ oCreateDesign.controller('CreateDesignCtrl', ['$scope', '$location', '$upload', 
                 };
                 var oArtifacts = Design.FileManager.query(oParam, function(oContent) {
                     //$scope.imgSrc = 'data:image/png;base64,' + oContent.data;
-                    $scope.aPublicArtifact = $scope.groupArtifactThumbnails(oContent.data, 6);
+                    $scope.aPublicArtifact = $scope.groupArtifactThumbnails(oContent.data, 4);
                     $scope.aPublicArtifactCarouselIndex = 0;
                     $scope.mBufferedPublicArtifact[sTargetType] = $scope.aPublicArtifact;
                 });

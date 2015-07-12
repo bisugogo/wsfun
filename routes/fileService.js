@@ -272,6 +272,7 @@ module.exports = function(app) {
         var sUserId = req.query.userId;
         var oQuery = Artifact.find({'creatorId': sUserId});
         oQuery.select('_id type fileId fileName previewFileId previewFileName previewInfo');
+        oQuery.sort({'lastModifiedTime': -1});
         oQuery.exec(function (err, aArtifact) {
             if (err) {
                 res.send({error: err.message});
@@ -298,6 +299,7 @@ module.exports = function(app) {
         }
         var oQuery = Artifact.find(oFilter);
         oQuery.select('_id type fileId fileName previewFileId previewFileName previewInfo');
+        oQuery.sort({'lastModifiedTime': -1});
         oQuery.exec(function (err, aArtifact) {
             if (err) {
                 res.send({error: err.message});

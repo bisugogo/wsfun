@@ -1154,6 +1154,26 @@ module.exports = function(app) {
         });
     };
 
+    updateArtifactModifiedTime = function(data, res) {
+        var sArtifactId = data.artifactId;
+        var updateInfo = {
+            'lastModifiedTime': new Date()
+        };
+        Artifact.findByIdAndUpdate(sArtifactId, updateInfo, {'new': true}, function(err, oDBRet) {
+            if (err) {
+                LOG.logger.logFunc('updateArtifactModifiedTime', err.message);
+                res.send({
+                    error: 'updateArtifactModifiedTime failed ' + err.message
+                });
+            } else {
+                res.send({
+                    status: 'OK',
+                    data: oDBRet
+                });
+            }
+        });
+    };
+
     updateDesignAccess = function(data, res) {
         var sDesignId = data.designId;
         var updateInfo = {
@@ -1164,6 +1184,26 @@ module.exports = function(app) {
                 LOG.logger.logFunc('updateDesignAccess', err.message);
                 res.send({
                     error: 'updateDesignAccess failed ' + err.message
+                });
+            } else {
+                res.send({
+                    status: 'OK',
+                    data: oDBRet
+                });
+            }
+        });
+    };
+
+    updateDesignLastModified = function(data, res) {
+        var sDesignId = data.designId;
+        var updateInfo = {
+            'modified': new Date()
+        };
+        Design.findByIdAndUpdate(sDesignId, updateInfo, {'new': true}, function(err, oDBRet) {
+            if (err) {
+                LOG.logger.logFunc('updateDesignLastModified', err.message);
+                res.send({
+                    error: 'updateDesignLastModified failed ' + err.message
                 });
             } else {
                 res.send({
@@ -1252,8 +1292,12 @@ module.exports = function(app) {
                 guessDesignCreated(req.body.data, res);
             } else if (sAction === 'updateArtifactType') {
                 updateArtifactType(req.body.data, res);
+            } else if (sAction === 'updateArtifactModifiedTime') {
+                updateArtifactModifiedTime(req.body.data, res);
             } else if (sAction === 'updateDesignAccess') {
                 updateDesignAccess(req.body.data, res);
+            } else if (sAction === 'updateDesignLastModified') {
+                updateDesignLastModified(req.body.data, res);
             }
         } else {
             console.log("design post service, action: empty.");
