@@ -2,6 +2,12 @@ var User = require('../models/User.js');
 
 var WeChatManager = function() {};
 
+var welcomeMsg = '小主，\n您回来啦～[愉快]\n夏天这么热，正是小主挥洒身姿的好光景啊～～\n\n';
+welcomeMsg += '内务府近期刚从西域进购了一批上等的全棉衣料，赶快再来定制一件屌炸天的私人新T恤吧。\n\n';
+welcomeMsg += '请点击：\n【新设计】 开始设计自己的专属T恤\n【设计精选】 查看其他设计师作品\n\n';
+welcomeMsg += '您也可以点击 【关于微服】 了解关于我们更详细的资料。或直接回复“客服”来联系我们的客服人员。\n\n';
+welcomeMsg += '再次感谢您的关注～～[愉快][爱心][拥抱]';
+
 WeChatManager.prototype.doAction = function(req, res) {
     var oMsg = req.weixin;
     console.log('User OpenId: ' + oMsg.FromUserName);
@@ -37,7 +43,7 @@ WeChatManager.prototype.doEvent = function(req, res) {
                         return;
                     } else {
                         console.log("User created");
-                        res.reply('感谢您关注 微服私纺');
+                        res.reply(welcomeMsg);
                         return;
                     }
                 });
@@ -50,13 +56,13 @@ WeChatManager.prototype.doEvent = function(req, res) {
                             return;
                         } else {
                             console.log("User created");
-                            res.reply('感谢您关注 微服私纺');
+                            res.reply(welcomeMsg);
                             return;
                         }
                     });
                 } else {
                     console.log('existing user found');
-                    res.reply('您已经关注了 微服私纺');
+                    res.reply(welcomeMsg);
                     return;
                 }
             }
