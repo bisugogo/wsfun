@@ -11,7 +11,8 @@ WeChatManager.prototype.doAction = function(req, res) {
     if (sMsgType === 'event') {
         this.doEvent(req, res);
     } else {
-        res.reply('Weaves Fun!! We are better with you!');
+        this.doMessage(req, res);
+        //res.reply('Weaves Fun!! We are better with you!');
     }
 };
 
@@ -93,6 +94,15 @@ WeChatManager.prototype.doEvent = function(req, res) {
         res.reply('Event not supported yet.');
         return;
     }
+};
+
+WeChatManager.prototype.doMessage = function(req, res) {
+    var oMsg = req.weixin;
+    var sWechatId = oMsg.FromUserName;
+    var sEventType = oMsg.Event;
+    res.reply({
+        type: 'transfer_customer_service'
+    });
 };
 
 module.exports.WeChatManager = WeChatManager;
