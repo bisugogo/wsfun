@@ -55,7 +55,15 @@ module.exports = function(app) {
                 creatorId: oData.creatorId ? oData.creatorId : ''
             },
         });
-        fs.createReadStream(req.files.file.path).pipe(writestream);
+        //fs.createReadStream(req.files.file.path).pipe(writestream);
+        var that = this;
+        var oReadUploadedStream = fs.createReadStream(req.files.file.path);
+        gm(oReadUploadedStream).options({imageMagick: true})
+        .autoOrient()
+        // .stream(function (err, stdout, stderr) {
+        //     stdout.pipe(that.writeStream);
+        // });
+        .stream().pipe(writestream);
 
 
         var sPreviewArtifactFileName = oData.fileName + '_' + sRequestTime + '_' + sRandomSurffix + '_artifact_preview.png';
@@ -84,6 +92,9 @@ module.exports = function(app) {
             // });
             var sReadStreamForResize = fs.createReadStream(req.files.file.path);
             gm(sReadStreamForResize).options({imageMagick: true})
+            // .identify(function (err, data) {
+            //   if (!err) console.log(JSON.stringify(data))
+            // })
             .size({bufferStream: true}, function(err, oSize) {
                 var iTargetWidth, iTargetHeight;
                 if (oSize.width > oSize.height) {
